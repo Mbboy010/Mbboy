@@ -3,9 +3,9 @@
 import Content from './Content';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsAside } from "../redux/slicer/AsideCheck";
-import { setPosit } from "../redux/slicer/posit";
-import { setOpacity } from "../redux/slicer/opacity";
+import { setIsAside } from "@/redux/slicer/AsideCheck";
+import { setPosit } from "@/redux/slicer/posit";
+import { setOpacity } from "@/redux/slicer/opacity";
 import Link from "next/link";
 import { X } from "lucide-react"; // Replaced MdClose from react-icons with lucide-react
 import { useTheme } from "next-themes";
