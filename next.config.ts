@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    unoptimized: true, // ✅ disables sharp for local dev on Termux
+  },
 };
 
 export default nextConfig;

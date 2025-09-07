@@ -29,7 +29,7 @@ module.exports = {
 
       // ✅ gradients go here, not in colors
       backgroundImage: {
-        darkBackground: "linear-gradient(135deg,#0F0716, #110819)",
+        darkBackground: "linear-gradient(135deg,#000000, #000000)",
         lightBackground: "linear-gradient(135deg, #F5F5F5, #E0E7FF)",
       },
 
