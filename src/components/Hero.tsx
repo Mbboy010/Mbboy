@@ -18,16 +18,17 @@ export default function Hero() {
           
           {/* ✨ Left side content */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.4 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
             className="text-center md:text-left max-w-xl space-y-6"
           >
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.8 }}
+              viewport={{ once: false }}
               className="text-4xl md:text-6xl font-extrabold leading-tight"
             >
               I’m <span className="text-purple-400">Musa Hakilu</span> 👋 <br />
@@ -38,6 +39,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
+              viewport={{ once: false }}
               className="text-gray-300 text-lg leading-relaxed"
             >
               I’m a creative UI/UX designer and full-stack developer specializing
@@ -50,20 +52,26 @@ export default function Hero() {
 
             {/* 🎯 Buttons */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
+              viewport={{ once: false }}
               className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
             >
-              <Button variant="primary">View My Projects</Button>
-              <Button variant="outline">Let’s Collaborate</Button>
+              <motion.div whileHover={{ scale: 1.07 }}>
+                <Button variant="primary">View My Projects</Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.07 }}>
+                <Button variant="outline">Let’s Collaborate</Button>
+              </motion.div>
             </motion.div>
 
             {/* 📊 Stats */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.7, duration: 0.8 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.9 }}
+              viewport={{ once: false }}
               className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center md:text-left"
             >
               <StatItem number="5+" label="Years Experience" />
@@ -75,25 +83,41 @@ export default function Hero() {
 
           {/* 🖼️ Right side image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
+            initial={{ opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 1, ease: "easeOut" }}
             className="relative mt-16 md:mt-0 flex justify-center md:justify-end w-full md:w-auto"
           >
-            <div className="relative">
+            <motion.div
+              animate={{ y: [0, -15, 0] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="relative"
+            >
               <Image
                 src="/profile.png"
                 alt="Musa Hakilu"
                 height={400}
                 width={400}
-                className="rounded-3xl"
+                className="rounded-3xl relative z-10"
                 priority
               />
-            </div>
 
-            {/* Glow behind image */}
-            <div className="absolute -bottom-10 -right-10 w-80 h-80 bg-purple-500/30 blur-[100px] rounded-full -z-10" />
+              {/* Glowing pulse behind image */}
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute -bottom-10 -right-10 w-80 h-80 bg-purple-500/30 blur-[100px] rounded-full -z-10"
+              />
+            </motion.div>
           </motion.div>
         </div>
       </Container>
@@ -106,10 +130,27 @@ function StatItem({ number, label }: { number: string; label: string }) {
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 200, damping: 10 }}
       className="transition-all duration-300"
     >
-      <p className="text-3xl md:text-4xl font-bold text-purple-400">{number}</p>
-      <p className="text-gray-400 text-sm md:text-base">{label}</p>
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: false }}
+        className="text-3xl md:text-4xl font-bold text-purple-400"
+      >
+        {number}
+      </motion.p>
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+        viewport={{ once: false }}
+        className="text-gray-400 text-sm md:text-base"
+      >
+        {label}
+      </motion.p>
     </motion.div>
   );
 }
