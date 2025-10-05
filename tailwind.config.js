@@ -25,6 +25,8 @@ module.exports = {
         customYellow: "#FFD700",
         customDarkGray: "#1A1A1A",
         customWhite: "#FFFFFF",
+        dark: "#0B0B14",
+        primary: "#A855F7", // Neon purple
       },
 
       // ✅ gradients go here, not in colors
@@ -50,3 +52,4 @@ module.exports = {
     heroui(), // 👈 add HeroUI plugin here
   ],
 };
+

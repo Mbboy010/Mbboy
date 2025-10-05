@@ -16,4 +16,10 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   transition: background-color 0.3s ease, color 0.3s ease;
+   @apply bg-[#0b0b14] text-white;
+}
+
+
+h2 span {
+  @apply text-purple-500;
 }
