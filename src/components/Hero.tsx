@@ -18,7 +18,7 @@ export default function Hero() {
           
           {/* ✨ Left side content */}
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
+            
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.4 }}
             transition={{ duration: 0.9, ease: "easeOut" }}
