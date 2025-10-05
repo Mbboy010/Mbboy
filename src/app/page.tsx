@@ -1,5 +1,4 @@
 
-import Main from '../../.next/static/chunks/main';
 import Hero from "@/components/Hero";
 import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
