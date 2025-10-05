@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
 import { FaReact, FaNodeJs, FaPython, FaDatabase, FaShieldAlt } from "react-icons/fa";
@@ -15,18 +15,16 @@ const icons = [
   { Icon: FaShieldAlt, color: "text-red-400", title: "Security" },
 ];
 
-// Parent container animation
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.25, // icons appear one by one
+      staggerChildren: 0.25,
     },
   },
 };
 
-// Each icon animation
-const iconVariants = {
+const iconVariants: Variants = {
   hidden: { opacity: 0, scale: 0.5, y: 30 },
   visible: {
     opacity: 1,
@@ -42,10 +40,9 @@ const iconVariants = {
 
 export default function Skills() {
   return (
-    <section className="relative  text-white py-20 overflow-hidden">
+    <section className="relative text-white py-20 overflow-hidden">
       <BackgroundGlow />
       <Container>
-        {/* Section Title */}
         <motion.h2
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,7 +53,6 @@ export default function Skills() {
           My <span className="text-purple-400">Tech Stack</span>
         </motion.h2>
 
-        {/* Icons Animation */}
         <motion.div
           variants={containerVariants}
           initial="hidden"

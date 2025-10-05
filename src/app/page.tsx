@@ -1,4 +1,5 @@
 
+
 import Hero from "@/components/Hero";
 import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
@@ -9,7 +10,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main>
+    <div>
       <Hero />
       <Portfolio />
       <Process />
@@ -17,7 +18,6 @@ export default function Home() {
       <Pricing />
       <Blog />
       <Footer />
-
-    </main>
+    </div>
   );
 }
