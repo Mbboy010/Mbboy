@@ -67,16 +67,7 @@ export default function Pricing() {
     <section className="relative bg-gray-100 dark:bg-[#0B0B0F] text-gray-900 dark:text-white py-20 overflow-hidden transition-colors duration-500">
       <BackgroundGlow />
 
-      {/* 🌗 Theme Toggle Button */}
-      <div className="absolute top-6 right-6">
-        <button
-          onClick={toggleTheme}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-300 dark:bg-gray-800 hover:bg-gray-400 dark:hover:bg-gray-700 transition"
-        >
-          {theme === "dark" ? <FaSun className="text-yellow-400" /> : <FaMoon className="text-gray-700" />}
-          <span className="text-sm font-medium">{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
-        </button>
-      </div>
+
 
       <Container>
         {/* 🔥 Header Section */}
