@@ -28,7 +28,7 @@ const blogs = [
 
 export default function Blog() {
   return (
-    <section className="relative bg-[#0B0B0F] text-white py-20 overflow-hidden">
+    <section className="relative bg-white text-gray-900 dark:bg-[#0B0B0F] dark:text-white py-20 overflow-hidden transition-colors duration-500">
       <BackgroundGlow />
       <Container>
         {/* ✨ Animated Header Section */}
@@ -44,7 +44,7 @@ export default function Blog() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: false }}
-            className="uppercase tracking-widest text-sm text-gray-400"
+            className="uppercase tracking-widest text-sm text-gray-500 dark:text-gray-400"
           >
             LATEST INSIGHTS
           </motion.h3>
@@ -57,7 +57,9 @@ export default function Blog() {
             className="text-3xl lg:text-4xl font-bold mt-2"
           >
             A journey to the science of{" "}
-            <span className="text-purple-400">Cybersecurity & Development</span>
+            <span className="text-purple-600 dark:text-purple-400">
+              Cybersecurity & Development
+            </span>
           </motion.h2>
 
           <motion.p
@@ -65,7 +67,7 @@ export default function Blog() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
             viewport={{ once: false }}
-            className="max-w-2xl mx-auto text-gray-400 mt-4"
+            className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400 mt-4"
           >
             Stay updated with trends, tutorials, and professional insights on
             secure development, ethical hacking, and digital innovation.
@@ -83,9 +85,10 @@ export default function Blog() {
               viewport={{ once: false, amount: 0.3 }}
               whileHover={{
                 scale: 1.03,
-                boxShadow: "0 0 25px rgba(168, 85, 247, 0.3)",
+                boxShadow:
+                  "0 0 25px rgba(168, 85, 247, 0.25), 0 0 10px rgba(168, 85, 247, 0.1)",
               }}
-              className="rounded-2xl bg-gradient-to-br from-[#1a1a2e] to-[#111] shadow-lg overflow-hidden group transition-all"
+              className="rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-[#1a1a2e] dark:to-[#111] shadow-lg overflow-hidden group transition-all"
             >
               {/* Image Section */}
               <div className="overflow-hidden">
@@ -107,16 +110,16 @@ export default function Blog() {
                 viewport={{ once: false }}
                 className="p-6"
               >
-                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                  <FaCalendarAlt className="text-purple-400" />
+                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm">
+                  <FaCalendarAlt className="text-purple-600 dark:text-purple-400" />
                   <span>{b.date}</span>
                 </div>
 
-                <h3 className="text-lg font-semibold mt-3 text-white group-hover:text-purple-400 transition-colors duration-300">
+                <h3 className="text-lg font-semibold mt-3 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
                   {b.title}
                 </h3>
 
-                <p className="text-gray-400 text-sm mt-2 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 text-sm mt-2 leading-relaxed">
                   {b.desc}
                 </p>
               </motion.div>
