@@ -111,19 +111,8 @@ export default function Hero() {
                 alt="Musa Hakilu"
                 height={400}
                 width={400}
-                className="rounded-3xl relative z-10 shadow-2xl"
+                className="rounded-3xl relative z-10 "
                 priority
-              />
-
-              {/* Glowing pulse behind image */}
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute -bottom-10 -right-10 w-80 h-80 bg-purple-500/30 dark:bg-purple-600/30 blur-[100px] rounded-full -z-10"
               />
             </motion.div>
           </motion.div>
