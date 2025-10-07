@@ -1,3 +1,5 @@
+import Cybersecurity from '../components/Cybersecurity';
+import AISkills from '../components/AISkills';
 import FrontendBackend from '../components/FrontendBackend';
 
 
@@ -16,6 +18,8 @@ export default function Home() {
       <Hero />
       <Portfolio />
       <FrontendBackend />
+      <AISkills />
+      <Cybersecurity />
       <LogoDesign />
       <Process />
       <Skills />
