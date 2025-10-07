@@ -1,5 +1,7 @@
+import FrontendBackend from '../components/FrontendBackend';
 
 
+import LogoDesign from '../components/LogoDesign';
 import Hero from "@/components/Hero";
 import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
@@ -13,6 +15,8 @@ export default function Home() {
     <div>
       <Hero />
       <Portfolio />
+      <FrontendBackend />
+      <LogoDesign />
       <Process />
       <Skills />
       <Pricing />
