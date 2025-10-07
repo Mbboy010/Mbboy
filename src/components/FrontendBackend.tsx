@@ -121,17 +121,6 @@ export default function FrontendBackend() {
           </motion.div>
         </div>
 
-        {/* CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="text-center mt-16"
-        >
-          <button className="px-8 py-3 rounded-lg font-medium text-white transition-all duration-300 shadow-md hover:shadow-xl bg-gradient-to-r from-purple-600 to-pink-500 hover:from-pink-500 hover:to-purple-600 dark:from-customPurple dark:to-customPink dark:hover:from-customPink dark:hover:to-customPurple">
-            Build My Next Project 🚀
-          </button>
-        </motion.div>
       </Container>
     </section>
   );

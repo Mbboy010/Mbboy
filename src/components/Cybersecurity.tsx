@@ -42,7 +42,7 @@ export default function Cybersecurity() {
           </h3>
           <h2 className="text-3xl lg:text-4xl font-bold mt-2">
             <span className="text-customPurple dark:text-customPurple">Protecting</span>{" "}
-            What Matters Most 🔐
+            What Matters Most
           </h2>
           <p className="max-w-2xl mx-auto mt-4 text-gray-600 dark:text-gray-400">
             I specialize in securing applications and systems — detecting
@@ -74,19 +74,6 @@ export default function Cybersecurity() {
           ))}
         </div>
 
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="text-center mt-16"
-        >
-          <button className="px-8 py-3 rounded-lg font-medium text-white transition-all duration-300 shadow-md hover:shadow-xl 
-            bg-gradient-to-r from-purple-600 to-pink-500 hover:from-pink-500 hover:to-purple-600 
-            dark:from-customPurple dark:to-customPink dark:hover:from-customPink dark:hover:to-customPurple">
-            Secure My App 🔒
-          </button>
-        </motion.div>
       </Container>
     </section>
   );
