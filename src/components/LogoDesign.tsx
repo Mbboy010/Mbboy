@@ -30,7 +30,7 @@ export default function LogoDesign() {
   ];
 
   return (
-    <section className="relative py-20 overflow-hidden bg-gray-50 text-gray-900 dark:bg-[#0B0B0F] dark:text-white transition-colors duration-500">
+    <section className="relative py-20 overflow-hidden text-gray-900  dark:text-white transition-colors duration-500">
       <BackgroundGlow />
       <Container>
         {/* ✨ Header */}

@@ -1,3 +1,4 @@
+import Footer from '../components/footer/Footer';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -55,6 +56,9 @@ export default function RootLayout({
 
           {/* 📄 Main Content */}
           <main className="min-h-screen">{children}</main>
+          
+           <Footer /> 
+          
         </Providers>
       </body>
     </html>

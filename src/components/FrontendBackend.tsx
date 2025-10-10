@@ -31,7 +31,7 @@ export default function FrontendBackend() {
   ];
 
   return (
-    <section className="relative py-20 overflow-hidden bg-gray-50 text-gray-900 dark:bg-[#0B0B0F] dark:text-white transition-colors duration-500">
+    <section className="relative py-20 overflow-hidden  text-gray-900  dark:text-white transition-colors duration-500">
       <BackgroundGlow />
       <Container>
         {/* Header */}
@@ -39,7 +39,7 @@ export default function FrontendBackend() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="relative z-10 text-center mb-14"
         >
           <h3 className="uppercase tracking-widest text-sm text-gray-600 dark:text-gray-400">
             DEVELOPMENT SKILLS

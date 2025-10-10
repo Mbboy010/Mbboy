@@ -28,7 +28,7 @@ const blogs = [
 
 export default function Blog() {
   return (
-    <section className="relative bg-white text-gray-900 dark:bg-[#0B0B0F] dark:text-white py-20 overflow-hidden transition-colors duration-500">
+    <section className="relative  text-gray-900  dark:text-white py-20 overflow-hidden transition-colors duration-500">
       <BackgroundGlow />
       <Container>
         {/* ✨ Animated Header Section */}

@@ -14,7 +14,7 @@ const projects = [
 
 export default function Portfolio() {
   return (
-    <section className="relative py-24 overflow-hidden bg-white dark:bg-dark text-gray-900 dark:text-white transition-colors duration-500">
+    <section className="relative py-24 overflow-hidden  text-gray-900 dark:text-white transition-colors duration-500">
       {/* 🔮 Background Glow */}
       <BackgroundGlow />
 
@@ -30,16 +30,16 @@ export default function Portfolio() {
             damping: 15,
             duration: 1,
           }}
-          className="text-3xl lg:text-5xl font-extrabold text-center leading-snug"
+          className="text-3xl relative z-10 lg:text-5xl font-extrabold text-center leading-snug"
         >
           Take a look at my{" "}
-          <span className="text-purple-600 dark:text-purple-400">
+          <span className="text-purple-600  dark:text-purple-400">
             Recent Projects
           </span>
         </motion.h2>
 
         {/* 💼 Project Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
           {projects.map((p, i) => {
             const fromLeft = i % 2 === 0;
             return (
@@ -108,9 +108,6 @@ export default function Portfolio() {
             );
           })}
         </div>
-
-        {/* 🌟 Subtle Glow Behind Grid */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-purple-600/20 blur-[160px] rounded-full -z-10"></div>
       </Container>
     </section>
   );

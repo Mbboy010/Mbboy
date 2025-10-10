@@ -54,7 +54,7 @@ export default function Skills() {
   const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   return (
-    <section className="relative bg-gray-100 dark:bg-[#0B0B0F] text-gray-900 dark:text-white py-20 overflow-hidden transition-colors duration-500">
+    <section className="relative  text-gray-900 dark:text-white py-20 overflow-hidden transition-colors duration-500">
       <BackgroundGlow />
 
 

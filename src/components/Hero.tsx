@@ -8,13 +8,13 @@ import Container from "./Container";
 
 export default function Hero() {
   return (
-    <section className="relative text-gray-900 dark:text-white py-24 overflow-hidden transition-colors duration-500 bg-white dark:bg-dark">
+    <section className="relative text-gray-900 dark:text-white py-24 overflow-hidden transition-colors duration-500 ">
       {/* 🔮 Background Glow */}
       <BackgroundGlow />
 
       {/* 🌆 Container */}
       <Container>
-        <div className="flex flex-col md:flex-row items-center md:justify-between">
+        <div className="relative z-10 flex flex-col md:flex-row items-center md:justify-between">
           {/* ✨ Left side content */}
           <motion.div
             whileInView={{ opacity: 1, x: 0 }}

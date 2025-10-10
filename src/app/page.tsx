@@ -1,31 +1,11 @@
-import Cybersecurity from '../components/Cybersecurity';
-import AISkills from '../components/AISkills';
-import FrontendBackend from '../components/FrontendBackend';
+import Home from '../components/Home';
+import HomeCom from '../components/HomeCom';
 
 
-import LogoDesign from '../components/LogoDesign';
-import Hero from "@/components/Hero";
-import Portfolio from "@/components/Portfolio";
-import Process from "@/components/Process";
-import Skills from "@/components/Skills";
-import Pricing from "@/components/Pricing";
-import Blog from "@/components/Blog";
-import Footer from "@/components/Footer";
-
-export default function Home() {
+export default function HomePage() {
   return (
     <div>
-      <Hero />
-      <Portfolio />
-      <FrontendBackend />
-      <AISkills />
-      <Cybersecurity />
-      <LogoDesign />
-      <Process />
-      <Skills />
-      <Pricing />
-      <Blog />
-      <Footer />
+    <Home />
     </div>
   );
 }
