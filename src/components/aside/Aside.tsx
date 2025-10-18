@@ -77,7 +77,7 @@ export default function Aside({ setPosi, posi }: Props) {
             </div>
 
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto py-4 px-4">
+            <div className="flex-1 overflow-y-auto py-4 px-2">
               <Content />
             </div>
 

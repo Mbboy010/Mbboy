@@ -1,8 +1,8 @@
 "use client";
 
+import HeroDesign from './home/HeroDesign';
 import Image from "next/image";
 import { motion } from "framer-motion";
-import BackgroundGlow from "./BackgroundGlow";
 import Button from "./ui/Button";
 import Container from "./Container";
 
@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section className="relative text-gray-900 dark:text-white py-24 overflow-hidden transition-colors duration-500 ">
       {/* 🔮 Background Glow */}
-      <BackgroundGlow />
+      <HeroDesign  />
 
       {/* 🌆 Container */}
       <Container>

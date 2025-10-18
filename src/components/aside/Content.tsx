@@ -28,7 +28,7 @@ export default function Content() {
   ];
 
   return (
-    <div className="flex flex-col mt-6 gap-3 px-4">
+    <div className="flex flex-col mt-3 gap-3 ">
       {navItems.map(({ name, href, icon: Icon }, i) => {
         const isActive = pathname === href;
 
@@ -41,7 +41,7 @@ export default function Content() {
           >
             <Link
               href={href}
-              className={`group flex items-center gap-3 px-4 py-3 rounded-xl text-[1rem] font-semibold transition-all duration-300
+              className={`group flex items-center gap-3 px-3 py-3 rounded-xl text-[1rem] font-semibold transition-all duration-300
                 ${
                   isActive
                     ? "bg-gradient-to-r from-purple-600 to-purple-400 text-white shadow-md"
@@ -62,15 +62,6 @@ export default function Content() {
           </motion.div>
         );
       })}
-
-      {/* Footer Section */}
-      <div
-        className={`mt-10 text-center text-xs italic opacity-60 ${
-          theme === "dark" ? "text-gray-400" : "text-gray-600"
-        }`}
-      >
-        <p>© {new Date().getFullYear()} Mbboy — Secure by Design 🔒</p>
-      </div>
     </div>
   );
 }
