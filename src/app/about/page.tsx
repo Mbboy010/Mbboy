@@ -15,8 +15,8 @@ export default function AboutPage() {
           About Mbboy
         </h1>
         <p className="text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
-          I'm Musa Hakilu (Mbboy), a creative developer, designer, and cybersecurity professional 
-          passionate about building secure and innovative digital experiences.
+          I&apos;m Musa Hakilu (Mbboy), a creative developer, designer, and cybersecurity
+          professional passionate about building secure and innovative digital experiences.
         </p>
       </motion.div>
     </main>
