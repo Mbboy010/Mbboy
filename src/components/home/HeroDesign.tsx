@@ -1,67 +1,29 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import React from "react";
 
 export default function HeroDesign() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
-  const controls = useAnimation();
-
-  // Start / stop cube rotation based on scroll visibility
-  React.useEffect(() => {
-    if (isInView) {
-      controls.start({
-        rotateX: [0, 360],
-        rotateY: [0, 360],
-        transition: {
-          repeat: Infinity,
-          duration: 10,
-          ease: "linear",
-        },
-      });
-    } else {
-      controls.stop();
-    }
-  }, [isInView, controls]);
-
   return (
     <div
-      ref={ref}
-      className="absolute opacity-40 top-[-18rem] right-[-10rem] flex items-center justify-center w-full h-[200vh]"
+      className="absolute opacity-20 top-[-18rem] right-[-10rem] flex items-center justify-center w-full h-[200vh]"
     >
       {/* 3D perspective container */}
       <div className="[perspective:1000px] sticky top-1/2 translate-y-[-50%]">
-        <motion.div
-          animate={controls}
+        <div
           className="relative w-[120px] h-[120px]"
           style={{
             transformStyle: "preserve-3d",
+            transform: "rotateX(20deg) rotateY(30deg)", // static 3D view
           }}
         >
           {/* Cube Faces */}
           <CubeFace transform="translateZ(60px)" label="Front" />
-          <CubeFace
-            transform="rotateY(180deg) translateZ(60px)"
-            label="AI"
-          />
-          <CubeFace
-            transform="rotateX(90deg) translateZ(60px)"
-            label="security"
-          />
-          <CubeFace
-            transform="rotateX(-90deg) translateZ(60px)"
-            label="mobile"
-          />
-          <CubeFace
-            transform="rotateY(-90deg) translateZ(60px)"
-            label="web"
-          />
-          <CubeFace
-            transform="rotateY(90deg) translateZ(60px)"
-            label="API"
-          />
-        </motion.div>
+          <CubeFace transform="rotateY(180deg) translateZ(60px)" label="AI" />
+          <CubeFace transform="rotateX(90deg) translateZ(60px)" label="Security" />
+          <CubeFace transform="rotateX(-90deg) translateZ(60px)" label="Mobile" />
+          <CubeFace transform="rotateY(-90deg) translateZ(60px)" label="Web" />
+          <CubeFace transform="rotateY(90deg) translateZ(60px)" label="API" />
+        </div>
       </div>
     </div>
   );
