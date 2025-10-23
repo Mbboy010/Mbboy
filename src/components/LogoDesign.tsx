@@ -1,5 +1,6 @@
 "use client";
 
+import LogoBack from './home/LogoBack';
 import { motion } from "framer-motion";
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
@@ -31,7 +32,7 @@ export default function LogoDesign() {
 
   return (
     <section className="relative py-20 overflow-hidden text-gray-900  dark:text-white transition-colors duration-500">
-      <BackgroundGlow />
+      <LogoBack />
       <Container>
         {/* ✨ Header */}
         <motion.div
