@@ -5,7 +5,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
 
-// ✨ Floating glowing curve
 function ShiningCurve() {
   const lineRef = useRef<THREE.Line>(null);
   const glowRef = useRef<THREE.Points>(null);
@@ -22,7 +21,6 @@ function ShiningCurve() {
     }
   }, []);
 
-  // Define smooth 3D curve
   const curve = new THREE.CatmullRomCurve3([
     new THREE.Vector3(-3, 1, 0),
     new THREE.Vector3(-1, 1.5, 1),
@@ -34,11 +32,17 @@ function ShiningCurve() {
   const points = curve.getPoints(100);
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
+  // Create material outside JSX
+  const material = new THREE.LineBasicMaterial({
+    color: "#4f46e5",
+    linewidth: 2,
+    transparent: true,
+    opacity: 0.8,
+  });
+
   return (
     <group>
-      <line ref={lineRef} geometry={geometry}>
-        <lineBasicMaterial color="#4f46e5" linewidth={2} transparent opacity={0.8} />
-      </line>
+      <primitive object={new THREE.Line(geometry, material)} ref={lineRef} />
 
       <points ref={glowRef} geometry={geometry}>
         <pointsMaterial color="#93c5fd" size={0.05} transparent opacity={0.9} />
