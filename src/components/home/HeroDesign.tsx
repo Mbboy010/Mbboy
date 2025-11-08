@@ -1,7 +1,212 @@
-import React from 'react'
+"use client"
 
-export default function HeroDesign() {
+import React, { useMemo } from "react";
+import { Canvas } from "@react-three/fiber";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import * as THREE from "three";
+
+/* ---------- Helper: Deform geometry to look more like a head ---------- */
+function deformToHead(geometry: THREE.IcosahedronGeometry) {
+  const pos = geometry.attributes.position;
+  const v = new THREE.Vector3();
+  for (let i = 0; i < pos.count; i++) {
+    v.fromBufferAttribute(pos, i);
+    v.y *= 1.22;
+    v.x *= 0.9;
+    v.z += Math.max(0, v.y * 0.085 - 0.02) * (1.0 - Math.abs(v.x) * 0.45);
+    pos.setXYZ(i, v.x, v.y, v.z);
+  }
+  pos.needsUpdate = true;
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+/* ---------- Base geometry ---------- */
+function useBaseHeadGeometry(detail = 8) {
+  return useMemo(() => {
+    const g = new THREE.IcosahedronGeometry(2, detail);
+    deformToHead(g);
+    return g;
+  }, [detail]);
+}
+
+/* ---------- Solid base ---------- */
+function BaseHead({ geometry }: { geometry: THREE.IcosahedronGeometry }) {
   return (
-    <div></div>
-  )
+    <mesh geometry={geometry} position={[2.6, -0.3, 0]}>
+      <meshStandardMaterial
+        color="#00172a"
+        emissive="#002f4a"
+        emissiveIntensity={0.12}
+        metalness={0.05}
+        roughness={0.6}
+      />
+    </mesh>
+  );
+}
+
+/* ---------- Wireframe ---------- */
+function WireframeOverlay({ geometry }: { geometry: THREE.IcosahedronGeometry }) {
+  const wireGeom = useMemo(() => new THREE.WireframeGeometry(geometry), [geometry]);
+  return (
+    <lineSegments geometry={wireGeom} position={[2.6, -0.3, 0]}>
+      <lineBasicMaterial
+        color="#33e1ff"
+        transparent
+        opacity={0.95}
+        toneMapped={false}
+      />
+    </lineSegments>
+  );
+}
+
+/* ---------- Points ---------- */
+function HeadPoints({ geometry }: { geometry: THREE.IcosahedronGeometry }) {
+  const pointsGeom = useMemo(() => {
+    const src = geometry.attributes.position.array;
+    const positions = new Float32Array(src.length);
+    for (let i = 0; i < src.length; i += 3) {
+      positions[i] = src[i];
+      positions[i + 1] = src[i + 1];
+      positions[i + 2] = src[i + 2];
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    return g;
+  }, [geometry]);
+
+  return (
+    <points geometry={pointsGeom} position={[2.6, -0.3, 0]}>
+      <pointsMaterial
+        size={0.012}
+        sizeAttenuation
+        color="#8effff"
+        transparent
+        opacity={0.95}
+        depthWrite={false}
+      />
+    </points>
+  );
+}
+
+/* ---------- Head bands ---------- */
+function HeadBands({ count = 8 }: { count?: number }) {
+  const rings = useMemo(() => {
+    const meshes = [];
+    for (let i = 0; i < count; i++) {
+      const radius = 1.1 + (i / count) * 1.2;
+      const tube = 0.003 + (i % 3 === 0 ? 0.002 : 0.0015);
+      const radialSegments = 120;
+      const tubularSegments = 4;
+      const geo = new THREE.TorusGeometry(radius, tube, tubularSegments, radialSegments);
+      meshes.push({
+        geometry: new THREE.EdgesGeometry(geo),
+        rotation: [Math.PI / 2 + (i - count / 2) * 0.08, (i / count) * 0.7, 0],
+        scale: [1.0 + 0.18 * Math.sin(i), 0.92 + 0.18 * Math.cos(i), 0.9 + i * 0.02],
+      });
+    }
+    return meshes;
+  }, [count]);
+
+  return (
+    <group position={[2.6, -0.3, 0]}>
+      {rings.map((r, idx) => (
+        <lineSegments
+          key={idx}
+          geometry={r.geometry}
+          rotation={r.rotation as [number, number, number]}
+          scale={r.scale as [number, number, number]}
+        >
+          <lineBasicMaterial color="#2fe8ff" transparent opacity={0.35} toneMapped={false} />
+        </lineSegments>
+      ))}
+    </group>
+  );
+}
+
+/* ---------- Background Particles ---------- */
+function BackgroundParticles({ count = 9000 }: { count?: number }) {
+  const geom = useMemo(() => {
+    const p = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+
+    // Define a few nice colors to mix
+    const colorPalette = ["#ff3283", "#00ffff", "#b000ff"];
+    const color = new THREE.Color();
+
+    for (let i = 0; i < count; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const r = 6 + Math.random() * 60;
+      const z = (Math.random() - 0.5) * 20;
+
+      // Particle position
+      p[i * 3] = Math.cos(theta) * r;
+      p[i * 3 + 1] = -1.5 + (Math.random() - 0.5) * 8;
+      p[i * 3 + 2] = z;
+
+      // Random color from palette
+      color.set(colorPalette[Math.floor(Math.random() * colorPalette.length)]);
+      colors[i * 3] = color.r;
+      colors[i * 3 + 1] = color.g;
+      colors[i * 3 + 2] = color.b;
+    }
+
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(p, 3));
+    g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    return g;
+  }, [count]);
+
+  return (
+    <points geometry={geom}>
+      <pointsMaterial
+        size={0.05}
+        sizeAttenuation
+        vertexColors // enable per-point colors
+        transparent
+        opacity={0.15}
+      />
+    </points>
+  );
+}
+
+/* ---------- Main Scene ---------- */
+export default function HeroDesign() {
+  const baseGeometry = useBaseHeadGeometry(8);
+
+  return (
+    <div className="w-full h-full absolute top-0 left-0 overflow-hidden opacity-70">
+      <Canvas
+        dpr={[1, 2]}
+        camera={{ position: [0, 0.6, 10], fov: 34 }}
+        className="w-full h-full"
+        onCreated={({ gl, scene }) => {
+          gl.toneMappingExposure = 1;
+          scene.fog = new THREE.FogExp2("#001524", 0.03);
+        }}
+        
+      >
+        <ambientLight intensity={0.4} />
+        <directionalLight position={[6, 10, 6]} intensity={0.6} />
+        <pointLight position={[2.6, 2.6, 2]} color="#66f0ff" intensity={1.0} />
+
+        <group>
+          <BackgroundParticles count={1000} />
+          <BaseHead geometry={baseGeometry} />
+          <WireframeOverlay geometry={baseGeometry} />
+          <HeadPoints geometry={baseGeometry} />
+          <HeadBands count={10} />
+        </group>
+
+        <EffectComposer>
+          <Bloom
+            luminanceThreshold={0.1}
+            luminanceSmoothing={0.9}
+            intensity={1.6}
+            kernelSize={5}
+          />
+        </EffectComposer>
+      </Canvas>
+    </div>
+  );
 }

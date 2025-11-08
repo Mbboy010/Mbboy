@@ -48,7 +48,7 @@ export default function Aside({ setPosi, posi }: Props) {
             animate={{ opacity: Number(opacity) }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm"
           />
 
           {/* 🧭 Sidebar Panel */}
@@ -58,20 +58,18 @@ export default function Aside({ setPosi, posi }: Props) {
             exit={{ x: "-100%" }}
             transition={{ type: "spring", stiffness: 80, damping: 12 }}
             className={`absolute top-0 left-0 w-[79vw] h-full flex flex-col 
-              ${theme === "dark"
-                ? "bg-gradient-to-br from-[#1a1a2e]/90 to-[#111]/90 text-white"
-                : "bg-white/80 text-gray-800 shadow-lg"
-              } 
-              backdrop-blur-2xl border-r border-purple-500/20`}
+              bg-white/80 dark:bg-gradient-to-br dark:from-[#1a1a2e]/90 dark:to-[#0d0d0d]/90
+              text-gray-800 dark:text-gray-100
+              backdrop-blur-2xl border-r border-purple-500/20 shadow-xl`}
           >
             {/* Header */}
-            <div className="flex justify-between items-center px-4 h-16 border-b border-purple-500/20 bg-purple-500/10 backdrop-blur-sm">
-              <h1 className="text-xl font-semibold text-purple-400">
+            <div className="flex justify-between items-center px-4 h-16 border-b border-purple-500/20 bg-purple-50/40 dark:bg-purple-500/10 backdrop-blur-md">
+              <h1 className="text-xl font-semibold text-purple-500 dark:text-purple-400">
                 Menu
               </h1>
               <X
                 onClick={handleAside}
-                className="cursor-pointer text-purple-400 hover:text-purple-500 transition-colors"
+                className="cursor-pointer text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
                 size={26}
               />
             </div>
@@ -81,8 +79,8 @@ export default function Aside({ setPosi, posi }: Props) {
               <Content />
             </div>
 
-            {/* Footer (optional) */}
-            <div className="py-3 border-t border-purple-500/20 text-center text-xs opacity-70">
+            {/* Footer */}
+            <div className="py-3 border-t border-purple-500/20 text-center text-xs text-gray-600 dark:text-gray-400">
               © {new Date().getFullYear()} Mbboy — Secure by Design 🔒
             </div>
           </motion.aside>
