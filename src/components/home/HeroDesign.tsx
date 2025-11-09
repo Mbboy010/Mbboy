@@ -146,27 +146,25 @@ function BackgroundParticles({ count = 9000 }: { count?: number }) {
   );
 }
 
-/* ---------- Scroll Animation Hook ---------- */
-function ScrollAnimation({ groupRef }: { groupRef: React.RefObject<THREE.Group> }) {
+/* ---------- Scroll Animation Hook (Fixed Type) ---------- */
+function ScrollAnimation({ groupRef }: { groupRef: React.RefObject<THREE.Group | null> }) {
   const { camera } = useThree();
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
+    const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useFrame(() => {
+    if (!groupRef.current) return;
+
     const scrollFactor = scrollY * 0.0015;
-    if (groupRef.current) {
-      groupRef.current.rotation.y = scrollFactor * 2;
-      groupRef.current.rotation.x = scrollFactor * 0.5;
-      groupRef.current.position.y = Math.sin(scrollFactor) * 0.5;
-    }
-    camera.position.z = 10 - Math.min(scrollY / 600, 3); // Zoom slightly on scroll
+    groupRef.current.rotation.y = scrollFactor * 2;
+    groupRef.current.rotation.x = scrollFactor * 0.5;
+    groupRef.current.position.y = Math.sin(scrollFactor) * 0.5;
+    camera.position.z = 10 - Math.min(scrollY / 600, 3);
   });
 
   return null;
@@ -175,7 +173,7 @@ function ScrollAnimation({ groupRef }: { groupRef: React.RefObject<THREE.Group> 
 /* ---------- Main Scene ---------- */
 export default function HeroDesign() {
   const baseGeometry = useBaseHeadGeometry(8);
-  const groupRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<THREE.Group>(null); // Initially null, will be set by <group>
 
   return (
     <div className="w-full h-full absolute top-0 left-0 overflow-hidden opacity-70">
@@ -200,6 +198,7 @@ export default function HeroDesign() {
           <HeadBands count={10} />
         </group>
 
+        {/* Now type-safe! */}
         <ScrollAnimation groupRef={groupRef} />
 
         <EffectComposer>
