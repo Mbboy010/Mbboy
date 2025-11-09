@@ -51,9 +51,9 @@ function WireframeOverlay({ geometry }: { geometry: THREE.IcosahedronGeometry })
   return (
     <lineSegments geometry={wireGeom} position={[2.6, -0.3, 0]}>
       <lineBasicMaterial
-        color="#33e1ff"
+        color="#dd32ff91"
         transparent
-        opacity={0.95}
+        opacity={0.75}
         toneMapped={false}
       />
     </lineSegments>
@@ -125,7 +125,7 @@ function HeadBands({ count = 8 }: { count?: number }) {
 }
 
 /* ---------- Background Particles ---------- */
-function BackgroundParticles({ count = 9000 }: { count?: number }) {
+function BackgroundParticles({ count = 700000 }: { count?: number }) {
   const geom = useMemo(() => {
     const p = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
@@ -191,7 +191,7 @@ export default function HeroDesign() {
         <pointLight position={[2.6, 2.6, 2]} color="#66f0ff" intensity={1.0} />
 
         <group>
-          <BackgroundParticles count={1000} />
+          <BackgroundParticles count={9000} />
           <BaseHead geometry={baseGeometry} />
           <WireframeOverlay geometry={baseGeometry} />
           <HeadPoints geometry={baseGeometry} />
