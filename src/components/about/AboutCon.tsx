@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, easeOut } from "framer-motion"; // Import easeOut
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
 import {
@@ -25,7 +25,7 @@ const techStack = [
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.65, ease: "easeOut" },
+  transition: { delay, duration: 0.65, ease: easeOut }, // Fixed: use easeOut
   viewport: { once: false, amount: 0.25 },
 });
 
