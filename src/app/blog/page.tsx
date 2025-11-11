@@ -2,18 +2,24 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, type Transition, easeOut } from "framer-motion";
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
 import Link from "next/link";
 
-const fadeUp = (delay = 0) => ({
+/* -------------------------------------------------
+   Animation helper – now type-correct
+   ------------------------------------------------- */
+const fadeUp = (delay = 0): Transition => ({
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.6, ease: "easeOut" },
+  transition: { delay, duration: 0.6, ease: easeOut },
   viewport: { once: false, amount: 0.2 },
 });
 
+/* -------------------------------------------------
+   Blog data
+   ------------------------------------------------- */
 const posts = [
   {
     id: 1,
@@ -57,6 +63,9 @@ const posts = [
   },
 ];
 
+/* -------------------------------------------------
+   Page component
+   ------------------------------------------------- */
 export default function BlogPage() {
   return (
     <section className="relative min-h-screen py-20 bg-white dark:bg-[#050608] text-gray-900 dark:text-gray-100 transition-colors duration-500">
