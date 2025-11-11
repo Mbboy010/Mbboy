@@ -1,4 +1,3 @@
-// app/about/page.tsx
 "use client";
 
 import React from "react";
@@ -6,7 +5,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
-import { FaPython, FaReact, FaNodeJs, FaDatabase, FaShieldAlt } from "react-icons/fa";
+import {
+  FaPython,
+  FaReact,
+  FaNodeJs,
+  FaDatabase,
+  FaShieldAlt,
+} from "react-icons/fa";
 
 const techStack = [
   { name: "React", Icon: FaReact, note: "Modern frontend & SPA" },
@@ -33,15 +38,19 @@ export default function AboutCon() {
         {/* Hero / Intro */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           <motion.div {...fadeUp(0)} className="md:col-span-7">
-            <p className="uppercase tracking-widest text-sm text-gray-500 dark:text-gray-400">About Me</p>
+            <p className="uppercase tracking-widest text-sm text-gray-500 dark:text-gray-400">
+              About Me
+            </p>
             <h1 className="text-4xl md:text-5xl font-bold mt-4 leading-tight">
-              I'm <span className="text-purple-400">Musa Hakilu</span> — also known as <span className="font-mono text-sm text-gray-400">Mbboy</span>
+              I&apos;m <span className="text-purple-400">Musa Hakilu</span> — also known as{" "}
+              <span className="font-mono text-sm text-gray-400">Mbboy</span>
             </h1>
             <p className="mt-6 text-gray-600 dark:text-gray-300 max-w-3xl text-lg leading-relaxed">
-              I’m a Cybersecurity Expert, Software & AI Engineer and Full-Stack Developer. I combine
-              secure engineering practices with modern product design to build scalable, maintainable,
-              and user-friendly systems. My work spans secure web apps, automation tools, penetration
-              testing, and branding — turning ideas into robust digital products.
+              I&apos;m a Cybersecurity Expert, Software &amp; AI Engineer and Full-Stack
+              Developer. I combine secure engineering practices with modern product design
+              to build scalable, maintainable, and user‑friendly systems. My work spans
+              secure web apps, automation tools, penetration testing, and branding —
+              turning ideas into robust digital products.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
@@ -55,7 +64,7 @@ export default function AboutCon() {
                 href="#contact"
                 className="inline-block border border-purple-600 text-purple-600 dark:text-purple-300 px-6 py-3 rounded-lg hover:bg-purple-50 dark:hover:bg-[#1b0d2b] transition-colors"
               >
-                Let's Talk
+                Let&apos;s Talk
               </a>
             </div>
 
@@ -68,7 +77,10 @@ export default function AboutCon() {
             </div>
           </motion.div>
 
-          <motion.div {...fadeUp(0.12)} className="md:col-span-5 flex justify-center md:justify-end">
+          <motion.div
+            {...fadeUp(0.12)}
+            className="md:col-span-5 flex justify-center md:justify-end"
+          >
             <div className="relative w-72 h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#111827] to-[#0b1220]">
               <Image
                 src="/profile.png"
@@ -89,10 +101,12 @@ export default function AboutCon() {
           <motion.div {...fadeUp(0.16)} className="lg:col-span-2 space-y-6">
             <h2 className="text-2xl font-semibold">Professional Bio</h2>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              I started my journey as a developer and quickly found a passion for application security.
-              Over the years I have helped businesses — from startups to established companies — build secure
-              and performant web applications. I specialize in threat modeling, secure architecture, pentesting,
-              and secure CI/CD pipelines. I also design clean product UIs and developer-friendly APIs.
+              I started my journey as a developer and quickly found a passion for
+              application security. Over the years I have helped businesses — from
+              startups to established companies — build secure and performant web
+              applications. I specialize in threat modeling, secure architecture,
+              pentesting, and secure CI/CD pipelines. I also design clean product UIs
+              and developer‑friendly APIs.
             </p>
 
             <h3 className="text-xl font-semibold mt-6">What I do</h3>
@@ -101,28 +115,36 @@ export default function AboutCon() {
                 <span className="mt-1 text-purple-400">•</span>
                 <div>
                   <strong className="block">Secure Web Development</strong>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">Full-stack apps with security-first mindset.</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
+                    Full‑stack apps with security‑first mindset.
+                  </p>
                 </div>
               </li>
               <li className="flex gap-3 items-start">
                 <span className="mt-1 text-purple-400">•</span>
                 <div>
-                  <strong className="block">Penetration Testing & Hardening</strong>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">Find and fix vulnerabilities before attackers do.</p>
+                  <strong className="block">Penetration Testing &amp; Hardening</strong>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
+                    Find and fix vulnerabilities before attackers do.
+                  </p>
                 </div>
               </li>
               <li className="flex gap-3 items-start">
                 <span className="mt-1 text-purple-400">•</span>
                 <div>
-                  <strong className="block">AI & Automation</strong>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">AI-assisted tooling, automation scripts & data analysis.</p>
+                  <strong className="block">AI &amp; Automation</strong>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
+                    AI‑assisted tooling, automation scripts &amp; data analysis.
+                  </p>
                 </div>
               </li>
               <li className="flex gap-3 items-start">
                 <span className="mt-1 text-purple-400">•</span>
                 <div>
-                  <strong className="block">Design & Branding</strong>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">Logos, identity systems and UI design that scale.</p>
+                  <strong className="block">Design &amp; Branding</strong>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
+                    Logos, identity systems and UI design that scale.
+                  </p>
                 </div>
               </li>
             </ul>
@@ -141,13 +163,13 @@ export default function AboutCon() {
                   year="2021 — 2024"
                   title="Full-Stack Engineer"
                   org="Various Startups"
-                  desc="Built e-commerce, education, and business web platforms using React, Next, Node and SQL."
+                  desc="Built e‑commerce, education, and business web platforms using React, Next, Node and SQL."
                 />
                 <TimelineItem
                   year="2018 — 2021"
-                  title="UI/UX & Frontend Developer"
+                  title="UI/UX &amp; Frontend Developer"
                   org="Agency Work"
-                  desc="Designed brand systems and high-fidelity UI prototypes that translated to production-ready apps."
+                  desc="Designed brand systems and high‑fidelity UI prototypes that translated to production‑ready apps."
                 />
               </div>
             </div>
@@ -155,7 +177,7 @@ export default function AboutCon() {
 
           {/* Skills */}
           <motion.aside {...fadeUp(0.20)} className="space-y-6">
-            <h3 className="text-xl font-semibold">Tech & Security Skills</h3>
+            <h3 className="text-xl font-semibold">Tech &amp; Security Skills</h3>
 
             <div className="grid grid-cols-2 gap-4">
               {techStack.map((t) => (
@@ -177,9 +199,19 @@ export default function AboutCon() {
             </div>
 
             <div className="mt-6">
-              <h4 className="text-sm text-gray-400 uppercase tracking-wider">Tools & Platforms</h4>
+              <h4 className="text-sm text-gray-400 uppercase tracking-wider">
+                Tools &amp; Platforms
+              </h4>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["Next.js", "React", "Tailwind", "Node.js", "Python", "Postgres", "Docker"].map((x) => (
+                {[
+                  "Next.js",
+                  "React",
+                  "Tailwind",
+                  "Node.js",
+                  "Python",
+                  "Postgres",
+                  "Docker",
+                ].map((x) => (
                   <span
                     key={x}
                     className="text-sm px-3 py-1 rounded-full bg-white/5 text-gray-300"
@@ -195,25 +227,56 @@ export default function AboutCon() {
         {/* Projects highlights */}
         <motion.div {...fadeUp(0.22)} className="mt-20">
           <h2 className="text-2xl font-semibold">Selected Projects</h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-2">A few projects that demonstrate a mix of design, development and security.</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-2">
+            A few projects that demonstrate a mix of design, development and security.
+          </p>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <ProjectCard title="E-Commerce Platform" img="/works/ecommerce.png" tags={["Next.js", "Stripe", "Security"]} />
-            <ProjectCard title="School Management System" img="/works/school.png" tags={["React", "Node.js", "SQL"]} />
-            <ProjectCard title="Security Audit Toolkit" img="/works/security.png" tags={["Python", "Pentest", "Automation"]} />
+            <ProjectCard
+              title="E-Commerce Platform"
+              img="/works/ecommerce.png"
+              tags={["Next.js", "Stripe", "Security"]}
+            />
+            <ProjectCard
+              title="School Management System"
+              img="/works/school.png"
+              tags={["React", "Node.js", "SQL"]}
+            />
+            <ProjectCard
+              title="Security Audit Toolkit"
+              img="/works/security.png"
+              tags={["Python", "Pentest", "Automation"]}
+            />
           </div>
         </motion.div>
 
         {/* CTA / Contact */}
-        <motion.div {...fadeUp(0.24)} id="contact" className="mt-20 bg-gradient-to-br from-[#0b1220]/60 to-[#071026]/40 p-8 rounded-2xl">
+        <motion.div
+          {...fadeUp(0.24)}
+          id="contact"
+          className="mt-20 bg-gradient-to-br from-[#0b1220]/60 to-[#071026]/40 p-8 rounded-2xl"
+        >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
               <h3 className="text-2xl font-semibold">Want to work together?</h3>
-              <p className="text-gray-400 mt-2">I'm available for security audits, full-stack development, AI integration and consulting.</p>
+              <p className="text-gray-400 mt-2">
+                I&apos;m available for security audits, full‑stack development, AI
+                integration and consulting.
+              </p>
             </div>
             <div className="flex gap-4">
-              <a href="mailto:musahakilu@email.com" className="px-6 py-3 rounded-lg bg-purple-600 text-white">Email Me</a>
-              <a href="/works" className="px-6 py-3 rounded-lg border border-purple-600 text-purple-400">See My Work</a>
+              <a
+                href="mailto:musahakilu@email.com"
+                className="px-6 py-3 rounded-lg bg-purple-600 text-white"
+              >
+                Email Me
+              </a>
+              <a
+                href="/works"
+                className="px-6 py-3 rounded-lg border border-purple-600 text-purple-400"
+              >
+                See My Work
+              </a>
             </div>
           </div>
         </motion.div>
@@ -233,7 +296,17 @@ function Stat({ number, label }: { number: string; label: string }) {
   );
 }
 
-function TimelineItem({ year, title, org, desc }: { year: string; title: string; org: string; desc: string }) {
+function TimelineItem({
+  year,
+  title,
+  org,
+  desc,
+}: {
+  year: string;
+  title: string;
+  org: string;
+  desc: string;
+}) {
   return (
     <div className="flex gap-4">
       <div className="text-sm text-gray-400 w-28">{year}</div>
@@ -248,7 +321,15 @@ function TimelineItem({ year, title, org, desc }: { year: string; title: string;
   );
 }
 
-function ProjectCard({ title, img, tags }: { title: string; img: string; tags: string[] }) {
+function ProjectCard({
+  title,
+  img,
+  tags,
+}: {
+  title: string;
+  img: string;
+  tags: string[];
+}) {
   return (
     <article className="rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-[#0f1724] to-[#071026] hover:shadow-purple-500/30 transition-all">
       <div className="w-full h-44 relative">
@@ -258,7 +339,12 @@ function ProjectCard({ title, img, tags }: { title: string; img: string; tags: s
         <h4 className="font-semibold text-lg">{title}</h4>
         <div className="mt-3 flex flex-wrap gap-2">
           {tags.map((t) => (
-            <span key={t} className="text-sm bg-white/5 px-3 py-1 rounded-full text-gray-300">{t}</span>
+            <span
+              key={t}
+              className="text-sm bg-white/5 px-3 py-1 rounded-full text-gray-300"
+            >
+              {t}
+            </span>
           ))}
         </div>
       </div>
