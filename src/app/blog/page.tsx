@@ -2,15 +2,17 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion, type Transition, easeOut } from "framer-motion";
+import { motion, type HTMLMotionProps, easeOut } from "framer-motion";
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
 import Link from "next/link";
 
 /* -------------------------------------------------
-   Animation helper – now type-correct
+   Animation helper – returns motion props for <div>
    ------------------------------------------------- */
-const fadeUp = (delay = 0): Transition => ({
+type DivMotionProps = HTMLMotionProps<"div">;
+
+const fadeUp = (delay = 0): DivMotionProps => ({
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
   transition: { delay, duration: 0.6, ease: easeOut },
