@@ -3,149 +3,181 @@
 import HeroDesign from './home/HeroDesign';
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Button from "./ui/Button";
+import Button from "./ui/Button"; // Assuming this accepts className
 import Container from "./Container";
+
+// Animation Variants for cleaner code
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
 
 export default function Hero() {
   return (
-    <section className="relative text-gray-900 dark:text-white py-24 overflow-hidden transition-colors duration-500 ">
-      {/* 🔮 Background Glow */}
-      <HeroDesign  />
+    <section className="relative min-h-screen flex items-center text-gray-900 dark:text-gray-100 py-24 overflow-hidden  transition-colors duration-500">
+      
+      {/* 🔮 Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+        <HeroDesign />
+        {/* Additional Ambient Glow for Depth */}
+        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[100px] opacity-50 dark:opacity-20" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/20 rounded-full blur-[100px] opacity-50 dark:opacity-20" />
+      </div>
 
-      {/* 🌆 Container */}
-      <Container>
-        <div className="relative z-10 flex flex-col md:flex-row items-center md:justify-between">
-          {/* ✨ Left side content */}
+      <Container className="relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+          
+          {/* ✨ Left Side Content */}
           <motion.div
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.4 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="text-center md:text-left max-w-xl space-y-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="text-center lg:text-left max-w-2xl space-y-8"
           >
+            {/* Badge */}
+            <motion.div variants={fadeInUp} className="flex justify-center lg:justify-start">
+              <span className="px-4 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm font-semibold tracking-wide uppercase border border-purple-200 dark:border-purple-700/50">
+                🚀 Available for Hire
+              </span>
+            </motion.div>
+
+            {/* Headline */}
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.8 }}
-              className="text-4xl md:text-6xl font-extrabold leading-tight"
+              variants={fadeInUp}
+              className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight"
             >
-              I’m <span className="text-purple-500 dark:text-purple-400">Musa Hakilu</span> 👋 <br />
-              <span className="text-gray-900 dark:text-white">
-                Securing & Building Digital Experiences
+              I’m <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">Musa Hakilu</span>
+              <br />
+              <span className="text-gray-900 dark:text-white text-4xl md:text-6xl mt-2 block">
+                Securing the Digital World.
               </span>
             </motion.h1>
 
+            {/* Description */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed"
+              variants={fadeInUp}
+              className="text-gray-600 dark:text-gray-300 text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0"
             >
-              I’m a <span className="text-purple-500 dark:text-purple-300">cybersecurity specialist </span> 
-              and full-stack developer focused on building modern, secure, and high-performance web & mobile
-              applications. I protect systems from vulnerabilities while creating powerful digital experiences
-              for{" "}
-              <span className="text-purple-500 dark:text-purple-300">businesses</span>,{" "}
-              <span className="text-purple-500 dark:text-purple-300">schools</span>, and{" "}
-              <span className="text-purple-500 dark:text-purple-300">e-commerce</span> platforms.
+              A <span className="font-semibold text-gray-900 dark:text-white">Cybersecurity Specialist</span> & Full-Stack Developer. 
+              I fuse secure engineering with modern design to build bulletproof applications for 
+              <span className="text-purple-600 dark:text-purple-400 font-medium"> Businesses</span>, 
+              <span className="text-purple-600 dark:text-purple-400 font-medium"> Schools</span>, and 
+              <span className="text-purple-600 dark:text-purple-400 font-medium"> E-commerce</span>.
             </motion.p>
 
             {/* 🎯 Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
-              className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full"
+              variants={fadeInUp}
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full pt-4"
             >
-              <motion.div whileHover={{ scale: 1.05 }} className="w-full sm:w-auto">
+              <div className="relative group w-full sm:w-auto">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-200"></div>
                 <Button
                   variant="primary"
-                  className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-400 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition-all duration-300"
+                  className="relative w-full sm:w-auto bg-gray-900 dark:bg-black text-white hover:bg-gray-800 dark:hover:bg-gray-900 font-semibold py-4 px-8 rounded-xl flex items-center justify-center gap-2"
                 >
-                  View My Projects
+                  View Projects 
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </Button>
-              </motion.div>
+              </div>
 
-              <motion.div whileHover={{ scale: 1.05 }} className="w-full sm:w-auto">
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto border-2 border-purple-500 text-purple-600 dark:text-purple-300 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-500 dark:hover:text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300"
-                >
-                  Let’s Collaborate
-                </Button>
-              </motion.div>
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:border-purple-500 hover:text-purple-600 dark:hover:text-purple-400 dark:hover:border-purple-500 font-semibold py-4 px-8 rounded-xl transition-all duration-300 bg-transparent"
+              >
+                Let’s Collaborate
+              </Button>
             </motion.div>
 
-            {/* 📊 Stats */}
+            {/* 📊 Stats - Glassmorphism Style */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.9 }}
-              className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center md:text-left"
+              variants={fadeInUp}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6"
             >
-              <StatItem number="5+" label="Years Experience" />
-              <StatItem number="150+" label="Projects Secured" />
-              <StatItem number="90+" label="Happy Clients" />
-              <StatItem number="12" label="Brands Protected" />
+              <StatItem number="5+" label="Years Exp." />
+              <StatItem number="150+" label="Projects" />
+              <StatItem number="90+" label="Clients" />
+              <StatItem number="12" label="Brands" />
             </motion.div>
           </motion.div>
 
-          {/* 🖼️ Right side image */}
+          {/* 🖼️ Right Side Image (Glass Card Effect) */}
           <motion.div
-            initial={{ opacity: 0, x: 80 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="relative mt-16 md:mt-0 flex justify-center md:justify-end w-full md:w-auto"
+            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative w-full lg:w-[45%]"
           >
+            {/* The Floating Card Wrapper */}
             <motion.div
-              animate={{ y: [0, -15, 0] }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="relative"
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative z-10 p-4 bg-white/30 dark:bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/20 shadow-2xl"
             >
-              <Image
-                src="/profile.png"
-                alt="Musa Hakilu"
-                height={400}
-                width={400}
-                className="rounded-3xl relative z-10 "
-                priority
-              />
+              <div className="relative rounded-[2rem] overflow-hidden aspect-square bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-800 dark:to-black">
+                <Image
+                  src="/profile.png"
+                  alt="Musa Hakilu"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-top hover:scale-105 transition-transform duration-700"
+                  priority
+                />
+                
+                {/* Overlay Gradient at bottom of image for text readability if needed */}
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
+              </div>
+
+              {/* Decorative Floating Tech Badge */}
+              <motion.div 
+                className="absolute -right-6 top-10 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+              >
+                <span className="text-2xl">🛡️</span>
+              </motion.div>
+
+              <motion.div 
+                className="absolute -left-6 bottom-10 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
+              >
+                <span className="text-2xl">💻</span>
+              </motion.div>
             </motion.div>
+
+            {/* Back Glow behind image */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-600 to-blue-600 blur-[80px] opacity-40 dark:opacity-30 -z-10 transform scale-90" />
           </motion.div>
+
         </div>
       </Container>
     </section>
   );
 }
 
-/* 🧩 Stat Item Component */
+/* 🧩 Stat Item Component (Updated Design) */
 function StatItem({ number, label }: { number: string; label: string }) {
   return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      transition={{ type: "spring", stiffness: 200, damping: 10 }}
-      className="transition-all duration-300"
-    >
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-3xl md:text-4xl font-bold text-purple-600 dark:text-purple-400"
-      >
+    <div className="flex flex-col items-center lg:items-start p-4 bg-white/50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/10 backdrop-blur-sm hover:-translate-y-1 transition-transform duration-300">
+      <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
         {number}
-      </motion.p>
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-        className="text-gray-600 dark:text-gray-400 text-sm md:text-base"
-      >
+      </span>
+      <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mt-1">
         {label}
-      </motion.p>
-    </motion.div>
+      </span>
+    </div>
   );
 }

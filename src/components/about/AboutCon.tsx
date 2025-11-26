@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion, easeOut } from "framer-motion"; // Import easeOut
+import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
 import {
@@ -11,287 +11,381 @@ import {
   FaNodeJs,
   FaDatabase,
   FaShieldAlt,
+  FaCode,
+  FaEnvelope,
+  FaArrowRight,
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+  FaDownload
 } from "react-icons/fa";
 
-const techStack = [
-  { name: "React", Icon: FaReact, note: "Modern frontend & SPA" },
-  { name: "Next.js", Icon: FaReact, note: "SSR / SSG & full-stack" },
-  { name: "Node.js", Icon: FaNodeJs, note: "API & backend services" },
-  { name: "Python", Icon: FaPython, note: "Scripting, automation & security tooling" },
-  { name: "SQL / Databases", Icon: FaDatabase, note: "Data modeling & optimization" },
-  { name: "Security", Icon: FaShieldAlt, note: "Vulnerability assessments & pentesting" },
-];
+// --- Animation Variants ---
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (custom = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { 
+      delay: custom * 0.1, 
+      duration: 0.6, 
+      ease: [0.22, 1, 0.36, 1] 
+    },
+  }),
+};
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.65, ease: easeOut }, // Fixed: use easeOut
-  viewport: { once: false, amount: 0.25 },
-});
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+// --- Data ---
+const techStack = [
+  { name: "React", Icon: FaReact, note: "Modern Frontend" },
+  { name: "Next.js", Icon: FaCode, note: "Full-Stack Framework" },
+  { name: "Node.js", Icon: FaNodeJs, note: "Backend Services" },
+  { name: "Python", Icon: FaPython, note: "Automation & Security" },
+  { name: "SQL", Icon: FaDatabase, note: "Data Modeling" },
+  { name: "Security", Icon: FaShieldAlt, note: "Pentesting & Audits" },
+];
 
 export default function AboutCon() {
   return (
-    <section className="relative py-20 min-h-screen bg-white dark:bg-[#050608] text-gray-900 dark:text-gray-100 transition-colors duration-500">
+    <section className="relative py-24 min-h-screen bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 transition-colors duration-500 overflow-hidden">
+      
+      {/* Decorative Gradients (Adjusted for both modes) */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-purple-600/10 dark:bg-purple-600/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-[120px]" />
+      </div>
+
       <BackgroundGlow />
 
-      <Container>
-        {/* Hero / Intro */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          <motion.div {...fadeUp(0)} className="md:col-span-7">
-            <p className="uppercase tracking-widest text-sm text-gray-500 dark:text-gray-400">
+      <Container className="relative z-10">
+        {/* --- Hero Section --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <motion.div 
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: false }} // Fix: Animation repeats on scroll
+            variants={fadeIn}
+            className="lg:col-span-7"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-300 text-xs font-medium uppercase tracking-wider mb-6">
+              <span className="w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400 animate-pulse" />
               About Me
-            </p>
-            <h1 className="text-4xl md:text-5xl font-bold mt-4 leading-tight">
-              I&apos;m <span className="text-purple-400">Musa Hakilu</span> — also known as{" "}
-              <span className="font-mono text-sm text-gray-400">Mbboy</span>
+            </div>
+            
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
+              I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">Musa Hakilu</span>
+              <br />
+              <span className="text-2xl md:text-3xl text-gray-500 dark:text-gray-400 font-normal mt-2 block">
+                aka <span className="font-mono text-purple-600 dark:text-purple-300">@Mbboy</span>
+              </span>
             </h1>
-            <p className="mt-6 text-gray-600 dark:text-gray-300 max-w-3xl text-lg leading-relaxed">
-              I&apos;m a Cybersecurity Expert, Software &amp; AI Engineer and Full-Stack
-              Developer. I combine secure engineering practices with modern product design
-              to build scalable, maintainable, and user‑friendly systems. My work spans
-              secure web apps, automation tools, penetration testing, and branding —
-              turning ideas into robust digital products.
+
+            <p className="mt-8 text-gray-600 dark:text-gray-300 text-lg leading-relaxed max-w-2xl border-l-2 border-purple-500/30 pl-6">
+              I&apos;m a <strong>Cybersecurity Expert</strong>, <strong>Software Engineer</strong>, and Full-Stack Developer. 
+              I combine secure engineering practices with modern product design to build scalable systems that are both beautiful and bulletproof.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="/works"
-                className="inline-block bg-gradient-to-r from-purple-600 to-pink-500 text-white px-6 py-3 rounded-lg shadow hover:scale-[1.02] transition-transform"
-              >
-                View Projects
-              </a>
-              <a
-                href="#contact"
-                className="inline-block border border-purple-600 text-purple-600 dark:text-purple-300 px-6 py-3 rounded-lg hover:bg-purple-50 dark:hover:bg-[#1b0d2b] transition-colors"
-              >
-                Let&apos;s Talk
-              </a>
+            {/* Added: Social Links */}
+            <div className="mt-6 flex gap-4 text-gray-500 dark:text-gray-400">
+                <SocialLink href="#" icon={FaGithub} />
+                <SocialLink href="#" icon={FaLinkedin} />
+                <SocialLink href="#" icon={FaTwitter} />
             </div>
 
-            {/* Quick stats */}
-            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6">
-              <Stat number="5+" label="Years Experience" />
+            <div className="mt-10 flex flex-wrap gap-4">
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="/works"
+                className="group relative px-8 py-3.5 rounded-xl bg-purple-600 text-white font-semibold shadow-lg shadow-purple-500/25 overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  View Projects <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </motion.a>
+              
+              {/* Added: Download Resume Button */}
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="/resume.pdf"
+                className="px-8 py-3.5 rounded-xl border border-gray-300 dark:border-gray-700 hover:border-purple-500/50 hover:bg-purple-50 dark:hover:bg-purple-500/5 text-gray-700 dark:text-gray-300 transition-all flex items-center gap-2"
+              >
+                <FaDownload size={12} /> CV
+              </motion.a>
+            </div>
+
+            {/* Quick Stats Row */}
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Stat number="5+" label="Years Exp." />
               <Stat number="150+" label="Projects" />
-              <Stat number="90+" label="Happy Clients" />
-              <Stat number="12" label="Companies / Brands" />
+              <Stat number="90+" label="Clients" />
+              <Stat number="12" label="Brands" />
             </div>
           </motion.div>
 
-          <motion.div
-            {...fadeUp(0.12)}
-            className="md:col-span-5 flex justify-center md:justify-end"
+          {/* Profile Image */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, rotate: -3 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.8, ease: "backOut" }}
+            viewport={{ once: false }} // Fix: Animation repeats
+            className="lg:col-span-5 flex justify-center lg:justify-end relative"
           >
-            <div className="relative w-72 h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#111827] to-[#0b1220]">
-              <Image
-                src="/profile.png"
-                alt="Musa Hakilu"
-                fill
-                sizes="(min-width: 768px) 320px, 240px"
-                className="object-cover"
-                priority
-              />
-              <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-purple-500/20 blur-3xl pointer-events-none" />
+            <div className="relative w-80 h-96 md:w-96 md:h-[450px]">
+              <div className="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-600 rounded-[2rem] rotate-6 opacity-20 blur-xl" />
+              <div className="relative w-full h-full rounded-[2rem] overflow-hidden border border-gray-200 dark:border-white/10 shadow-2xl bg-white dark:bg-[#0b1220]">
+                <Image
+                  src="/profile.png"
+                  alt="Musa Hakilu"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700 ease-in-out"
+                  priority
+                />
+                {/* Gradient overlay for text readability at bottom */}
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
+              </div>
+              
+              {/* Floating Badge */}
+              <motion.div 
+                animate={{ y: [0, -10, 0] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                className="absolute -bottom-6 -left-6 bg-white/90 dark:bg-[#1a1f2e]/90 backdrop-blur-md border border-gray-200 dark:border-white/10 p-4 rounded-xl shadow-xl flex items-center gap-3"
+              >
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                <span className="text-sm font-medium text-gray-800 dark:text-gray-200">Open for work</span>
+              </motion.div>
             </div>
           </motion.div>
         </div>
 
-        {/* Two column: Bio + Skills */}
-        <div className="mt-20 grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Bio */}
-          <motion.div {...fadeUp(0.16)} className="lg:col-span-2 space-y-6">
-            <h2 className="text-2xl font-semibold">Professional Bio</h2>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              I started my journey as a developer and quickly found a passion for
-              application security. Over the years I have helped businesses — from
-              startups to established companies — build secure and performant web
-              applications. I specialize in threat modeling, secure architecture,
-              pentesting, and secure CI/CD pipelines. I also design clean product UIs
-              and developer‑friendly APIs.
-            </p>
+        <div className="my-24 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-800 to-transparent" />
 
-            <h3 className="text-xl font-semibold mt-6">What I do</h3>
-            <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <li className="flex gap-3 items-start">
-                <span className="mt-1 text-purple-400">•</span>
-                <div>
-                  <strong className="block">Secure Web Development</strong>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    Full‑stack apps with security‑first mindset.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-3 items-start">
-                <span className="mt-1 text-purple-400">•</span>
-                <div>
-                  <strong className="block">Penetration Testing &amp; Hardening</strong>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    Find and fix vulnerabilities before attackers do.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-3 items-start">
-                <span className="mt-1 text-purple-400">•</span>
-                <div>
-                  <strong className="block">AI &amp; Automation</strong>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    AI‑assisted tooling, automation scripts &amp; data analysis.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-3 items-start">
-                <span className="mt-1 text-purple-400">•</span>
-                <div>
-                  <strong className="block">Design &amp; Branding</strong>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    Logos, identity systems and UI design that scale.
-                  </p>
-                </div>
-              </li>
-            </ul>
+        {/* --- Bio & Skills Grid --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left: Bio & Timeline */}
+          <div className="lg:col-span-7 space-y-12">
+            <motion.section
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              variants={staggerContainer}
+            >
+              <motion.h2 variants={fadeIn} className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Professional Bio</motion.h2>
+              <motion.p variants={fadeIn} className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">
+                I started my journey as a developer and quickly found a passion for
+                application security. I specialize in <span className="text-purple-600 dark:text-purple-400 font-medium">threat modeling</span>, <span className="text-purple-600 dark:text-purple-400 font-medium">secure architecture</span>,
+                and building robust CI/CD pipelines. My goal is to bridge the gap between complex security requirements and clean, user-friendly design.
+              </motion.p>
+              
+              {/* Added: Soft Skills / Approach */}
+              <motion.div variants={fadeIn} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+                 {['Secure Web Dev', 'Penetration Testing', 'AI & Automation', 'Design & Branding'].map((item) => (
+                   <div key={item} className="flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/5">
+                     <span className="text-purple-500">✔</span>
+                     <span className="text-gray-700 dark:text-gray-200 font-medium">{item}</span>
+                   </div>
+                 ))}
+              </motion.div>
 
-            {/* Timeline / Experience */}
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold">Experience Highlights</h3>
-              <div className="mt-4 space-y-4">
+              <motion.h3 variants={fadeIn} className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Experience</motion.h3>
+              <div className="space-y-0 relative border-l border-gray-300 dark:border-gray-800 ml-3">
                 <TimelineItem
                   year="2024 — Present"
                   title="Senior Security Engineer"
                   org="Freelance / Consulting"
-                  desc="Delivering vulnerability assessments, pentests, and secure architecture guidance for clients."
+                  desc="Delivering vulnerability assessments, pentests, and secure architecture guidance."
                 />
                 <TimelineItem
                   year="2021 — 2024"
                   title="Full-Stack Engineer"
-                  org="Various Startups"
-                  desc="Built e‑commerce, education, and business web platforms using React, Next, Node and SQL."
+                  org="Tech Startups"
+                  desc="Built e‑commerce and business platforms using Next.js and secure APIs."
                 />
                 <TimelineItem
                   year="2018 — 2021"
-                  title="UI/UX &amp; Frontend Developer"
-                  org="Agency Work"
-                  desc="Designed brand systems and high‑fidelity UI prototypes that translated to production‑ready apps."
+                  title="Frontend Developer"
+                  org="Digital Agencies"
+                  desc="Designed high‑fidelity UI prototypes translated to production apps."
                 />
               </div>
-            </div>
-          </motion.div>
+            </motion.section>
+          </div>
 
-          {/* Skills */}
-          <motion.aside {...fadeUp(0.20)} className="space-y-6">
-            <h3 className="text-xl font-semibold">Tech &amp; Security Skills</h3>
+          {/* Right: Skills Sticky Sidebar */}
+          <div className="lg:col-span-5">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              variants={staggerContainer}
+              className="bg-white/50 dark:bg-[#0b1220]/50 backdrop-blur-sm p-6 rounded-3xl border border-gray-200 dark:border-white/5 sticky top-24 shadow-sm dark:shadow-none"
+            >
+              <motion.h3 variants={fadeIn} className="text-xl font-semibold mb-6 flex items-center gap-2 text-gray-900 dark:text-white">
+                <FaCode className="text-purple-500" /> Tech Stack
+              </motion.h3>
 
-            <div className="grid grid-cols-2 gap-4">
-              {techStack.map((t) => (
-                <div
-                  key={t.name}
-                  className="p-4 rounded-xl bg-gradient-to-br from-[#0f1724] to-[#071026] dark:from-[#111827] dark:to-[#0b1220] shadow-md"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-3 rounded-lg bg-purple-600/10">
-                      <t.Icon className="w-6 h-6 text-purple-300" />
-                    </div>
-                    <div>
-                      <div className="font-semibold">{t.name}</div>
-                      <div className="text-sm text-gray-400 mt-1">{t.note}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6">
-              <h4 className="text-sm text-gray-400 uppercase tracking-wider">
-                Tools &amp; Platforms
-              </h4>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {[
-                  "Next.js",
-                  "React",
-                  "Tailwind",
-                  "Node.js",
-                  "Python",
-                  "Postgres",
-                  "Docker",
-                ].map((x) => (
-                  <span
-                    key={x}
-                    className="text-sm px-3 py-1 rounded-full bg-white/5 text-gray-300"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {techStack.map((t, i) => (
+                  <motion.div
+                    variants={fadeIn}
+                    custom={i}
+                    key={t.name}
+                    whileHover={{ y: -5 }}
+                    className="p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-default"
                   >
-                    {x}
-                  </span>
+                    <div className="flex items-start gap-4">
+                      <div className="p-2.5 rounded-lg bg-purple-100 dark:bg-gradient-to-br dark:from-purple-500/20 dark:to-blue-500/20 text-purple-600 dark:text-purple-300">
+                        <t.Icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-800 dark:text-gray-200">{t.name}</div>
+                        <div className="text-xs text-gray-500 mt-1">{t.note}</div>
+                      </div>
+                    </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
-          </motion.aside>
+
+              <motion.div variants={fadeIn} className="mt-8 pt-6 border-t border-gray-200 dark:border-white/5">
+                <h4 className="text-xs text-gray-500 uppercase tracking-wider mb-4">
+                  Toolkit &amp; Platforms
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {["Docker", "AWS", "Git", "Figma", "Burp Suite", "Postgres", "Tailwind"].map((x) => (
+                    <span
+                      key={x}
+                      className="text-xs px-3 py-1.5 rounded-md bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/5 hover:border-purple-500/30 transition-colors"
+                    >
+                      {x}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Projects highlights */}
-        <motion.div {...fadeUp(0.22)} className="mt-20">
-          <h2 className="text-2xl font-semibold">Selected Projects</h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-2">
-            A few projects that demonstrate a mix of design, development and security.
-          </p>
+        {/* --- Projects Section --- */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, margin: "-100px" }}
+          variants={staggerContainer}
+          className="mt-32"
+        >
+          <motion.div variants={fadeIn} className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Featured Projects</h2>
+              <p className="text-gray-600 dark:text-gray-400 mt-2 max-w-lg">
+                Selected works demonstrating security, performance, and design.
+              </p>
+            </div>
+            <a href="/works" className="text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 text-sm font-medium flex items-center gap-1">
+              View All <FaArrowRight size={12} />
+            </a>
+          </motion.div>
 
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <ProjectCard
-              title="E-Commerce Platform"
+              title="E-Commerce Core"
               img="/works/ecommerce.png"
+              desc="Headless Shopify solution with Next.js."
               tags={["Next.js", "Stripe", "Security"]}
             />
             <ProjectCard
-              title="School Management System"
+              title="EduManage System"
               img="/works/school.png"
+              desc="Comprehensive portal for universities."
               tags={["React", "Node.js", "SQL"]}
             />
             <ProjectCard
-              title="Security Audit Toolkit"
+              title="SecAudit Toolkit"
               img="/works/security.png"
+              desc="Automated vulnerability scanner script."
               tags={["Python", "Pentest", "Automation"]}
             />
           </div>
         </motion.div>
 
-        {/* CTA / Contact */}
+        {/* --- CTA --- */}
         <motion.div
-          {...fadeUp(0.24)}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false }}
           id="contact"
-          className="mt-20 bg-gradient-to-br from-[#0b1220]/60 to-[#071026]/40 p-8 rounded-2xl"
+          className="mt-32 relative overflow-hidden rounded-3xl bg-[#111827] dark:bg-gradient-to-b dark:from-[#111827] dark:to-[#080c14] border border-gray-800 dark:border-white/10 p-10 md:p-16 text-center shadow-2xl"
         >
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <h3 className="text-2xl font-semibold">Want to work together?</h3>
-              <p className="text-gray-400 mt-2">
-                I&apos;m available for security audits, full‑stack development, AI
-                integration and consulting.
-              </p>
-            </div>
-            <div className="flex gap-4">
+           {/* Abstract Glow (Works in both modes as this card is always dark) */}
+           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-purple-600/20 blur-[100px] pointer-events-none" />
+           
+           <div className="relative z-10 max-w-2xl mx-auto">
+             <div className="inline-block p-3 rounded-full bg-white/10 mb-6">
+                <FaEnvelope className="text-2xl text-purple-400" />
+             </div>
+             <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">Ready to secure your next idea?</h3>
+             <p className="text-gray-300 mb-8">
+               Whether you need a full-stack application, a security audit, or technical consultation, I&apos;m here to help.
+             </p>
+             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href="mailto:musahakilu@email.com"
-                className="px-6 py-3 rounded-lg bg-purple-600 text-white"
+                className="px-8 py-3.5 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-500 transition-colors shadow-lg shadow-purple-900/20"
               >
-                Email Me
+                Send an Email
               </a>
               <a
                 href="/works"
-                className="px-6 py-3 rounded-lg border border-purple-600 text-purple-400"
+                className="px-8 py-3.5 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-white transition-colors"
               >
-                See My Work
+                Browse Portfolio
               </a>
             </div>
-          </div>
+           </div>
         </motion.div>
+
+        {/* Footer */}
+        <div className="mt-20 text-center text-gray-500 dark:text-gray-600 text-sm pb-10">
+          © {new Date().getFullYear()} Musa Hakilu. All rights reserved.
+        </div>
       </Container>
     </section>
   );
 }
 
-/* ----------------- small components ----------------- */
+/* ----------------- Sub-Components ----------------- */
+
+function SocialLink({ href, icon: Icon }: { href: string, icon: React.ElementType }) {
+    return (
+        <a 
+            href={href} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="p-2 bg-gray-100 dark:bg-white/5 rounded-full hover:bg-purple-100 dark:hover:bg-purple-500/20 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
+        >
+            <Icon size={18} />
+        </a>
+    )
+}
 
 function Stat({ number, label }: { number: string; label: string }) {
   return (
-    <div className="bg-gradient-to-br from-white/3 to-white/2 rounded-xl p-4 text-center">
-      <div className="text-2xl font-bold text-purple-400">{number}</div>
-      <div className="text-sm text-gray-500 dark:text-gray-400">{label}</div>
+    <div className="bg-white/80 dark:bg-[#111827]/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-5 text-center hover:-translate-y-1 transition-transform duration-300 shadow-sm dark:shadow-none">
+      <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 dark:from-purple-400 dark:to-pink-400 mb-1">
+        {number}
+      </div>
+      <div className="text-sm text-gray-600 dark:text-gray-500 font-medium uppercase tracking-wide">{label}</div>
     </div>
   );
 }
@@ -308,46 +402,65 @@ function TimelineItem({
   desc: string;
 }) {
   return (
-    <div className="flex gap-4">
-      <div className="text-sm text-gray-400 w-28">{year}</div>
-      <div className="flex-1">
-        <div className="flex items-center justify-between">
-          <h4 className="font-semibold">{title}</h4>
-          <div className="text-sm text-gray-500">{org}</div>
-        </div>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{desc}</p>
+    <motion.div 
+      variants={fadeIn}
+      className="relative pl-8 pb-12 last:pb-0"
+    >
+      {/* Timeline Dot */}
+      <div className="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-purple-500 border border-gray-50 dark:border-[#050608] shadow-[0_0_0_4px_rgba(168,85,247,0.2)]" />
+      
+      <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-1">
+        <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h4>
+        <span className="text-sm text-purple-600 dark:text-purple-400 font-medium">@ {org}</span>
       </div>
-    </div>
+      <div className="text-xs font-mono text-gray-500 mb-2 uppercase tracking-widest">{year}</div>
+      <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-md">
+        {desc}
+      </p>
+    </motion.div>
   );
 }
 
 function ProjectCard({
   title,
   img,
+  desc,
   tags,
 }: {
   title: string;
   img: string;
+  desc: string;
   tags: string[];
 }) {
   return (
-    <article className="rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-[#0f1724] to-[#071026] hover:shadow-purple-500/30 transition-all">
-      <div className="w-full h-44 relative">
-        <Image src={img} alt={title} fill className="object-cover" />
+    <motion.article 
+      variants={fadeIn}
+      className="group rounded-2xl overflow-hidden bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 hover:border-purple-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-900/10"
+    >
+      <div className="w-full h-48 relative overflow-hidden">
+        {/* Overlay gradient on image */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 z-10" />
+        <Image 
+          src={img} 
+          alt={title} 
+          fill 
+          className="object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out" 
+        />
       </div>
-      <div className="p-4">
-        <h4 className="font-semibold text-lg">{title}</h4>
-        <div className="mt-3 flex flex-wrap gap-2">
+      <div className="p-6 relative z-20 -mt-10">
+        <h4 className="font-bold text-xl text-white mb-2">{title}</h4>
+        <p className="text-sm text-gray-300 dark:text-gray-400 mb-4 line-clamp-2">{desc}</p>
+        <div className="flex flex-wrap gap-2">
           {tags.map((t) => (
             <span
               key={t}
-              className="text-sm bg-white/5 px-3 py-1 rounded-full text-gray-300"
+              className="text-xs font-medium bg-purple-500/20 text-purple-200 px-2.5 py-1 rounded-md border border-purple-500/10"
             >
               {t}
             </span>
           ))}
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
