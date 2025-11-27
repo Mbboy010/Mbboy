@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
+// Import IconType to fix the TypeScript error
+import { IconType } from "react-icons"; 
 import {
   FaReact,
   FaNodeJs,
@@ -29,7 +31,8 @@ import React from "react";
 // --- Types for TypeScript ---
 interface SkillItem {
   name: string;
-  icon: React.ElementType;
+  // CHANGED: Use IconType instead of React.ElementType
+  icon: IconType; 
   color: string;
 }
 
@@ -48,8 +51,7 @@ const fadeInUp = {
   visible: { 
     opacity: 1, 
     y: 0, 
-    // FIXED: Added 'as const' to 'ease' so TypeScript accepts it as a valid easing type
-    transition: { duration: 0.5, ease: "easeOut" as const } 
+    transition: { duration: 0.5, ease: "easeOut" } 
   }
 };
 
@@ -81,7 +83,7 @@ export default function FrontendBackend() {
   ];
 
   return (
-    <section className="relative py-24 overflow-hidden  text-gray-900 dark:text-white transition-colors duration-500">
+    <section className="relative py-24 overflow-hidden text-gray-900 dark:text-white transition-colors duration-500">
       
       {/* 🔮 Background Elements */}
       <BackgroundGlow />
@@ -190,6 +192,7 @@ function TechCard({ title, desc, skills, delay, gradient, borderGlow }: TechCard
             whileHover={{ scale: 1.1, y: -2 }}
             className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:bg-white dark:hover:bg-white/10 hover:shadow-md transition-all cursor-default"
           >
+            {/* The corrected render using IconType */}
             <skill.icon className={`text-3xl ${skill.color}`} />
             <span className="text-[10px] font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               {skill.name}

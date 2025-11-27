@@ -1,8 +1,15 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // your config options here (if any)
+  reactStrictMode: true,
   images: {
-    unoptimized: true, // ✅ disables sharp for local dev on Termux
+    // If you are using external images
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
 };
 
