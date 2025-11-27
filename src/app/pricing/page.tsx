@@ -18,7 +18,6 @@ const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
   transition: { delay, duration: 0.5, ease: "easeOut" },
-  // FIXED: Changed to false so animation plays every time it enters view
   viewport: { once: false, amount: 0.1 }, 
 });
 
@@ -46,7 +45,7 @@ const pricingPlans = [
     ],
     highlight: false,
     icon: FaMobileAlt,
-    buttonText: "Start Project", // Added
+    buttonText: "Start Project",
   },
   {
     name: "Pro Business",
@@ -64,7 +63,7 @@ const pricingPlans = [
     highlight: true,
     tag: "Most Popular",
     icon: FaRocket,
-    buttonText: "Get Started", // Added
+    buttonText: "Get Started",
   },
   {
     name: "Enterprise",
@@ -81,7 +80,7 @@ const pricingPlans = [
     ],
     highlight: false,
     icon: FaCode,
-    buttonText: "Contact Sales", // Added
+    buttonText: "Contact Sales",
   },
   {
     name: "SecAudit + Fix",
@@ -99,7 +98,7 @@ const pricingPlans = [
     highlight: false,
     special: true,
     icon: FaShieldAlt,
-    buttonText: "Secure Now", // Added
+    buttonText: "Secure Now",
   },
 ];
 
@@ -158,7 +157,7 @@ export default function PricingPage() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }} // Stagger happens once, but children fadeUp will repeat
+          viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 relative"
         >
           {pricingPlans.map((plan, index) => (
@@ -209,7 +208,7 @@ export default function PricingPage() {
                 ))}
               </ul>
 
-              {/* Button with Dynamic Text */}
+              {/* Button */}
               <button
                 className={`w-full py-3 rounded-xl font-semibold transition-all duration-300
                   ${
@@ -268,7 +267,8 @@ export default function PricingPage() {
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Need a custom quote?</h2>
             <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-              Have a unique idea or a complex security requirement? Let's chat about building a solution tailored specifically to your needs.
+              {/* FIXED: Changed "Let's" to "Let&apos;s" */}
+              Have a unique idea or a complex security requirement? Let&apos;s chat about building a solution tailored specifically to your needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                <button className="px-8 py-3.5 bg-white text-gray-900 font-bold rounded-xl hover:bg-gray-100 transition-colors">

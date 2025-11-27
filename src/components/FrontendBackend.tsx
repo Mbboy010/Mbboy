@@ -24,6 +24,23 @@ import {
   SiVercel, 
   SiFigma 
 } from "react-icons/si";
+import React from "react";
+
+// --- Types for TypeScript ---
+interface SkillItem {
+  name: string;
+  icon: React.ElementType;
+  color: string;
+}
+
+interface TechCardProps {
+  title: string;
+  desc: string;
+  skills: SkillItem[];
+  delay: number;
+  gradient: string;
+  borderGlow: string;
+}
 
 // --- Variants for Staggered Animation ---
 const fadeInUp = {
@@ -35,19 +52,10 @@ const fadeInUp = {
   }
 };
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    }
-  }
-};
+// Removed unused 'staggerContainer' to fix build warning
 
 export default function FrontendBackend() {
-  const frontend = [
+  const frontend: SkillItem[] = [
     { name: "React", icon: FaReact, color: "text-blue-400" },
     { name: "Next.js", icon: SiNextdotjs, color: "text-gray-900 dark:text-white" },
     { name: "TypeScript", icon: SiTypescript, color: "text-blue-600" },
@@ -56,7 +64,7 @@ export default function FrontendBackend() {
     { name: "CSS3", icon: FaCss3Alt, color: "text-blue-500" },
   ];
 
-  const backend = [
+  const backend: SkillItem[] = [
     { name: "Node.js", icon: FaNodeJs, color: "text-green-500" },
     { name: "Express", icon: SiExpress, color: "text-gray-900 dark:text-gray-300" },
     { name: "MongoDB", icon: SiMongodb, color: "text-green-400" },
@@ -64,7 +72,7 @@ export default function FrontendBackend() {
     { name: "Python", icon: FaPython, color: "text-yellow-400" },
   ];
 
-  const tools = [
+  const tools: SkillItem[] = [
     { name: "Git", icon: FaGitAlt, color: "text-orange-600" },
     { name: "Docker", icon: FaDocker, color: "text-blue-500" },
     { name: "AWS", icon: FaAws, color: "text-yellow-500" },
@@ -89,7 +97,7 @@ export default function FrontendBackend() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false }} // Fix: Animation repeats on scroll
+          viewport={{ once: false }}
           variants={fadeInUp}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
@@ -104,7 +112,8 @@ export default function FrontendBackend() {
             </span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400">
-            I don't just write code; I architect secure, scalable, and efficient systems using the industry's most robust technologies.
+            {/* Fixed Apostrophe here: don't -> don&apos;t */}
+            I don&apos;t just write code; I architect secure, scalable, and efficient systems using the industry&apos;s most robust technologies.
           </p>
         </motion.div>
 
@@ -131,7 +140,7 @@ export default function FrontendBackend() {
             borderGlow="group-hover:border-green-500/50"
           />
 
-          {/* 3. Tools & DevOps (Added this!) */}
+          {/* 3. Tools & DevOps */}
           <TechCard 
             title="Tools & DevOps" 
             desc="Streamlining deployment, testing, and collaboration."
@@ -149,12 +158,13 @@ export default function FrontendBackend() {
 
 // --- Sub-Component for Cards ---
 
-function TechCard({ title, desc, skills, delay, gradient, borderGlow }: any) {
+// Replaced 'any' with TechCardProps
+function TechCard({ title, desc, skills, delay, gradient, borderGlow }: TechCardProps) {
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false }} // Fix: Animation repeats
+      viewport={{ once: false }}
       variants={{
         hidden: { opacity: 0, y: 50 },
         visible: { 
@@ -177,7 +187,8 @@ function TechCard({ title, desc, skills, delay, gradient, borderGlow }: any) {
 
       {/* Grid of Icons */}
       <div className="grid grid-cols-3 gap-4">
-        {skills.map((skill: any, i: number) => (
+        {/* Typescript now infers 'skill' correctly, no explicit type needed in map */}
+        {skills.map((skill, i) => (
           <motion.div
             key={i}
             whileHover={{ scale: 1.1, y: -2 }}

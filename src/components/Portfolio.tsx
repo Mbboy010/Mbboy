@@ -64,7 +64,7 @@ const projects = [
   { 
     title: "Security Dashboard", 
     desc: "Visualizing threat data and server logs in real-time for sec-ops teams.",
-    img: "/works/dashboard.png", // Ensure you have a placeholder or use a different image
+    img: "/works/dashboard.png",
     tags: ["Vue", "D3.js", "Python"],
     demo: "#",
     repo: "#"
@@ -104,8 +104,9 @@ export default function Portfolio() {
           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
             Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">Works</span>
           </h2>
+          {/* FIX: Changed "I've" to "I&apos;ve" below */}
           <p className="text-lg text-gray-600 dark:text-gray-400">
-            A collection of projects where I've implemented secure coding practices, scalable architecture, and pixel-perfect design.
+            A collection of projects where I&apos;ve implemented secure coding practices, scalable architecture, and pixel-perfect design.
           </p>
         </motion.div>
 
@@ -194,3 +195,4 @@ export default function Portfolio() {
     </section>
   );
 }
+  
