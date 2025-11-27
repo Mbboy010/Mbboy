@@ -17,8 +17,12 @@ import Container from "@/components/Container";
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.5, ease: "easeOut" },
-  viewport: { once: false, amount: 0.1 }, 
+  transition: { 
+    delay, 
+    duration: 0.5, 
+    ease: "easeOut" as const // FIXED: Added 'as const' to fix TypeScript error
+  },
+  viewport: { once: false, amount: 0.1 } as const, 
 });
 
 const staggerContainer = {
@@ -267,7 +271,6 @@ export default function PricingPage() {
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Need a custom quote?</h2>
             <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-              {/* FIXED: Changed "Let's" to "Let&apos;s" */}
               Have a unique idea or a complex security requirement? Let&apos;s chat about building a solution tailored specifically to your needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
