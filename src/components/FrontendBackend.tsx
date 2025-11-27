@@ -48,11 +48,10 @@ const fadeInUp = {
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.5, ease: "easeOut" } 
+    // FIXED: Added 'as const' to 'ease' so TypeScript accepts it as a valid easing type
+    transition: { duration: 0.5, ease: "easeOut" as const } 
   }
 };
-
-// Removed unused 'staggerContainer' to fix build warning
 
 export default function FrontendBackend() {
   const frontend: SkillItem[] = [
@@ -112,7 +111,6 @@ export default function FrontendBackend() {
             </span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400">
-            {/* Fixed Apostrophe here: don't -> don&apos;t */}
             I don&apos;t just write code; I architect secure, scalable, and efficient systems using the industry&apos;s most robust technologies.
           </p>
         </motion.div>
@@ -158,7 +156,6 @@ export default function FrontendBackend() {
 
 // --- Sub-Component for Cards ---
 
-// Replaced 'any' with TechCardProps
 function TechCard({ title, desc, skills, delay, gradient, borderGlow }: TechCardProps) {
   return (
     <motion.div
@@ -187,7 +184,6 @@ function TechCard({ title, desc, skills, delay, gradient, borderGlow }: TechCard
 
       {/* Grid of Icons */}
       <div className="grid grid-cols-3 gap-4">
-        {/* Typescript now infers 'skill' correctly, no explicit type needed in map */}
         {skills.map((skill, i) => (
           <motion.div
             key={i}
