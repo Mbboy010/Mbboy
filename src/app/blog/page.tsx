@@ -3,22 +3,28 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+// 1. Import Variants to fix type inference issues
+import { motion, Variants } from "framer-motion"; 
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
 import { FaSearch, FaArrowRight, FaCalendarAlt, FaTag, FaRegClock, FaSadTear } from "react-icons/fa";
 
 // --- Animation Variants ---
-const fadeInUp = {
+// 2. Explicitly type the variants
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    transition: { 
+      duration: 0.6, 
+      // 3. Add 'as const' here to fix the "Type 'number[]' is not assignable" error
+      ease: [0.22, 1, 0.36, 1] as const 
+    }
   }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -130,7 +136,7 @@ export default function BlogPage() {
         <motion.div 
           initial="hidden" 
           whileInView="visible" 
-          viewport={{ once: false }} // Fix: Animations repeat
+          viewport={{ once: false }}
           variants={staggerContainer}
           className="mb-16 space-y-8"
         >
@@ -196,7 +202,7 @@ export default function BlogPage() {
                 className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 priority
               />
-              {/* Gradient Overlay (Always dark for text readability on image) */}
+              {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
               
               {/* Featured Content Overlay */}
@@ -253,7 +259,6 @@ export default function BlogPage() {
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
                     />
-                    {/* Overlay Gradient (Dark mode only usually, but nice for text contrast if needed) */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-40 transition-opacity" />
                   </div>
 
@@ -294,7 +299,7 @@ export default function BlogPage() {
           </motion.div>
         )}
 
-        {/* --- Load More Button (New) --- */}
+        {/* --- Load More Button --- */}
         {regularPosts.length > 0 && (
           <div className="mt-16 text-center">
             <button className="px-8 py-3 rounded-full border border-gray-300 dark:border-white/10 bg-white dark:bg-transparent text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all font-medium">
@@ -346,3 +351,4 @@ export default function BlogPage() {
     </section>
   );
 }
+ 
