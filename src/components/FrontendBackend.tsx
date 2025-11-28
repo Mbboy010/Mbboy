@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React from "react";
+// 1. Import Variants to fix the type error
+import { motion, Variants } from "framer-motion"; 
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
-// Import IconType to fix the TypeScript error
 import { IconType } from "react-icons"; 
 import {
   FaReact,
@@ -26,12 +27,10 @@ import {
   SiVercel, 
   SiFigma 
 } from "react-icons/si";
-import React from "react";
 
 // --- Types for TypeScript ---
 interface SkillItem {
   name: string;
-  // CHANGED: Use IconType instead of React.ElementType
   icon: IconType; 
   color: string;
 }
@@ -46,7 +45,8 @@ interface TechCardProps {
 }
 
 // --- Variants for Staggered Animation ---
-const fadeInUp = {
+// 2. Explicitly type this object as 'Variants'
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
     opacity: 1, 
@@ -169,6 +169,7 @@ function TechCard({ title, desc, skills, delay, gradient, borderGlow }: TechCard
         visible: { 
           opacity: 1, 
           y: 0, 
+          // 3. Cast the easing here as well to be safe, though inline usually works better
           transition: { duration: 0.6, delay: delay, ease: "easeOut" } 
         }
       }}
@@ -192,7 +193,6 @@ function TechCard({ title, desc, skills, delay, gradient, borderGlow }: TechCard
             whileHover={{ scale: 1.1, y: -2 }}
             className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:bg-white dark:hover:bg-white/10 hover:shadow-md transition-all cursor-default"
           >
-            {/* The corrected render using IconType */}
             <skill.icon className={`text-3xl ${skill.color}`} />
             <span className="text-[10px] font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wide">
               {skill.name}
