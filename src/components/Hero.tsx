@@ -2,17 +2,19 @@
 
 import HeroDesign from './home/HeroDesign';
 import Image from "next/image";
-import { motion } from "framer-motion";
-import Button from "./ui/Button"; // Assuming this accepts className
+// 1. Import 'Variants' from framer-motion to fix the type inference
+import { motion, Variants } from "framer-motion";
+import Button from "./ui/Button"; 
 import Container from "./Container";
 
-// Animation Variants for cleaner code
-const fadeInUp = {
+// 2. Explicitly type the animation object as 'Variants'
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-const staggerContainer = {
+// 3. Type this one as well for consistency
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
