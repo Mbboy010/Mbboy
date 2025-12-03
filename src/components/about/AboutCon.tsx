@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion,Variants, Transition } from "framer-motion";
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
+import { IconType } from "react-icons"; // <-- use IconType
 import {
   FaPython,
   FaReact,
@@ -330,7 +331,9 @@ export default function AboutCon() {
   );
 }
 
-function SocialLink({ href, icon: Icon }: { href: string; icon: React.ElementType }) {
+
+
+function SocialLink({ href, icon: Icon }: { href: string; icon: IconType }) {
   return (
     <a
       href={href}
@@ -342,6 +345,8 @@ function SocialLink({ href, icon: Icon }: { href: string; icon: React.ElementTyp
     </a>
   );
 }
+
+
 
 function Stat({ number, label }: { number: string; label: string }) {
   return (
