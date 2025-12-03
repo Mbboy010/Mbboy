@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
 import Image from "next/image";
@@ -8,16 +8,16 @@ import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaArrowRight } from "react-icons/fa";
 
 // === Safe Animation Variants (No Vercel Errors) ===
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }, // ✅ fixed
   },
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -131,7 +131,7 @@ export default function Portfolio() {
           {projects.map((p, i) => (
             <motion.div
               key={i}
-              variants={fadeInUp}
+              variants={fadeInUp} // ✅ safe now
               className="group relative flex flex-col bg-white dark:bg-[#111] rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-purple-500/50 dark:hover:border-purple-500/50 shadow-sm hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 overflow-hidden"
             >
               {/* Image */}
@@ -200,7 +200,7 @@ export default function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} // ✅ fixed
           className="mt-16 text-center"
         >
           <Link
