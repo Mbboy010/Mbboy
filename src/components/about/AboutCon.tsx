@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion,Variants, Transition } from "framer-motion";
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
 import {
@@ -21,17 +21,22 @@ import {
 } from "react-icons/fa";
 
 // --- Animation Variants ---
-const fadeIn = {
+
+
+const fadeIn: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: (custom: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
+  visible: (custom: number = 0) => {
+    const transition: Transition = {
       delay: custom * 0.1,
       duration: 0.6,
-      ease: "easeInOut", // must be string or function
-    },
-  }),
+      ease: [0.42, 0, 0.58, 1] // use cubic bezier array instead of string
+    };
+    return {
+      opacity: 1,
+      y: 0,
+      transition
+    };
+  }
 };
 
 const staggerContainer = {
