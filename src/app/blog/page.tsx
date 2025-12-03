@@ -112,7 +112,7 @@ const posts = [
   },
 ];
 
-export default function BlogPage(): JSX.Element {
+export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
