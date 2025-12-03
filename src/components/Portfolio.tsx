@@ -7,18 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaArrowRight } from "react-icons/fa";
 
-// --- Correct Animation Variants (Framer Motion 10+ compatible) ---
+// === Safe Animation Variants (No Vercel Errors) ===
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut", // Still works as a string in most cases
-      // OR use the official easing (recommended for strict TS):
-      // ease: [0.25, 0.1, 0.25, 1], // cubic-bezier(0.25, 0.1, 0.25, 1) = easeOutQuart
-    },
+    transition: { duration: 0.6, ease: "easeOut" },
   },
 };
 
@@ -26,14 +21,22 @@ const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
+    transition: { staggerChildren: 0.15 },
   },
 };
 
-// --- Data ---
-const projects = [
+// === Strong Type for Project Data (Prevents "undefined" errors) ===
+interface Project {
+  title: string;
+  desc: string;
+  img: string;
+  tags: string[];
+  demo: string;
+  repo: string;
+}
+
+// === Data ===
+const projects: Project[] = [
   {
     title: "Luxe E-Commerce",
     desc: "A headless Shopify solution featuring real-time inventory and Stripe integration.",
@@ -104,12 +107,14 @@ export default function Portfolio() {
             <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
             Portfolio
           </div>
+
           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
             Selected{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
               Works
             </span>
           </h2>
+
           <p className="text-lg text-gray-600 dark:text-gray-400">
             A collection of projects where I&apos;ve implemented secure coding practices, scalable architecture, and pixel-perfect design.
           </p>
@@ -126,7 +131,7 @@ export default function Portfolio() {
           {projects.map((p, i) => (
             <motion.div
               key={i}
-              variants={fadeInUp} // This is now correctly typed
+              variants={fadeInUp}
               className="group relative flex flex-col bg-white dark:bg-[#111] rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-purple-500/50 dark:hover:border-purple-500/50 shadow-sm hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 overflow-hidden"
             >
               {/* Image */}
@@ -135,24 +140,26 @@ export default function Portfolio() {
                   src={p.img}
                   alt={p.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
+
+                {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                   <a
                     href={p.demo}
-                    className="p-3 rounded-full bg-white text-gray-900 hover:bg-purple-500 hover:text-white transition-all transform hover:scale-110"
-                    title="Live Demo"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="p-3 rounded-full bg-white text-gray-900 hover:bg-purple-500 hover:text-white transition-all transform hover:scale-110"
                   >
                     <FaExternalLinkAlt size={18} />
                   </a>
+
                   <a
                     href={p.repo}
-                    className="p-3 rounded-full bg-white text-gray-900 hover:bg-purple-500 hover:text-white transition-all transform hover:scale-110"
-                    title="View Code"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="p-3 rounded-full bg-white text-gray-900 hover:bg-purple-500 hover:text-white transition-all transform hover:scale-110"
                   >
                     <FaGithub size={20} />
                   </a>
@@ -162,9 +169,9 @@ export default function Portfolio() {
               {/* Content */}
               <div className="flex flex-col flex-grow p-6">
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {p.tags.map((tag) => (
+                  {p.tags.map((tag, index) => (
                     <span
-                      key={tag}
+                      key={index}
                       className="text-xs font-medium px-2.5 py-1 rounded-md bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-800/50"
                     >
                       {tag}
@@ -188,7 +195,7 @@ export default function Portfolio() {
           ))}
         </motion.div>
 
-        {/* View All Button */}
+        {/* View More Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -200,8 +207,7 @@ export default function Portfolio() {
             href="/works"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold hover:bg-purple-600 dark:hover:bg-gray-200 transition-colors shadow-lg hover:shadow-purple-500/25"
           >
-            View All Projects
-            <FaArrowRight />
+            View All Projects <FaArrowRight />
           </Link>
         </motion.div>
       </Container>
