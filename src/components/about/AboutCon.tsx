@@ -152,7 +152,7 @@ export default function AboutCon() {
                 <Image
                   src="/profile.png"
                   alt="Musa Hakilu"
-                  fill
+                  
                   className="object-cover hover:scale-105 transition-transform duration-700 ease-in-out"
                   priority
                 />
@@ -189,7 +189,12 @@ export default function AboutCon() {
                 and building robust CI/CD pipelines. My goal is to bridge the gap between complex security requirements and clean, user-friendly design.
               </motion.p>
 
-              <motion.div variants={fadeIn} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+              <motion.div
+              initial="hidden"
+              whileInView="visible"
+              variants={fadeIn}
+              viewport={{ once: false }}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
                 {['Secure Web Dev', 'Penetration Testing', 'AI & Automation', 'Design & Branding'].map((item) => (
                   <div key={item} className="flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                     <span className="text-purple-500">✔</span>
