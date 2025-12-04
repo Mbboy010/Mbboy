@@ -229,7 +229,7 @@ export default function AboutCon() {
                     className="p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-default"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="p-2.5 rounded-lg bg-purple-100 dark:bg-gradient-to-br dark:from-purple-500/20 dark:to-blue-500/20 text-purple-600 dark:text-purple-300">
+                      <div className="p-2.5 rounded-lg bg-purple-200 dark:bg-gradient-to-br dark:from-purple-500/20 dark:to-blue-500/20 text-purple-300 dark:text-purple-300">
                         <t.Icon className="w-5 h-5" />
                       </div>
                       <div>
@@ -335,14 +335,20 @@ export default function AboutCon() {
 
 function SocialLink({ href, icon: Icon }: { href: string; icon: IconType }) {
   return (
-    <a
+    <motion.a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="p-2 bg-gray-100 dark:bg-white/5 rounded-full hover:bg-purple-100 dark:hover:bg-purple-500/20 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
+      
+      // --- Scroll Animation Settings ---
+      initial={{ opacity: 0, y: 20, scale: 0.8 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false }} // Re-animates every time it enters the view
+      transition={{ duration: 0.3, type: "spring", stiffness: 260, damping: 20 }}
     >
       <Icon size={18} />
-    </a>
+    </motion.a>
   );
 }
 
@@ -350,14 +356,25 @@ function SocialLink({ href, icon: Icon }: { href: string; icon: IconType }) {
 
 function Stat({ number, label }: { number: string; label: string }) {
   return (
-    <div className="bg-white/80 dark:bg-[#111827]/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-5 text-center hover:-translate-y-1 transition-transform duration-300 shadow-sm dark:shadow-none">
+    <motion.div
+      className="bg-white/80 dark:bg-[#111827]/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-5 text-center shadow-sm dark:shadow-none"
+      
+      // --- Scroll Animation Settings ---
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: false }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      
+      // Keep your hover effect here
+      whileHover={{ y: -5 }} 
+    >
       <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 dark:from-purple-400 dark:to-pink-400 mb-1">
         {number}
       </div>
       <div className="text-sm text-gray-600 dark:text-gray-500 font-medium uppercase tracking-wide">
         {label}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -375,14 +392,27 @@ function ProjectCard({
   tags: string[];
 }) {
   return (
-    <div className="group bg-white/80 dark:bg-[#111827]/50 backdrop-blur-md border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-md dark:shadow-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <motion.div
+      // Removed "hover:-translate-y-1" from className and moved to whileHover below
+      className="group bg-white/80 dark:bg-[#111827]/50 backdrop-blur-md border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-md dark:shadow-none transition-all duration-300 hover:shadow-lg"
+      
+      // --- Scroll Animation Settings ---
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, margin: "-50px" }} // Added margin so it triggers slightly before the bottom
+      transition={{ duration: 0.5, type: "spring", damping: 20 }}
+      
+      // --- Hover Animation ---
+      whileHover={{ y: -5 }}
+    >
       
       <div className="relative w-full h-48 overflow-hidden">
         <Image
           src={img}
           alt={title}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          // group-hover works perfectly with motion.div provided "group" is in the parent className
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
       </div>
 
@@ -406,9 +436,10 @@ function ProjectCard({
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
+
 
 function TimelineItem({
   year,
@@ -422,8 +453,19 @@ function TimelineItem({
   desc: string;
 }) {
   return (
-    <div className="relative pl-8 pb-10 border-l border-gray-300 dark:border-white/10">
-      {/* Dot */}
+    <motion.div
+      className="relative pl-8 pb-10 border-l border-gray-300 dark:border-white/10"
+      
+      // --- Scroll Animation Settings ---
+      // Starts slightly to the left (-10px) and invisible
+      initial={{ opacity: 0, x: -10 }} 
+      // Slides into place and becomes visible
+      whileInView={{ opacity: 1, x: 0 }} 
+      viewport={{ once: false, margin: "-20px" }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+    >
+      {/* Dot - You can also animate this separately if you want, 
+          but here it moves with the container */}
       <span className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-purple-600 dark:bg-purple-400"></span>
 
       {/* Year */}
@@ -445,6 +487,6 @@ function TimelineItem({
       <p className="text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">
         {desc}
       </p>
-    </div>
+    </motion.div>
   );
 }
