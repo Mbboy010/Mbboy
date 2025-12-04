@@ -235,7 +235,7 @@ export default function AboutCon() {
                     className="p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-default"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="p-2.5 rounded-lg bg-purple-900/50 dark:bg-gradient-to-br dark:from-purple-900/20 dark:to-blue-900/20 text-purple-500 dark:text-purple-200">
+                      <div className="p-2.5 rounded-lg bg-purple-900/50 dark:bg-gradient-to-br dark:from-purple-900/20 dark:to-blue-900/20 text-purple-200 dark:text-purple-200">
                         <t.Icon className="w-5 h-5" />
                       </div>
                       <div>
@@ -327,11 +327,6 @@ export default function AboutCon() {
             </div>
           </div>
         </motion.div>
-
-        {/* Footer */}
-        <div className="mt-20 text-center text-gray-500 dark:text-gray-600 text-sm pb-10">
-          © {new Date().getFullYear()} Musa Hakilu. All rights reserved.
-        </div>
       </Container>
     </section>
   );
