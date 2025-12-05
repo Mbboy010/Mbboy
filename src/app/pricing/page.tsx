@@ -13,26 +13,6 @@ import {
 import BackgroundGlow from "@/components/BackgroundGlow";
 import Container from "@/components/Container";
 
-// --- Animations ---
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { 
-    delay, 
-    duration: 0.5, 
-    ease: "easeOut" as const 
-  },
-  viewport: { once: false, amount: 0.1 } as const,
-});
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
-
 // --- Pricing Data ---
 const pricingPlans = [
   {
@@ -130,13 +110,6 @@ const faqs = [
   },
 ];
 
-const steps = [
-  { num: "01", title: "Discovery", desc: "We discuss your goals and requirements." },
-  { num: "02", title: "Design", desc: "I create high-fidelity mockups for approval." },
-  { num: "03", title: "Develop", desc: "I build the site using clean, secure code." },
-  { num: "04", title: "Launch", desc: "Deployment, testing, and final handoff." },
-];
-
 export default function PricingPage() {
   return (
     <section className="relative min-h-screen py-24 bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 overflow-hidden">
@@ -144,7 +117,13 @@ export default function PricingPage() {
       <Container className="relative z-10">
 
         {/* Header */}
-        <motion.div {...fadeUp(0)} className="text-center mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
           <span className="inline-block px-4 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs font-bold uppercase tracking-widest mb-4">
             Transparent Pricing
           </span>
@@ -162,43 +141,42 @@ export default function PricingPage() {
         </motion.div>
 
         {/* Pricing Cards */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={index}
-              variants={fadeUp(0)}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-50px" }} // Re-animates every time
+              transition={{ duration: 0.5, delay: index * 0.1 }} // Stagger based on index
               className={`relative flex flex-col rounded-2xl p-6 transition-all duration-300 group
                 ${
                   plan.highlight
-                    ? "bg-white dark:bg-[#121212] border-2 border-purple-500 shadow-2xl"
-                    : "bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/10 hover:border-purple-500/50"
+                    ? "bg-white dark:bg-[#121212] border-2 border-purple-500 shadow-2xl scale-105 z-10"
+                    : "bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/10 hover:border-purple-500/50 hover:shadow-xl"
                 }
               `}
             >
               {plan.highlight && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 text-xs font-bold rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 text-xs font-bold rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg whitespace-nowrap">
                   {plan.tag}
                 </div>
               )}
 
               <div className="mb-6">
                 <div
-                  className={`w-12 h-12 flex items-center justify-center rounded-lg mb-4 text-xl ${
+                  className={`w-12 h-12 flex items-center justify-center rounded-lg mb-4 text-xl transition-colors ${
                     plan.highlight
                       ? "bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300"
-                      : "bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300"
+                      : "bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 group-hover:bg-purple-100 dark:group-hover:bg-purple-900/30 group-hover:text-purple-500"
                   }`}
                 >
                   <plan.icon />
                 </div>
 
-                <h3 className="text-xl font-bold">{plan.name}</h3>
+                <h3 className="text-xl font-bold group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                  {plan.name}
+                </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                   {plan.description}
                 </p>
@@ -212,27 +190,36 @@ export default function PricingPage() {
               <ul className="space-y-4 mb-8 flex-grow">
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-sm">
-                    <FaCheck className={`${plan.highlight ? "text-purple-500" : "text-gray-400"} mt-0.5`} size={12} />
-                    <span>{feature}</span>
+                    <FaCheck 
+                      className={`mt-0.5 shrink-0 ${plan.highlight ? "text-purple-500" : "text-gray-400 group-hover:text-purple-500"}`} 
+                      size={12} 
+                    />
+                    <span className="text-gray-700 dark:text-gray-300">{feature}</span>
                   </li>
                 ))}
               </ul>
 
               <button
-                className={`w-full py-3 rounded-xl font-semibold transition-all ${
+                className={`w-full py-3 rounded-xl font-semibold transition-all shadow-md ${
                   plan.highlight
-                    ? "bg-purple-600 text-white hover:bg-purple-700"
-                    : "bg-gray-100 dark:bg-white/5 hover:bg-purple-600 hover:text-white"
+                    ? "bg-purple-600 text-white hover:bg-purple-700 hover:shadow-purple-500/25"
+                    : "bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-purple-600 hover:text-white"
                 }`}
               >
                 {plan.buttonText}
               </button>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
         {/* FAQ */}
-        <motion.div {...fadeUp(0.4)} className="mt-32 max-w-3xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-32 max-w-3xl mx-auto"
+        >
           <h2 className="text-3xl font-bold text-center mb-10">
             Frequently Asked Questions
           </h2>
@@ -256,15 +243,17 @@ function FaqItem({ faq }: { faq: { question: string; answer: string } }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-white/5 overflow-hidden">
+    <div className="border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-white/5 overflow-hidden hover:border-purple-500/30 transition-colors">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-5 text-left"
+        className="w-full flex items-center justify-between p-5 text-left focus:outline-none"
       >
-        <span className="text-lg font-medium">{faq.question}</span>
+        <span className={`text-lg font-medium transition-colors ${isOpen ? "text-purple-600 dark:text-purple-400" : ""}`}>
+          {faq.question}
+        </span>
 
         <FaChevronDown
-          className={`transition-transform ${isOpen ? "rotate-180 text-purple-500" : "text-gray-400"}`}
+          className={`transition-transform duration-300 ${isOpen ? "rotate-180 text-purple-500" : "text-gray-400"}`}
         />
       </button>
 
@@ -274,9 +263,10 @@ function FaqItem({ faq }: { faq: { question: string; answer: string } }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="p-5 pt-0 text-sm text-gray-600 dark:text-gray-300 border-t border-gray-200 dark:border-gray-700/50">
+            <div className="p-5 pt-0 text-sm text-gray-600 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700/50 leading-relaxed">
               {faq.answer}
             </div>
           </motion.div>
