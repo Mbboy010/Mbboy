@@ -16,27 +16,56 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mbboy",
+  title: {
+    default: "Mbboy",
+    template: "%s - Mbboy",
+  },
   description:
-    "Mbboy — Secure Web & App Development powered by modern cybersecurity and technology innovation.",
+    "Portfolio of Musa Hakilu (Mbboy) — Full-stack developer, cybersecurity analyst, UI/UX designer, and software security expert.",
   keywords: [
-    "Mbboy",
-    "Cybersecurity",
-    "Web Security",
-    "Next.js",
-    "Ethical Hacking",
-    "Software Development",
     "Musa Hakilu",
+    "Mbboy",
+    "Full-stack developer",
+    "Cybersecurity",
+    "UI/UX designer",
+    "Software security",
+    "React developer",
+    "Next.js developer",
+    "Nigeria developer",
+    "Brand identity design",
+    "Web developer",
+    "Mobile developer",
+
+    // ⭐ Location-based SEO
+    "Kargi",
+    "Kargi Kaduna",
+    "Kubau Local Government",
+    "Kaduna State developer",
+    "Developer in Kaduna",
+    "Cybersecurity Kaduna",
+    "Tech expert Kaduna",
+
+    // ⭐ Zaria keywords added
+    "Zaria",
+    "Zaria developer",
+    "Tech expert Zaria",
+    "Kaduna Zaria developer",
   ],
   authors: [{ name: "Musa Hakilu" }],
+  creator: "Musa Hakilu",
+  publisher: "Musa Hakilu",
   openGraph: {
-    title: "Mbboy — Secure Web & App Development",
+    title: "Musa Hakilu | Mbboy",
     description:
-      "Explore cutting-edge cybersecurity and development projects by Mbboy — where performance meets protection.",
-    url: "https://yourdomain.com",
-    siteName: "Mbboy",
+      "Full-stack developer, cybersecurity analyst, and designer. Explore my works, pricing, services, and blog.",
+    url: "https://your-domain.com",
+    siteName: "Musa Hakilu Portfolio",
     locale: "en_US",
     type: "website",
+  },
+  other: {
+    "google-site-verification": "CTf3k5K1pHcDm8TDmu_Qp6AjT-opf6Bn2rny8MrWEoc",
+    "location-area": "Kargi, Kubau Local Government, Zaria, Kaduna State, Nigeria",
   },
 };
 
