@@ -23,8 +23,6 @@ export const metadata: Metadata = {
     "Kargi Kaduna",
     "Kubau Local Government",
     "Kaduna State tech expert",
-
-    // ⭐ Added as requested
     "Kargi developer",
     "Anchau developer",
     "Kubau developer",
@@ -41,12 +39,11 @@ export const metadata: Metadata = {
     siteName: "Musa Hakilu Portfolio",
     locale: "en_US",
     type: "profile",
-    profile: {
-      firstName: "Musa",
-      lastName: "Hakilu",
-      username: "Mbboy",
-      gender: "male",
-    },
+    // ✅ FIXED: These properties must be here, not inside a 'profile' object
+    firstName: "Musa",
+    lastName: "Hakilu",
+    username: "Mbboy",
+    gender: "male",
   },
 
   other: {
