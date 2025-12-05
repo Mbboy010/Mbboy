@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
 import {
@@ -14,30 +14,6 @@ import {
   FaRegClock,
   FaSadTear,
 } from "react-icons/fa";
-
-// --- Animation Variants ---
-const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.22, 1, 0.36, 1] as const,
-    },
-  },
-};
-
-const staggerContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
 
 // --- Data ---
 const categories = ["All", "Cybersecurity", "Development", "AI", "Branding"];
@@ -53,7 +29,7 @@ const posts = [
     date: "Nov 10, 2025",
     readTime: "8 min read",
     href: "/blog/next-security",
-    featured: true,
+    featured: true, // This is the featured post
   },
   {
     id: 2,
@@ -118,13 +94,22 @@ export default function BlogPage() {
 
   const featuredPost = posts.find((p) => p.featured);
 
-  const regularPosts = posts.filter((p) => {
+  // --- Logic Fix ---
+  // Only show the "Big Featured Header" if we are in "All" and not searching
+  const showFeaturedLayout = activeCategory === "All" && !searchQuery;
+
+  const filteredPosts = posts.filter((p) => {
     const matchesCategory =
       activeCategory === "All" || p.category === activeCategory;
     const matchesSearch = p.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    return !p.featured && matchesCategory && matchesSearch;
+
+    // If the featured layout is visible, hide that specific post from the grid
+    // If we are filtering/searching, show the featured post in the grid along with everything else
+    if (showFeaturedLayout && p.featured) return false;
+
+    return matchesCategory && matchesSearch;
   });
 
   return (
@@ -136,15 +121,12 @@ export default function BlogPage() {
 
       <Container className="relative z-10">
         {/* Header */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="mb-16 space-y-8"
-        >
+        <div className="mb-16 space-y-8">
           <motion.div
-            variants={fadeInUp}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }} // Re-animates on scroll
+            transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
@@ -160,7 +142,10 @@ export default function BlogPage() {
 
           {/* Search + Filters */}
           <motion.div
-            variants={fadeInUp}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="flex flex-col md:flex-row items-center justify-between gap-6 p-2 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/5 backdrop-blur-sm max-w-5xl mx-auto shadow-sm"
           >
             {/* Category Tabs */}
@@ -188,19 +173,19 @@ export default function BlogPage() {
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-gray-50 dark:bg-[#0b1220] border border-gray-200 dark:border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm"
+                className="w-full bg-gray-50 dark:bg-[#0b1220] border border-gray-200 dark:border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-purple-500/50 transition-colors"
               />
             </div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Featured Post */}
-        {featuredPost && activeCategory === "All" && !searchQuery && (
+        {/* Featured Post (Only visible if default view) */}
+        {featuredPost && showFeaturedLayout && (
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: false, margin: "-100px" }} // Re-animates
             transition={{ duration: 0.7, ease: "easeOut" }}
-            viewport={{ once: true }}
             className="mb-20 relative group"
           >
             <Link
@@ -245,16 +230,17 @@ export default function BlogPage() {
         )}
 
         {/* Posts Grid */}
-        {regularPosts.length > 0 ? (
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {regularPosts.map((post) => (
-              <motion.div key={post.id} variants={fadeInUp}>
+        {filteredPosts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPosts.map((post, index) => (
+              <motion.div
+                key={post.id}
+                // Individual animation for every card
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-50px" }} // Re-animates on every scroll
+                transition={{ duration: 0.5, delay: index * 0.1 }} // Slight stagger based on index
+              >
                 <Link
                   href={post.href}
                   className="group flex flex-col h-full rounded-2xl overflow-hidden bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 transition-all hover:border-purple-500/30 shadow-sm hover:shadow-2xl"
@@ -304,11 +290,11 @@ export default function BlogPage() {
                 </Link>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         ) : (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             className="text-center py-20 bg-white/50 dark:bg-white/5 rounded-3xl border border-gray-200 dark:border-white/5"
           >
             <FaSadTear className="mx-auto text-4xl text-gray-400 mb-4" />
@@ -320,12 +306,17 @@ export default function BlogPage() {
         )}
 
         {/* Load More */}
-        {regularPosts.length > 0 && (
-          <div className="mt-16 text-center">
+        {filteredPosts.length > 0 && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false }}
+            className="mt-16 text-center"
+          >
             <button className="px-8 py-3 rounded-full border border-gray-300 dark:border-white/10 bg-white dark:bg-transparent hover:bg-gray-50 dark:hover:bg-white/5 transition-all font-medium">
               Load More Articles
             </button>
-          </div>
+          </motion.div>
         )}
       </Container>
     </section>
