@@ -1,72 +1,46 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { X, Terminal, Github, Linkedin, Twitter } from "lucide-react";
+import React, { useEffect, useCallback } from "react";
+// Import LucideIcon type to fix the "any" error
+import { X, Terminal, Github, Linkedin, Twitter, LucideIcon } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import { usePathname } from "next/navigation"; // 1. Import usePathname
+import { usePathname } from "next/navigation"; 
 import { setIsAside } from "../redux/slicer/AsideCheck";
 import { setPosit } from "../redux/slicer/posit";
 import { setOpacity } from "../redux/slicer/opacity";
 import type { RootState } from "../redux/store";
 import Content from "./Content";
 
-interface Props {
-  setPosi: React.Dispatch<React.SetStateAction<string>>;
-  posi: string;
-}
-
-// Animation Variants
-const overlayVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 }
-};
-
-const sidebarVariants = {
-  hidden: { x: "-100%" },
-  visible: { 
-    x: "0%",
-    transition: { type: "spring", stiffness: 300, damping: 30, mass: 0.8 }
-  },
-  exit: { 
-    x: "-100%",
-    transition: { duration: 0.3, ease: "easeInOut" }
-  }
-};
-
-export default function Aside({ setPosi, posi }: Props) {
+// Removed unused Props interface since Redux is handling state
+export default function Aside() {
   const dispatch = useDispatch();
-  const pathname = usePathname(); // 2. Get current route
+  const pathname = usePathname(); 
   const isAside = useSelector((state: RootState) => state.isAs.value);
-  const opacity = useSelector((state: RootState) => state.opacity.value);
-  const posit = useSelector((state: RootState) => state.posit.value);
+  // Removed unused selectors (opacity, posit) to clear warnings
 
-  // Common close logic
-  const handleClose = () => {
+  // FIXED: Wrapped in useCallback to satisfy useEffect dependencies
+  const handleClose = useCallback(() => {
     dispatch(setOpacity("0"));
     dispatch(setPosit("-79vw"));
     setTimeout(() => {
       dispatch(setIsAside(false));
     }, 300);
-  };
+  }, [dispatch]);
 
-  // 3. Effect: Close sidebar when Route Changes (User clicked a link inside menu)
+  // Effect: Close sidebar when Route Changes
   useEffect(() => {
     if (isAside) {
       handleClose();
     }
-  }, [pathname]);
+  }, [pathname, isAside, handleClose]); // Added handleClose to deps
 
-  // 4. Effect: Close sidebar on Back Button press (Mobile/Desktop)
+  // Effect: Close sidebar on Back Button press
   useEffect(() => {
     if (isAside) {
-      // Push a fake state to history so the back button has something to "pop"
-      // instead of navigating away from the website
       window.history.pushState(null, "", window.location.href);
 
       const handlePopState = () => {
-        // When back button is pressed, close the sidebar
         handleClose();
       };
 
@@ -76,7 +50,7 @@ export default function Aside({ setPosi, posi }: Props) {
         window.removeEventListener("popstate", handlePopState);
       };
     }
-  }, [isAside]);
+  }, [isAside, handleClose]); // Added handleClose to deps
 
   return (
     <AnimatePresence mode="wait">
@@ -85,7 +59,11 @@ export default function Aside({ setPosi, posi }: Props) {
           
           {/* 🔲 Backdrop Overlay */}
           <motion.div
-            variants={overlayVariants}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1 },
+              exit: { opacity: 0 }
+            }}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -95,7 +73,17 @@ export default function Aside({ setPosi, posi }: Props) {
 
           {/* 🧭 Sidebar Panel */}
           <motion.aside
-            variants={sidebarVariants}
+            variants={{
+              hidden: { x: "-100%" },
+              visible: { 
+                x: "0%",
+                transition: { type: "spring", stiffness: 300, damping: 30, mass: 0.8 }
+              },
+              exit: { 
+                x: "-100%",
+                transition: { duration: 0.3, ease: "easeInOut" }
+              }
+            }}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -149,8 +137,8 @@ export default function Aside({ setPosi, posi }: Props) {
   );
 }
 
-// Small helper for social icons
-function SocialIcon({ Icon }: { Icon: any }) {
+// FIXED: Replaced 'any' with 'LucideIcon'
+function SocialIcon({ Icon }: { Icon: LucideIcon }) {
   return (
     <a href="#" className="text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors hover:scale-110">
       <Icon size={18} />
