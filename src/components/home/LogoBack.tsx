@@ -1,161 +1,103 @@
 "use client";
 
-import React, { useRef } from "react";
-import { Canvas } from "@react-three/fiber";
-import * as THREE from "three";
+import React from "react";
+import { motion } from "framer-motion";
 
-function ShiningCurve() {
-  const curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-3, 1, 0),
-    new THREE.Vector3(-1, 1.5, 1),
-    new THREE.Vector3(0, 0.5, -1),
-    new THREE.Vector3(2, 1, 1),
-    new THREE.Vector3(3, 0, 0),
-  ]);
-
-  const points = curve.getPoints(100);
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
-
-  const material = new THREE.LineBasicMaterial({
-    color: "#4f46e5",
-    linewidth: 2,
-    transparent: true,
-    opacity: 0.8,
-  });
-
+export default function HeroDesign() {
   return (
-    <group>
-      <primitive object={new THREE.Line(geometry, material)} />
-      <points geometry={geometry}>
-        <pointsMaterial color="#93c5fd" size={0.05} transparent opacity={0.9} />
-      </points>
-    </group>
+    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none">
+      
+      {/* 1. Ambient Background Glows (Replacing PointLights) */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] mix-blend-screen" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen" />
+
+      {/* 2. The Shining Curve (Replaced with SVG) */}
+      <svg className="absolute top-0 left-0 w-full h-full opacity-60" viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <motion.path
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
+          d="M-100 600 C 200 600, 400 200, 720 400 C 1040 600, 1200 100, 1600 300"
+          stroke="url(#gradient-line)"
+          strokeWidth="4"
+          strokeLinecap="round"
+        />
+        <defs>
+          <linearGradient id="gradient-line" x1="0" y1="0" x2="1440" y2="0">
+            <stop offset="0%" stopColor="#4f46e5" stopOpacity="0" />
+            <stop offset="50%" stopColor="#6366f1" />
+            <stop offset="100%" stopColor="#818cf8" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      {/* 3. Floating Spheres (Replaced with CSS Radial Gradients) */}
+      <FloatingElement className="top-[20%] left-[15%]">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-transparent opacity-30 blur-md" />
+      </FloatingElement>
+      
+      <FloatingElement className="top-[60%] right-[20%] delay-700">
+        <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-purple-500 to-transparent opacity-20 blur-xl" />
+      </FloatingElement>
+
+      <FloatingElement className="bottom-[15%] left-[30%] delay-1000">
+        <div className="w-8 h-8 rounded-full bg-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.6)]" />
+      </FloatingElement>
+
+
+      {/* 4. The Cube (Abstract Representation) */}
+      <FloatingElement className="top-[30%] right-[25%] duration-[6s]">
+        <div className="w-20 h-20 border border-indigo-500/30 bg-indigo-500/5 backdrop-blur-sm transform rotate-12 rounded-2xl shadow-[0_0_30px_rgba(99,102,241,0.2)]" />
+      </FloatingElement>
+
+      {/* 5. The Square/Plane (Abstract Diamond) */}
+      <FloatingElement className="bottom-[30%] left-[10%] duration-[8s]">
+        <div className="w-16 h-16 border border-purple-500/40 bg-purple-500/5 rotate-45 transform rounded-lg" />
+      </FloatingElement>
+
+      {/* 6. The World (Wireframe-ish Circle) */}
+      <FloatingElement className="top-[15%] right-[10%] duration-[10s]">
+        <div className="w-24 h-24 rounded-full border border-blue-400/20 relative flex items-center justify-center">
+          <div className="w-[110%] h-[1px] bg-blue-400/20 absolute rotate-45" />
+          <div className="w-[110%] h-[1px] bg-blue-400/20 absolute -rotate-45" />
+          <div className="w-full h-full rounded-full border border-blue-400/10 scale-75 absolute" />
+        </div>
+      </FloatingElement>
+
+      {/* 7. The Shield */}
+      <FloatingElement className="bottom-[20%] right-[40%] delay-500">
+         <svg width="60" height="60" viewBox="0 0 24 24" fill="none" className="text-sky-500/40 drop-shadow-[0_0_10px_rgba(14,165,233,0.3)]">
+            <path 
+              d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" 
+              stroke="currentColor" 
+              strokeWidth="1.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+         </svg>
+      </FloatingElement>
+
+    </div>
   );
 }
 
-// Static spheres (no floating)
-function FloatingSpheres() {
+// Helper for floating animation
+function FloatingElement({ children, className, duration = "4s" }: { children: React.ReactNode; className?: string; duration?: string }) {
   return (
-    <group>
-      {[...Array(5)].map((_, i) => (
-        <mesh
-          key={i}
-          position={[
-            Math.random() * 5 - 2.5,
-            Math.random() * 2 - 1,
-            Math.random() * 2 - 1,
-          ]}
-        >
-          <sphereGeometry args={[0.2, 32, 32]} />
-          <meshStandardMaterial
-            emissive="#6366f1"
-            emissiveIntensity={0.9}
-            color="#818cf8"
-            metalness={0.6}
-            roughness={0.3}
-          />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-// Cube
-function Cube({ position }: { position: [number, number, number] }) {
-  return (
-    <mesh position={position}>
-      <boxGeometry args={[0.8, 0.8, 0.8]} />
-      <meshStandardMaterial
-        color="#6366f1"
-        metalness={0.8}
-        roughness={0.2}
-        emissive="#818cf8"
-        emissiveIntensity={0.6}
-      />
-    </mesh>
-  );
-}
-
-// Square Plane
-function Square({ position }: { position: [number, number, number] }) {
-  return (
-    <mesh position={position} rotation={[Math.PI / 4, Math.PI / 4, 0]}>
-      <planeGeometry args={[1, 1]} />
-      <meshStandardMaterial
-        color="#4f46e5"
-        metalness={0.6}
-        roughness={0.3}
-        side={THREE.DoubleSide}
-      />
-    </mesh>
-  );
-}
-
-// World Sphere
-function World({ position }: { position: [number, number, number] }) {
-  return (
-    <mesh position={position}>
-      <sphereGeometry args={[0.7, 32, 32]} />
-      <meshStandardMaterial
-        color="#60a5fa"
-        metalness={0.7}
-        roughness={0.2}
-        emissive="#3b82f6"
-        emissiveIntensity={0.4}
-      />
-    </mesh>
-  );
-}
-
-// Shield Shape
-function Shield({ position }: { position: [number, number, number] }) {
-  const shape = new THREE.Shape();
-  shape.moveTo(0, 1);
-  shape.bezierCurveTo(0.6, 0.5, 0.6, -0.3, 0, -1);
-  shape.bezierCurveTo(-0.6, -0.3, -0.6, 0.5, 0, 1);
-  const geometry = new THREE.ShapeGeometry(shape);
-
-  return (
-    <mesh position={position} rotation={[Math.PI / 2, 0, 0]}>
-      <primitive object={geometry} />
-      <meshStandardMaterial
-        color="#0ea5e9"
-        emissive="#38bdf8"
-        emissiveIntensity={0.7}
-        metalness={0.8}
-        roughness={0.2}
-      />
-    </mesh>
-  );
-}
-
-// Scene
-function Scene() {
-  return (
-    <>
-      <ambientLight intensity={0.4} />
-      <pointLight position={[3, 3, 3]} intensity={1.5} color="#a5b4fc" />
-      <pointLight position={[-3, -3, -3]} intensity={1.2} color="#6366f1" />
-
-      <ShiningCurve />
-      <FloatingSpheres />
-
-      {/* 3D elements */}
-      <Cube position={[-2, 1, -1]} />
-      <Square position={[2, -1, -2]} />
-      <World position={[1.5, 1.5, -1]} />
-      <Shield position={[0, 0, 0]} />
-    </>
-  );
-}
-
-// Main component
-export default function LogoBack() {
-  return (
-    <div className="w-full h-full opacity-70 flex justify-center items-center absolute top-0 left-0 overflow-hidden">
-      <Canvas camera={{ position: [0, 0, 6], fov: 60 }}>
-        <Scene />
-      </Canvas>
+    <div className={`absolute ${className}`}>
+      <motion.div
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 5, -5, 0],
+        }}
+        transition={{
+          duration: parseFloat(duration),
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        {children}
+      </motion.div>
     </div>
   );
 }
