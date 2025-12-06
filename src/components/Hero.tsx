@@ -85,7 +85,7 @@ export default function Hero() {
 
                 <Button
                   variant="primary"
-                  className="relative w-full sm:w-auto  text-white hover:bg-gray-800 dark:hover:bg-gray-900 font-semibold py-4 px-8 rounded-xl flex items-center justify-center gap-2"
+                  className="relative w-full sm:w-auto   text-white hover:bg-gray-800 dark:hover:bg-gray-900 font-semibold py-4 px-8 rounded-xl flex items-center justify-center gap-2"
                 >
                   View Projects 
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
