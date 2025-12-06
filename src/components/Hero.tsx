@@ -6,8 +6,7 @@ import { motion, Variants } from "framer-motion";
 import Button from "./ui/Button";
 import Container from "./Container";
 
-// Prevent SSR crashes from browser APIs inside HeroDesign
-const HeroDesign = dynamic(() => import("./home/HeroDesign"), { ssr: false });
+
 
 // Animation Variants
 const fadeInUp: Variants = {
@@ -31,12 +30,6 @@ export default function Hero() {
   return (
     <section className="relative flex items-center text-gray-900 dark:text-gray-100 py-24 overflow-hidden transition-colors duration-500">
       
-      {/* Background Ambient Glow */}
-      <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none overflow-hidden">
-        <HeroDesign />
-        <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-[120px] opacity-40 dark:opacity-20" />
-        <div className="absolute bottom-[10%] left-[5%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] opacity-40 dark:opacity-20" />
-      </div>
 
       <Container className="relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
