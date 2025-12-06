@@ -17,7 +17,6 @@ export default function Navigate() {
   const dispatch = useDispatch();
   const { theme, setTheme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [posi, setPosi] = useState("-79vw");
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -53,7 +52,8 @@ export default function Navigate() {
 
   return (
     <>
-      <Aside setPosi={setPosi} posi={posi} />
+      {/* FIXED: Removed props 'setPosi' and 'posi' because Aside uses Redux now */}
+      <Aside />
 
       <motion.header
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-in-out border-b
