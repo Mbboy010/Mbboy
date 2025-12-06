@@ -4,8 +4,8 @@ import Aside from "../aside/Aside";
 import Container from "../Container";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Moon, Sun, Menu, Home, Briefcase, Users, User } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Moon, Sun, Menu, Home, Briefcase, Users, User, Terminal } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useDispatch } from "react-redux";
 import { setIsAside } from "../redux/slicer/AsideCheck";
@@ -18,6 +18,7 @@ export default function Navigate() {
   const { theme, setTheme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [posi, setPosi] = useState("-79vw");
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
   const navItems = [
@@ -27,7 +28,17 @@ export default function Navigate() {
     { name: "About Me", href: "/about-me", icon: User },
   ];
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    
+    // Handle Scroll Effect
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   if (!mounted) return null;
 
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -41,79 +52,106 @@ export default function Navigate() {
   };
 
   return (
-    <div
-      className={`relative transition-colors duration-300 bg-white dark:bg-[#0d0d0d]`}
-      style={{ zIndex: "100" }}
-    >
+    <>
       <Aside setPosi={setPosi} posi={posi} />
 
-      <div className="fixed left-0 top-0 w-full flex justify-center items-center z-50">
-        <motion.nav
-          className={`w-full shadow-md backdrop-blur-md h-[4.2rem] flex items-center transition-all duration-300
-            bg-white/80 dark:bg-[#0D0D0D]/80`}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Container>
-            <div className="flex justify-between items-center w-full h-full">
-              {/* 🌟 Brand Logo */}
-              <Link href="/" className="flex items-center gap-3 group">
-                <h1 className="text-2xl font-extrabold bg-gradient-to-r from-customPurple to-customPink text-transparent bg-clip-text group-hover:scale-105 transition-transform duration-300">
-                  MBBOY
-                </h1>
-              </Link>
+      <motion.header
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-in-out border-b
+          ${
+            isScrolled
+              ? "bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-xl border-gray-200 dark:border-white/5 py-3 shadow-sm"
+              : "bg-transparent border-transparent py-5"
+          }
+        `}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Container>
+          <div className="flex justify-between items-center w-full">
+            
+            {/* 🌟 Brand Logo */}
+            <Link href="/" className="flex items-center gap-2 group relative z-50">
+              <div className="p-2 bg-gradient-to-tr from-purple-600 to-pink-500 rounded-lg text-white transform group-hover:rotate-12 transition-transform duration-300">
+                <Terminal size={20} strokeWidth={2.5} />
+              </div>
+              <span className="text-xl md:text-2xl font-black tracking-tight text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                MBBOY<span className="text-pink-500">.</span>
+              </span>
+            </Link>
 
-              {/* 🔆 Right Side */}
-              <div className="flex items-center gap-6 md:gap-8">
-                {/* 🧭 Desktop Navigation */}
-                <div className="hidden md:flex items-center gap-6">
-                  {navItems.map(({ name, href, icon: Icon }) => (
+            {/* 🔆 Right Side Actions */}
+            <div className="flex items-center gap-4 md:gap-8">
+              
+              {/* 🧭 Desktop Navigation */}
+              <nav className="hidden md:flex items-center gap-2 p-1 bg-gray-100/50 dark:bg-white/5 rounded-full border border-gray-200/50 dark:border-white/5 backdrop-blur-sm">
+                {navItems.map(({ name, href }) => {
+                  const isActive = pathname === href;
+                  return (
                     <Link
                       key={href}
                       href={href}
-                      className={`flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                        pathname === href
-                          ? "bg-gradient-to-r from-customPurple to-customPink text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-purple-600 dark:hover:text-purple-400"
-                      }`}
+                      className={`relative px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 z-10 
+                        ${isActive ? "text-white" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"}
+                      `}
                     >
-                      <Icon className="w-4 h-4" />
+                      {isActive && (
+                        <motion.div
+                          layoutId="active-pill"
+                          className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full -z-10 shadow-lg shadow-purple-500/30"
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
+                      )}
                       {name}
                     </Link>
-                  ))}
-                </div>
+                  );
+                })}
+              </nav>
 
+              <div className="flex items-center gap-4">
                 {/* 🌙 Theme Toggle */}
                 <button
-                  onClick={() =>
-                    setTheme(currentTheme === "dark" ? "light" : "dark")
-                  }
-                  className="relative w-12 h-6 flex items-center rounded-full bg-gray-300 dark:bg-gray-700 transition-all duration-300 hover:ring-2 hover:ring-purple-400/50"
+                  onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
+                  className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-white/10 transition-all active:scale-95 border border-transparent dark:border-white/5"
+                  aria-label="Toggle Theme"
                 >
-                  <span
-                    className={`absolute left-1 flex items-center justify-center w-5 h-5 rounded-full bg-white dark:bg-gray-900 shadow-md transform transition-transform duration-300 ${
-                      currentTheme === "dark" ? "translate-x-6" : "translate-x-0"
-                    }`}
-                  >
+                  <AnimatePresence mode="wait" initial={false}>
                     {currentTheme === "dark" ? (
-                      <Sun className="w-3 h-3 text-yellow-400" />
+                      <motion.div
+                        key="moon"
+                        initial={{ rotate: -90, opacity: 0 }}
+                        animate={{ rotate: 0, opacity: 1 }}
+                        exit={{ rotate: 90, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Moon size={18} />
+                      </motion.div>
                     ) : (
-                      <Moon className="w-3 h-3 text-purple-500" />
+                      <motion.div
+                        key="sun"
+                        initial={{ rotate: 90, opacity: 0 }}
+                        animate={{ rotate: 0, opacity: 1 }}
+                        exit={{ rotate: -90, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Sun size={18} className="text-orange-500" />
+                      </motion.div>
                     )}
-                  </span>
+                  </AnimatePresence>
                 </button>
 
-                {/* ☰ Mobile Menu */}
-                <Menu
+                {/* ☰ Mobile Menu Button */}
+                <button
                   onClick={handleAside}
-                  className="md:hidden w-7 h-7 text-gray-800 dark:text-gray-200 cursor-pointer hover:text-customPink transition-colors"
-                />
+                  className="md:hidden p-2 rounded-lg text-gray-800 dark:text-white bg-gray-100 dark:bg-white/10 hover:bg-purple-50 dark:hover:bg-purple-500/20 transition-colors"
+                >
+                  <Menu size={24} />
+                </button>
               </div>
             </div>
-          </Container>
-        </motion.nav>
-      </div>
-    </div>
+          </div>
+        </Container>
+      </motion.header>
+    </>
   );
 }

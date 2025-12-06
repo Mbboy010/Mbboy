@@ -29,7 +29,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[#050608] text-gray-300 border-t border-fuchsia-800  overflow-hidden">
+    <footer className="relative bg-[#050608] text-gray-300 border-t border-fuchsia-800 overflow-hidden">
       
       {/* 🔮 Background Glows */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
