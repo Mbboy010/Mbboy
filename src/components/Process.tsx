@@ -3,127 +3,234 @@
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
 import { motion } from "framer-motion";
-import { FaReact, FaNodeJs, FaShieldAlt, FaBug } from "react-icons/fa";
+// Added IconType for type safety
+import { IconType } from "react-icons"; 
+import { 
+  FaReact, 
+  FaNodeJs, 
+  FaShieldAlt, 
+  FaBug, 
+  FaPython, 
+  FaGitAlt, 
+  // REMOVED: FaDatabase and FaLock (unused)
+} from "react-icons/fa";
 import {
   SiNextdotjs,
   SiTailwindcss,
   SiLinux,
   SiWireshark,
+  SiDocker,
+  SiPostgresql
 } from "react-icons/si";
 
-const skills = [
-  {
-    title: "React",
-    desc: "Building dynamic and modern user interfaces using the React library for seamless performance.",
-    icon: <FaReact className="text-4xl text-cyan-500 dark:text-cyan-400" />,
+// --- Types ---
+interface SkillItem {
+  title: string;
+  category: string;
+  desc: string;
+  icon: IconType;
+  color: string;
+  bg: string;
+}
+
+// --- Animation Variants ---
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    // FIXED: Added 'as const' to fix TypeScript error
+    transition: { duration: 0.5, ease: "easeOut" as const } 
   },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+// --- Data ---
+const skills: SkillItem[] = [
+  // Frontend
   {
     title: "Next.js",
-    desc: "Developing full-stack web applications with optimized SEO, SSR, and secure API integrations.",
-    icon: <SiNextdotjs className="text-4xl text-black dark:text-white" />,
+    category: "Frontend",
+    desc: "Production-grade React framework for scalable, secure web apps.",
+    icon: SiNextdotjs,
+    color: "text-black dark:text-white",
+    bg: "group-hover:border-gray-500/50"
   },
   {
-    title: "TailwindCSS",
-    desc: "Creating responsive, elegant, and efficient UIs with a utility-first CSS framework.",
-    icon: <SiTailwindcss className="text-4xl text-sky-500 dark:text-sky-400" />,
+    title: "React",
+    category: "Frontend",
+    desc: "Building interactive, state-driven UIs with modern hooks.",
+    icon: FaReact,
+    color: "text-cyan-500",
+    bg: "group-hover:border-cyan-500/50"
   },
+  {
+    title: "Tailwind CSS",
+    category: "Frontend",
+    desc: "Rapid UI development with a utility-first, responsive engine.",
+    icon: SiTailwindcss,
+    color: "text-sky-500",
+    bg: "group-hover:border-sky-500/50"
+  },
+  
+  // Backend & Data (Added SQL & Python)
   {
     title: "Node.js",
-    desc: "Powering the backend with Node.js for scalable, secure, and high-performance APIs.",
-    icon: <FaNodeJs className="text-4xl text-green-600 dark:text-green-500" />,
+    category: "Backend",
+    desc: "Asynchronous event-driven runtime for scalable network apps.",
+    icon: FaNodeJs,
+    color: "text-green-600",
+    bg: "group-hover:border-green-600/50"
   },
   {
+    title: "Python",
+    category: "Backend & Sec",
+    desc: "Scripting for automation, AI integration, and security tools.",
+    icon: FaPython,
+    color: "text-yellow-500",
+    bg: "group-hover:border-yellow-500/50"
+  },
+  {
+    title: "PostgreSQL",
+    category: "Database",
+    desc: "Robust relational database management for complex data modeling.",
+    icon: SiPostgresql,
+    color: "text-blue-400",
+    bg: "group-hover:border-blue-400/50"
+  },
+
+  // Security
+  {
     title: "Cybersecurity",
-    desc: "Identifying vulnerabilities, strengthening defenses, and ensuring applications remain secure from attacks.",
-    icon: <FaShieldAlt className="text-4xl text-purple-500 dark:text-purple-400" />,
+    category: "Security",
+    desc: "Vulnerability assessment, threat modeling, and defense strategies.",
+    icon: FaShieldAlt,
+    color: "text-purple-600",
+    bg: "group-hover:border-purple-600/50"
   },
   {
     title: "Ethical Hacking",
-    desc: "Performing penetration testing, analyzing systems, and applying exploit prevention techniques.",
-    icon: <FaBug className="text-4xl text-red-500 dark:text-red-400" />,
+    category: "Security",
+    desc: "Penetration testing and exploit analysis to harden systems.",
+    icon: FaBug,
+    color: "text-red-500",
+    bg: "group-hover:border-red-500/50"
   },
   {
-    title: "Linux Security",
-    desc: "Configuring, monitoring, and hardening Linux systems to enhance overall infrastructure security.",
-    icon: <SiLinux className="text-4xl text-gray-600 dark:text-gray-300" />,
+    title: "Linux Hardening",
+    category: "OS Security",
+    desc: "Securing server environments and managing permissions.",
+    icon: SiLinux,
+    color: "text-gray-700 dark:text-gray-300",
+    bg: "group-hover:border-gray-500/50"
   },
   {
-    title: "Wireshark & Network Analysis",
-    desc: "Analyzing packets and traffic patterns to detect threats and maintain secure network communication.",
-    icon: <SiWireshark className="text-4xl text-cyan-500 dark:text-cyan-400" />,
+    title: "Network Analysis",
+    category: "Security",
+    desc: "Packet sniffing and traffic analysis with Wireshark.",
+    icon: SiWireshark,
+    color: "text-blue-600",
+    bg: "group-hover:border-blue-600/50"
+  },
+
+  // DevOps (Added Docker & Git)
+  {
+    title: "Docker",
+    category: "DevOps",
+    desc: "Containerization for consistent deployment and isolation.",
+    icon: SiDocker,
+    color: "text-blue-500",
+    bg: "group-hover:border-blue-500/50"
+  },
+  {
+    title: "Git & GitHub",
+    category: "Version Control",
+    desc: "Source code management and collaborative workflows.",
+    icon: FaGitAlt,
+    color: "text-orange-600",
+    bg: "group-hover:border-orange-600/50"
   },
 ];
 
 export default function Skills() {
   return (
-    <section className="relative  text-gray-900 dark:text-white py-20 overflow-hidden transition-colors duration-500">
+    <section className="relative py-24 overflow-hidden text-gray-900 dark:text-white transition-colors duration-500">
+      
+      {/* 🔮 Background */}
       <BackgroundGlow />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-      <Container>
+      <Container className="relative z-10">
+        
         {/* Header Section */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: false, amount: 0.3 }}
-          className="text-center mb-14"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }} // Repeats animation
+          variants={fadeInUp}
+          className="text-center mb-16 max-w-3xl mx-auto"
         >
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="uppercase tracking-widest text-sm text-gray-500 dark:text-gray-400"
-          >
-            TECH STACK
-          </motion.h3>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl lg:text-4xl font-bold mt-2"
-          >
-            My{" "}
-            <span className="text-purple-600 dark:text-purple-400">
-              Development & Security Stack
-            </span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400 mt-4"
-          >
-            I blend creativity with cybersecurity expertise — developing
-            high-performance, secure, and visually stunning digital experiences
-            using modern technologies and security practices.
-          </motion.p>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-xs font-bold uppercase tracking-widest mb-4">
+             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+             Technological Arsenal
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold mt-2 leading-tight">
+            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">Development</span> & Security Stack
+          </h2>
+          <p className="mt-6 text-lg text-gray-600 dark:text-gray-400">
+            I blend creativity with cybersecurity expertise — developing high-performance, 
+            secure, and visually stunning digital experiences using modern technologies.
+          </p>
         </motion.div>
 
-        {/* Skill Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {/* Skill Cards Grid */}
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }} // Repeats animation
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: false, amount: 0.3 }}
-              className="rounded-2xl p-6 text-center shadow-lg hover:shadow-purple-500/30 dark:hover:shadow-purple-500/40
-                         transition-all hover:scale-[1.03] bg-white dark:bg-gradient-to-br dark:from-[#1a1a2e] dark:to-[#111]"
+              variants={fadeInUp}
+              whileHover={{ y: -5 }}
+              className={`group relative p-6 rounded-2xl bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 ${skill.bg} transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10`}
             >
-              <div className="mx-auto mb-4 flex items-center justify-center w-16 h-16 
-                              rounded-xl bg-gradient-to-tr from-purple-600 to-pink-500">
-                {skill.icon}
+              {/* Category Tag */}
+              <div className="absolute top-4 right-4">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400">
+                  {skill.category}
+                </span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">{skill.title}</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+
+              {/* Icon */}
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <skill.icon className={`text-2xl ${skill.color}`} />
+              </div>
+
+              {/* Text */}
+              <h3 className="text-lg font-bold mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                {skill.title}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                 {skill.desc}
               </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
+
       </Container>
     </section>
   );
