@@ -5,15 +5,18 @@ import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import Button from "./ui/Button";
 import Container from "./Container";
-// New imports for professional icons
-import { FaReact, FaShieldAlt } from "react-icons/fa"; 
 
 // Prevent SSR crashes from browser APIs inside HeroDesign
 const HeroDesign = dynamic(() => import("./home/HeroDesign"), { ssr: false });
 
+// Animation Variants
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: "easeOut" } 
+  },
 };
 
 const staggerContainer: Variants = {
@@ -26,7 +29,7 @@ const staggerContainer: Variants = {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center text-gray-900 dark:text-gray-100 py-24 overflow-hidden transition-colors duration-500 bg-gray-50/50 dark:bg-[#0a0a0a]">
+    <section className="relative flex items-center text-gray-900 dark:text-gray-100 py-24 overflow-hidden transition-colors duration-500">
       
       {/* Background Ambient Glow */}
       <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none overflow-hidden">
@@ -42,9 +45,9 @@ export default function Hero() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: false }} // FIXED: Animation repeats on scroll
             variants={staggerContainer}
-            className="text-center lg:text-left max-w-2xl space-y-8"
+            className="text-center lg:text-left max-w-2xl space-y-8 lg:w-1/2"
           >
             {/* Badge */}
             <motion.div variants={fadeInUp} className="flex justify-center lg:justify-start">
@@ -82,7 +85,7 @@ export default function Hero() {
 
                 <Button
                   variant="primary"
-                  className="relative w-full sm:w-auto bg-gray-900 dark:bg-black text-white hover:bg-gray-800 dark:hover:bg-gray-900 font-semibold py-4 px-8 rounded-xl flex items-center justify-center gap-2"
+                  className="relative w-full sm:w-auto  text-white hover:bg-gray-800 dark:hover:bg-gray-900 font-semibold py-4 px-8 rounded-xl flex items-center justify-center gap-2"
                 >
                   View Projects 
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -106,62 +109,44 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT SIDE - IMPROVED IMAGE SECTION */}
+          {/* RIGHT SIDE - IMAGE SECTION (Replaced) */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+            initial={{ opacity: 0, scale: 0.9, rotate: -3 }}
             whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative w-full lg:w-[45%] perspective-1000"
+            transition={{ duration: 0.8, ease: "backOut" }}
+            viewport={{ once: false }} // FIXED: Animation repeats on scroll
+            className="w-full lg:w-1/2 flex justify-center lg:justify-end relative"
           >
-            {/* Floating Glass Card Container */}
-            <motion.div
-              animate={{ y: [0, -20, 0], rotateX: [0, 2, 0], rotateY: [0, -2, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="relative z-10 p-3 bg-white/40 dark:bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border-[1.5px] border-white/30 dark:border-white/10 shadow-2xl dark:shadow-purple-900/20"
-            >
-              {/* Inner Image Container with Cyber Grid Background */}
-              <div className="relative rounded-[2rem] overflow-hidden aspect-square bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-black">
-                 {/* Subtle Cyber Grid Overlay */}
-                 <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] dark:opacity-20 opacity-10 z-0"></div>
-                
+            <div className="relative w-96 h-[30rem] md:w-[29rem] md:h-[38rem]">
+              
+              {/* Background Glow/Blob behind image */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-600 rounded-[2rem] rotate-6 opacity-20 blur-xl" />
+              
+              {/* Main Image Card */}
+              <div className="relative w-full h-full rounded-[2rem] overflow-hidden border border-gray-200 dark:border-white/10 shadow-2xl bg-white dark:bg-[#0b1220]">
                 <Image
                   src="/profile.png"
-                  alt="Musa Hakilu Profile"
+                  alt="Musa Hakilu"
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-top hover:scale-105 transition-transform duration-700 relative z-10"
+                  className="object-cover hover:scale-105 transition-transform duration-700 ease-in-out"
                   priority
                 />
-
-                {/* Dark Gradient Overlay at bottom for depth */}
-                <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-20" />
+                {/* Gradient Overlay at bottom for depth */}
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
               </div>
 
-              {/* Floating Tech Badge 1 (Security) */}
-              <motion.div 
-                className="absolute -right-6 top-12 p-3.5 rounded-2xl shadow-[0_8px_16px_rgb(0_0_0/0.15)] bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-purple-100 dark:border-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400"
-                animate={{ y: [0, 12, 0], rotate: [0, 5, 0] }}
-                transition={{ duration: 5, repeat: Infinity, delay: 0.5, ease: "easeInOut" }}
+              {/* "Open for Work" Badge */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                className="absolute -bottom-6 -left-6 bg-white/90 dark:bg-[#1a1f2e]/90 backdrop-blur-md border border-gray-200 dark:border-white/10 p-4 rounded-xl shadow-xl flex items-center gap-3"
               >
-                 <div className="absolute inset-0 bg-purple-500/10 rounded-2xl blur-md -z-10"></div>
-                <FaShieldAlt size={28} />
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                <span className="text-sm font-medium text-gray-800 dark:text-gray-200">Open for work</span>
               </motion.div>
-
-              {/* Floating Tech Badge 2 (React/Dev) */}
-              <motion.div 
-                className="absolute -left-6 bottom-12 p-3.5 rounded-2xl shadow-[0_8px_16px_rgb(0_0_0/0.15)] bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-blue-100 dark:border-blue-900/50 flex items-center justify-center text-blue-500 dark:text-blue-400"
-                animate={{ y: [0, -12, 0], rotate: [0, -5, 0] }}
-                transition={{ duration: 6, repeat: Infinity, delay: 1, ease: "easeInOut" }}
-              >
-                <div className="absolute inset-0 bg-blue-500/10 rounded-2xl blur-md -z-10"></div>
-                <FaReact size={30} className="animate-spin-slow" />
-              </motion.div>
-            </motion.div>
-
-            {/* Back Glow behind image container */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-purple-600/40 to-blue-600/40 blur-[90px] -z-10 transform scale-95" />
+            </div>
           </motion.div>
+
         </div>
       </Container>
     </section>
