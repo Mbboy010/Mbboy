@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
+// REMOVED: Unused 'SiTensorflow' import to clear warning
 import { 
-  SiTensorflow, 
   SiPytorch, 
   SiOpenai, 
   SiScikitlearn, 
@@ -20,7 +20,8 @@ const fadeInUp = {
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.6, ease: "easeOut" } 
+    // FIXED: Added 'as const' to fix the TypeScript 'Easing' error
+    transition: { duration: 0.6, ease: "easeOut" as const } 
   },
 };
 
@@ -98,7 +99,7 @@ export default function AISkills() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false }} // FIXED: Set to false to repeat animation on scroll
+          viewport={{ once: false }}
           variants={fadeInUp}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
@@ -123,7 +124,7 @@ export default function AISkills() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false }} // FIXED: Set to false to repeat animation on scroll
+          viewport={{ once: false }} 
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {aiCapabilities.map(({ name, icon: Icon, desc, color }, i) => (
