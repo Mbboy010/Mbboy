@@ -1,192 +1,198 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
 import { motion } from "framer-motion";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { FaCheckCircle, FaShieldAlt } from "react-icons/fa";
 
-const plans = [
+// --- Types ---
+interface Plan {
+  name: string;
+  price: string;
+  desc: string;
+  features: string[];
+  highlight?: boolean;
+  isSecurity?: boolean;
+}
+
+// --- Animation Variants ---
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    // FIXED: Added 'as const' to fix TypeScript error
+    transition: { duration: 0.5, ease: "easeOut" as const } 
+  },
+};
+
+// --- Data ---
+const plans: Plan[] = [
   {
     name: "Basic",
     price: "₦150,000",
+    desc: "Perfect for personal blogs and portfolios.",
     features: [
       "3 Pages or Screens",
       "2 Revisions",
       "Responsive Design",
       "Source Code Included",
     ],
+    highlight: false,
   },
   {
     name: "Standard",
     price: "₦350,000",
+    desc: "Ideal for small businesses and startups.",
     features: [
       "10 Pages or Screens",
       "5 Revisions",
       "Backend Integration",
       "Basic SEO & Security Setup",
     ],
+    highlight: true, // Tag as Popular
   },
   {
     name: "Premium",
     price: "₦700,000",
+    desc: "For large scale applications and companies.",
     features: [
-      "Unlimited Pages or Screens",
+      "Unlimited Pages/Screens",
       "Unlimited Revisions",
-      "Full Deployment & Maintenance",
-      "Advanced Security & Optimization",
+      "Full Deployment",
+      "Advanced Optimization",
     ],
+    highlight: false,
   },
   {
-    name: "Cybersecurity Plan",
+    name: "Cyber Security",
     price: "₦500,000",
+    desc: "Hardening and protecting existing systems.",
     features: [
-      "Comprehensive Vulnerability Assessment",
-      "Penetration Testing (Web & App)",
-      "Firewall Configuration & Hardening",
-      "Incident Response & Security Audit Report",
+      "Vulnerability Assessment",
+      "Penetration Testing",
+      "Firewall Configuration",
+      "Incident Response Report",
     ],
+    isSecurity: true, // Special styling
   },
 ];
 
 export default function Pricing() {
-  const [theme, setTheme] = useState("dark");
-
-  useEffect(() => {
-    // Apply theme to <html> tag for Tailwind dark mode
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
-
   return (
-    <section className="relative text-gray-900 dark:text-white py-20 overflow-hidden transition-colors duration-500">
+    <section className="relative text-gray-900 dark:text-white py-24 overflow-hidden transition-colors duration-500">
       <BackgroundGlow />
 
-
-
-      <Container>
+      <Container className="relative z-10">
         {/* 🔥 Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: false, amount: 0.3 }}
-          className="text-center mb-14"
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16 max-w-3xl mx-auto"
         >
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: false }}
-            className="uppercase tracking-widest text-sm text-gray-500 dark:text-gray-400"
-          >
-            PRICING PLANS
-          </motion.h3>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: false }}
-            className="text-3xl lg:text-4xl font-bold mt-2"
-          >
-            Flexible <span className="text-purple-600 dark:text-purple-400">Pricing</span> for Every Project
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            viewport={{ once: false }}
-            className="max-w-2xl mx-auto text-gray-600 dark:text-gray-400 mt-4"
-          >
-            Choose a plan that fits your goals — whether you’re launching a website,
-            building an app, or securing your systems from cyber threats.
-          </motion.p>
+          <span className="inline-block py-1 px-3 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs font-bold uppercase tracking-widest mb-4">
+            Transparent Pricing
+          </span>
+          <h2 className="text-3xl lg:text-5xl font-extrabold mb-4">
+            Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">Power</span>
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400">
+            Fair prices for high-quality code and iron-clad security. 
+            No hidden fees, just results.
+          </p>
         </motion.div>
 
-        {/* 💫 Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* 💫 Pricing Cards Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"
+        >
           {plans.map((p, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
-              viewport={{ once: false, amount: 0.3 }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 0 30px rgba(168, 85, 247, 0.4)",
-              }}
-              whileTap={{ scale: 0.97 }}
-              className={`rounded-2xl p-8 text-center shadow-lg border transition-all duration-300 
+              variants={cardVariants}
+              whileHover={{ y: -8 }}
+              className={`relative flex flex-col p-6 rounded-3xl border transition-all duration-300
                 ${
-                  p.name === "Cybersecurity Plan"
-                    ? "bg-gradient-to-br from-purple-100 to-gray-50 dark:from-purple-900 dark:to-[#111] border-purple-400 dark:border-purple-500 shadow-purple-400/30 dark:shadow-purple-500/50"
-                    : "bg-gradient-to-br from-white to-gray-100 dark:from-[#1a1a2e] dark:to-[#111] border-gray-200 dark:border-gray-700 hover:shadow-purple-500/40"
-                }`}
+                  p.isSecurity
+                    ? "bg-[#1a1a2e] border-purple-500/50 shadow-2xl shadow-purple-500/20"
+                    : "bg-white dark:bg-[#0b1220] border-gray-200 dark:border-white/10 hover:border-purple-400/50 hover:shadow-xl"
+                }
+                ${p.highlight ? "border-purple-500 ring-1 ring-purple-500/50" : ""}
+              `}
             >
-              <motion.h3
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                viewport={{ once: false }}
-                className="text-xl font-semibold text-gray-800 dark:text-white"
-              >
-                {p.name}
-              </motion.h3>
+              {/* Most Popular Badge */}
+              {p.highlight && (
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-purple-600 to-pink-500 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">
+                  MOST POPULAR
+                </div>
+              )}
 
-              <motion.p
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: false }}
-                className="text-3xl font-bold mt-4 text-purple-600 dark:text-purple-400"
-              >
-                {p.price}
-              </motion.p>
+              {/* Security Badge */}
+              {p.isSecurity && (
+                <div className="absolute top-4 right-4 text-purple-400 opacity-20">
+                  <FaShieldAlt size={40} />
+                </div>
+              )}
 
-              <ul className="mt-6 text-gray-600 dark:text-gray-400 space-y-2 text-sm">
+              <div className="mb-4">
+                <h3 className={`text-xl font-bold ${p.isSecurity ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                  {p.name}
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 h-8">
+                  {p.desc}
+                </p>
+              </div>
+
+              <div className="mb-6 pb-6 border-b border-gray-100 dark:border-white/5">
+                <span className={`text-3xl font-bold ${p.isSecurity ? 'text-purple-400' : 'text-gray-900 dark:text-white'}`}>
+                  {p.price}
+                </span>
+                <span className="text-sm text-gray-500 ml-1">/project</span>
+              </div>
+
+              <ul className="space-y-4 mb-8 flex-1">
                 {p.features.map((f, j) => (
-                  <motion.li
-                    key={j}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: j * 0.1 }}
-                    viewport={{ once: false }}
-                    className="flex items-center justify-center gap-2"
-                  >
-                    <span>✔</span> {f}
-                  </motion.li>
+                  <li key={j} className="flex items-start gap-3 text-sm">
+                    <FaCheckCircle className={`mt-0.5 flex-shrink-0 ${p.isSecurity ? "text-purple-400" : "text-green-500"}`} />
+                    <span className="text-gray-600 dark:text-gray-300 leading-snug">
+                      {f}
+                    </span>
+                  </li>
                 ))}
               </ul>
 
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 15px rgba(168, 85, 247, 0.5)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className={`mt-8 px-6 py-2 rounded-lg font-medium transition-all duration-300 
+              <button
+                className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg
                   ${
-                    p.name === "Cybersecurity Plan"
-                      ? "bg-purple-600 hover:bg-purple-700 text-white"
-                      : "bg-purple-500 hover:bg-purple-600 text-white"
+                    p.isSecurity
+                      ? "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-900/20"
+                      : p.highlight 
+                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90"
+                        : "bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/10"
                   }`}
               >
-                {p.name === "Cybersecurity Plan"
-                  ? "Secure My System"
-                  : "Start Project"}
-              </motion.button>
+                {p.isSecurity ? "Secure Now" : "Choose Plan"}
+              </button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </Container>
     </section>
   );
