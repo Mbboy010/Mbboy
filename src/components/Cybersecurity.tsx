@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Container from "./Container";
-import BackgroundGlow from "./BackgroundGlow";
+import SecurityBackground from './home/SecurityBackground';
 // Added IconType for strict TypeScript safety
 import { IconType } from "react-icons";
 import {
@@ -101,7 +101,7 @@ export default function Cybersecurity() {
     <section className="relative py-24 overflow-hidden text-gray-900 dark:text-white transition-colors duration-500">
       
       {/* 🔮 Background & Radar Effect */}
-      <BackgroundGlow />
+      <SecurityBackground />
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5 pointer-events-none" />
       
       <Container className="relative z-10">
