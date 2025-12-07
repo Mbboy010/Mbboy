@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useCallback } from "react";
-// Import LucideIcon type to fix the "any" error
 import { X, Terminal, Github, Linkedin, Twitter, LucideIcon } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,14 +11,11 @@ import { setOpacity } from "../redux/slicer/opacity";
 import type { RootState } from "../redux/store";
 import Content from "./Content";
 
-// Removed unused Props interface since Redux is handling state
 export default function Aside() {
   const dispatch = useDispatch();
   const pathname = usePathname(); 
   const isAside = useSelector((state: RootState) => state.isAs.value);
-  // Removed unused selectors (opacity, posit) to clear warnings
 
-  // FIXED: Wrapped in useCallback to satisfy useEffect dependencies
   const handleClose = useCallback(() => {
     dispatch(setOpacity("0"));
     dispatch(setPosit("-79vw"));
@@ -28,12 +24,14 @@ export default function Aside() {
     }, 300);
   }, [dispatch]);
 
+  // 🔴 FIX APPLIED HERE 🔴
   // Effect: Close sidebar when Route Changes
   useEffect(() => {
-    if (isAside) {
-      handleClose();
-    }
-  }, [pathname, isAside, handleClose]); // Added handleClose to deps
+    // We simply call handleClose on any route change.
+    // We REMOVED 'isAside' from the dependency array below.
+    // If we include it, the menu will close itself the moment it opens.
+    handleClose();
+  }, [pathname, handleClose]); 
 
   // Effect: Close sidebar on Back Button press
   useEffect(() => {
@@ -50,7 +48,7 @@ export default function Aside() {
         window.removeEventListener("popstate", handlePopState);
       };
     }
-  }, [isAside, handleClose]); // Added handleClose to deps
+  }, [isAside, handleClose]);
 
   return (
     <AnimatePresence mode="wait">
@@ -137,7 +135,6 @@ export default function Aside() {
   );
 }
 
-// FIXED: Replaced 'any' with 'LucideIcon'
 function SocialIcon({ Icon }: { Icon: LucideIcon }) {
   return (
     <a href="#" className="text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors hover:scale-110">
