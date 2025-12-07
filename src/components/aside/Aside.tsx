@@ -125,7 +125,7 @@ export default function Aside() {
             </div>
 
             {/* 📜 Content Area */}
-            <div className="relative z-10 flex-1 overflow-y-auto py-6 px-4">
+            <div className="relative z-10 flex-1 overflow-y-auto pb-6 px-4">
               <Content />
             </div>
 

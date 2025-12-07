@@ -1,7 +1,7 @@
 "use client";
 
 import Aside from "../aside/Aside";
-import Container from "../Container";
+import NabCom from "./NabCom";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -67,7 +67,7 @@ export default function Navigate() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Container>
+        <NabCom>
           <div className="flex justify-between items-center w-full">
             
             {/* 🌟 Brand Logo */}
@@ -150,7 +150,7 @@ export default function Navigate() {
               </div>
             </div>
           </div>
-        </Container>
+        </NabCom>
       </motion.header>
     </>
   );
