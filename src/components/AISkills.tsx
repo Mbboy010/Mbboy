@@ -141,6 +141,8 @@ export default function AISkills() {
               variants={fadeInUp}
               // ✅ Added viewport once: false to each item as requested
               viewport={{ once: false }} 
+              initial="hidden"
+              whileInView="visible"
               whileHover={{ y: -5 }}
               className="group relative p-6 rounded-2xl bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 hover:border-purple-500/30 shadow-sm hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300"
             >

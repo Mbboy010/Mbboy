@@ -128,6 +128,9 @@ export default function Pricing() {
               key={i}
               variants={cardVariants}
               whileHover={{ y: -8 }}
+              viewport={{ once: false }} 
+              initial="hidden"
+              whileInView="visible"
               className={`relative flex flex-col p-6 rounded-3xl border transition-all duration-300
                 ${
                   p.isSecurity

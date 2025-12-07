@@ -206,6 +206,9 @@ export default function Skills() {
               key={index}
               variants={fadeInUp}
               whileHover={{ y: -5 }}
+              viewport={{ once: false }} 
+              initial="hidden"
+              whileInView="visible"
               className={`group relative p-6 rounded-2xl bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 ${skill.bg} transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10`}
             >
               {/* Category Tag */}
