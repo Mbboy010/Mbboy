@@ -9,11 +9,6 @@ export default function SecurityBackground() {
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none z-0">
       
-      {/* 1. Ambient Security Glows */}
-      {/* Red (Threat) Glow */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px] mix-blend-screen" />
-      {/* Green (Safe) Glow */}
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px] mix-blend-screen" />
 
       {/* 2. The Circuit Line (Cyber Path) */}
       <svg className="absolute top-0 left-0 w-full h-full opacity-40" viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">

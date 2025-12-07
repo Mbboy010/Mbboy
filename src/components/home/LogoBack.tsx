@@ -7,9 +7,6 @@ export default function HeroDesign() {
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none">
       
-      {/* 1. Ambient Background Glows */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] mix-blend-screen" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen" />
 
       {/* 2. The Shining Curve (Draws when in view) */}
       <svg className="absolute top-0 left-0 w-full h-full opacity-60" viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">
