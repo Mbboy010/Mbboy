@@ -24,16 +24,28 @@ export default function Aside() {
     }, 300);
   }, [dispatch]);
 
-  // 🔴 FIX APPLIED HERE 🔴
-  // Effect: Close sidebar when Route Changes
+  // 1. Effect: Lock Body Scroll when Menu is Open
   useEffect(() => {
-    // We simply call handleClose on any route change.
-    // We REMOVED 'isAside' from the dependency array below.
-    // If we include it, the menu will close itself the moment it opens.
+    if (isAside) {
+      // Disable scroll
+      document.body.style.overflow = "hidden";
+    } else {
+      // Enable scroll
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup: Ensure scroll is restored if component unmounts unexpectedly
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isAside]);
+
+  // 2. Effect: Close sidebar when Route Changes
+  useEffect(() => {
     handleClose();
   }, [pathname, handleClose]); 
 
-  // Effect: Close sidebar on Back Button press
+  // 3. Effect: Close sidebar on Back Button press
   useEffect(() => {
     if (isAside) {
       window.history.pushState(null, "", window.location.href);

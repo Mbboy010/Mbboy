@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Container from "./Container";
 import BackgroundGlow from "./BackgroundGlow";
-// REMOVED: Unused 'SiTensorflow' import to clear warning
+import { IconType } from "react-icons"; 
 import { 
   SiPytorch, 
   SiOpenai, 
@@ -15,17 +15,16 @@ import {
 import { FaBrain, FaRobot, FaDatabase, FaNetworkWired } from "react-icons/fa";
 
 // --- Animation Variants ---
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 40 },
   visible: { 
     opacity: 1, 
     y: 0, 
-    // FIXED: Added 'as const' to fix the TypeScript 'Easing' error
-    transition: { duration: 0.6, ease: "easeOut" as const } 
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } 
   },
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -35,8 +34,16 @@ const staggerContainer = {
   },
 };
 
+// --- Types ---
+interface AIAbility {
+  name: string;
+  icon: IconType;
+  desc: string;
+  color: string;
+}
+
 // --- Data ---
-const aiCapabilities = [
+const aiCapabilities: AIAbility[] = [
   { 
     name: "Generative AI & LLMs", 
     icon: SiOpenai, 
@@ -124,13 +131,16 @@ export default function AISkills() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false }} 
+          // Keep viewport on parent for staggering
+          viewport={{ once: false, margin: "-50px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {aiCapabilities.map(({ name, icon: Icon, desc, color }, i) => (
             <motion.div
               key={i}
               variants={fadeInUp}
+              // ✅ Added viewport once: false to each item as requested
+              viewport={{ once: false }} 
               whileHover={{ y: -5 }}
               className="group relative p-6 rounded-2xl bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 hover:border-purple-500/30 shadow-sm hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300"
             >

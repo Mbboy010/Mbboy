@@ -7,25 +7,30 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaArrowRight } from "react-icons/fa";
 
-// === Safe Animation Variants (No Vercel Errors) ===
+// === Safe Animation Variants ===
+// 1. The Card Animation (Rising Up)
 const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 60 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }, // ✅ fixed
+    // Using a bezier array is safer for TS than string literals like "easeOut" in some versions
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
+// 2. The Container Animation (Staggering the children)
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 },
+    transition: {
+      staggerChildren: 0.2, // Time between each card appearing
+    },
   },
 };
 
-// === Strong Type for Project Data (Prevents "undefined" errors) ===
+// === Types ===
 interface Project {
   title: string;
   desc: string;
@@ -90,11 +95,13 @@ const projects: Project[] = [
 export default function Portfolio() {
   return (
     <section className="relative py-32 overflow-hidden text-gray-900 dark:text-white transition-colors duration-500">
+      
       {/* Background Elements */}
       <BackgroundGlow />
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
 
       <Container className="relative z-10">
+        
         {/* Section Header */}
         <motion.div
           initial="hidden"
@@ -125,17 +132,21 @@ export default function Portfolio() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
+          // viewport settings explain:
+          // once: false -> Animations repeat every time you scroll up/down
+          // margin: "-100px" -> Animation starts when element is 100px into the screen (prevents half-cut animations)
           viewport={{ once: false, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {projects.map((p, i) => (
             <motion.div
               key={i}
-              variants={fadeInUp} // ✅ safe now
+              variants={fadeInUp}
               className="group relative flex flex-col bg-white dark:bg-[#111] rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-purple-500/50 dark:hover:border-purple-500/50 shadow-sm hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 overflow-hidden"
             >
-              {/* Image */}
+              {/* Image Container */}
               <div className="relative w-full h-60 overflow-hidden bg-gray-100 dark:bg-gray-800">
+                {/* Note: Ensure you have these images in public/works/ folder */}
                 <Image
                   src={p.img}
                   alt={p.title}
@@ -166,7 +177,7 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Content */}
+              {/* Card Content */}
               <div className="flex flex-col flex-grow p-6">
                 <div className="flex flex-wrap gap-2 mb-4">
                   {p.tags.map((tag, index) => (
@@ -200,7 +211,7 @@ export default function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} // ✅ fixed
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16 text-center"
         >
           <Link
@@ -210,6 +221,7 @@ export default function Portfolio() {
             View All Projects <FaArrowRight />
           </Link>
         </motion.div>
+
       </Container>
     </section>
   );

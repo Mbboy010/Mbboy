@@ -105,7 +105,7 @@ export default function FrontendBackend() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           variants={fadeInUp}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
@@ -171,7 +171,7 @@ function TechCard({ title, desc, skills, delay, gradient, borderGlow }: TechCard
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       variants={{
         hidden: { opacity: 0, y: 40 },
         visible: {
