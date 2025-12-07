@@ -141,6 +141,9 @@ export default function Portfolio() {
           {projects.map((p, i) => (
             <motion.div
               key={i}
+              initial="hidden"
+               whileInView="visible"
+              viewport={{ once: false}} 
               variants={fadeInUp}
               className="group relative flex flex-col bg-white dark:bg-[#111] rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-purple-500/50 dark:hover:border-purple-500/50 shadow-sm hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 overflow-hidden"
             >
