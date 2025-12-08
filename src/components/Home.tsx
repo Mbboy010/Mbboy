@@ -1,45 +1,49 @@
 "use client"
 
-import HomeBackground from './home/HomeBackground';
-import React, { useEffect, useCallback,useState } from "react";
-import HomeCom from './HomeCom';
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { setIsAside } from "./redux/slicer/AsideCheck";
 import { setPosit } from "./redux/slicer/posit";
 import { setOpacity } from "./redux/slicer/opacity";
-import type { RootState } from "./redux/store";
-import Loading from "./loading/Loading"
-
-
+import HomeBackground from './home/HomeBackground';
+import HomeCom from './HomeCom';
+import Loading from "./loading/Loading";
 
 export default function Home() {
-  
   const dispatch = useDispatch();
-  const isAside = useSelector((state: RootState) => state.isAs.value);
-  const [loading,setLoading] = useState<boolean>(false)
   
+  // FIX: Start loading as true so the user sees the loader first
+  const [loading, setLoading] = useState<boolean>(true);
   
   useEffect(() => {
+    // Dispatch initial Redux states
     dispatch(setOpacity("0"));
     dispatch(setPosit("-79vw"));
-    setTimeout(() => {
+
+    const timer = setTimeout(() => {
       dispatch(setIsAside(false));
-    }, 300);
-  },[]);
-  
+      // FIX: Update local state to stop loading after the timeout
+      setLoading(false); 
+    }, 3000);
+
+    // FIX: Cleanup timer if component unmounts
+    return () => clearTimeout(timer);
+  }, [dispatch]);
   
   return (
     <div className="relative">
         {
-          loading ?
+          loading ? (
             <Loading />
-            :
+          ) : (
             <>
-            <HomeBackground />
-            <div className="relative z-10 none ">
-            <HomeCom />
-            </div>
+              <HomeBackground />
+              {/* FIX: Removed 'none' class which might obscure content unexpectedly */}
+              <div className="relative z-10">
+                <HomeCom />
+              </div>
             </>
+          )
         }
     </div>
   )
