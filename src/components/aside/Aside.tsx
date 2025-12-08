@@ -3,8 +3,8 @@
 import React, { useEffect, useCallback } from "react";
 import { X, Terminal, Github, Linkedin, Twitter, LucideIcon } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
-import { useSelector, useDispatch } from "react-redux";
 import { usePathname } from "next/navigation"; 
+import { useSelector, useDispatch } from "react-redux";
 import { setIsAside } from "../redux/slicer/AsideCheck";
 import { setPosit } from "../redux/slicer/posit";
 import { setOpacity } from "../redux/slicer/opacity";

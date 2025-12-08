@@ -36,14 +36,35 @@ module.exports = {
       },
 
       keyframes: {
+        // Your existing bounce
         bounce: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        // 👇 NEW: Keyframes for the Loader
+        'spin-reverse': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(-360deg)' },
+        },
+        'pulse-core': {
+          '0%': { opacity: '0.5', transform: 'translate(-50%, -50%) scale(0.8)' },
+          '50%': { opacity: '1', transform: 'translate(-50%, -50%) scale(1.2)' },
+          '100%': { opacity: '0.5', transform: 'translate(-50%, -50%) scale(0.8)' },
+        },
+        'text-fade': {
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.9' },
+        },
       },
 
       animation: {
+        // Your existing bounce
         bounce: "bounce 0.8s infinite ease-in-out",
+        // 👇 NEW: Animation utilities for the Loader
+        'spin-slow': 'spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite', // Uses default tailwind 'spin' keyframe
+        'spin-reverse': 'spin-reverse 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+        'pulse-core': 'pulse-core 2s ease-in-out infinite',
+        'text-fade': 'text-fade 2s ease-in-out infinite',
       },
     },
   },
@@ -52,4 +73,3 @@ module.exports = {
     heroui(), // 👈 add HeroUI plugin here
   ],
 };
-
