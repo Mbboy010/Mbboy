@@ -6,8 +6,9 @@ import { setIsAside } from "./redux/slicer/AsideCheck";
 import { setPosit } from "./redux/slicer/posit";
 import { setOpacity } from "./redux/slicer/opacity";
 import HomeBackground from './home/HomeBackground';
-import HomeCom from './HomeCom';
 import Loading from "./loading/Loading";
+
+import HomeCom from './HomeCom';
 
 export default function Home() {
   const dispatch = useDispatch();
