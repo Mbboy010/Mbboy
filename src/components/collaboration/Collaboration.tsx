@@ -32,7 +32,7 @@ export default function Collaboration() {
 
     // FIX: Cleanup timer if component unmounts
     return () => clearTimeout(timer);
-  }, [dispatch]);
+  }, []);
   
   
   

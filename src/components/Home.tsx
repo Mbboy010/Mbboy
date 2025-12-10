@@ -29,7 +29,7 @@ export default function Home() {
 
     // FIX: Cleanup timer if component unmounts
     return () => clearTimeout(timer);
-  }, [dispatch]);
+  }, []);
   
   return (
     <div className="relative">

@@ -6,7 +6,7 @@ import { useRef } from "react";
 
 export default function HomeBackground() {
   return (
-    <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+    <div className="absolute opacity-70 inset-0 w-full h-full z-0 overflow-hidden">
       {/* 🌙 Mobile Glow Style */}
       <div className="block md:hidden absolute top-0 left-0 w-full h-full">
         {[
