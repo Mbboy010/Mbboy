@@ -20,9 +20,32 @@ import {
   Sparkles,
   Binary,
   Globe,
-  Lock
+  Lock,
+  LucideIcon
 } from "lucide-react";
 import Container from "@/components/Container";
+
+// --- Types ---
+interface ProjectLink {
+  demo: string;
+  repo: string;
+}
+
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  desc: string;
+  tags: string[];
+  links: ProjectLink;
+  image: string;
+  featured: boolean;
+}
+
+interface Message { 
+  role: "user" | "bot"; 
+  text: string; 
+}
 
 // --- Data ---
 const categories = [
@@ -32,7 +55,7 @@ const categories = [
   { id: "AI", label: "AI & Tools", icon: Cpu },
 ];
 
-const projects = [
+const projects: Project[] = [
   {
     id: 1,
     title: "SecurePay FinTech Core",
@@ -86,7 +109,6 @@ const projects = [
 ];
 
 // --- Chat Bot Logic ---
-interface Message { role: "user" | "bot"; text: string; }
 const INITIAL_CHAT: Message[] = [{ role: "bot", text: "Hello! I'm Mbboy's AI Assistant. Ask me about cybersecurity, tech stack, or hiring!" }];
 
 const getBotResponse = (input: string): string => {
@@ -132,7 +154,6 @@ export default function WorkCom() {
     ? projects 
     : projects.filter(p => p.category === activeTab || (activeTab === "AI" && p.category === "AI"));
   
-  // Get ALL featured projects, not just one
   const featuredProjects = projects.filter(p => p.featured);
 
   useEffect(() => {
@@ -162,12 +183,14 @@ export default function WorkCom() {
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/25 rounded-full blur-[120px]" />
         <div className="absolute top-[40%] left-[20%] w-[300px] h-[300px] bg-pink-500/25 rounded-full blur-[100px]" />
 
+        {/* Tech Grid Lines */}
         <svg className="absolute top-0 left-0 w-full h-full opacity-[0.03] dark:opacity-[0.05]" viewBox="0 0 100 100" preserveAspectRatio="none">
           <path d="M0 50 Q 25 25 50 50 T 100 50" stroke="currentColor" strokeWidth="0.5" fill="none" />
           <path d="M0 60 Q 25 35 50 60 T 100 60" stroke="currentColor" strokeWidth="0.5" fill="none" />
           <path d="M0 70 Q 25 45 50 70 T 100 70" stroke="currentColor" strokeWidth="0.5" fill="none" />
         </svg>
 
+        {/* Floating Icons */}
         <FloatingIcon icon={Binary} top="10%" left="10%" delay={0} />
         <FloatingIcon icon={Globe} top="30%" right="15%" delay={2} />
         <FloatingIcon icon={Lock} bottom="20%" left="5%" delay={4} />
@@ -299,7 +322,7 @@ export default function WorkCom() {
         {/* 4. Featured Projects (ANIMATED SCROLL) */}
         {(activeTab === "All" || activeTab === "Full-Stack") && featuredProjects.length > 0 && (
           <div className="space-y-16 mb-24">
-            {featuredProjects.map((project, index) => (
+            {featuredProjects.map((project) => (
               <motion.div 
                 key={project.id}
                 initial="hidden"
@@ -310,13 +333,16 @@ export default function WorkCom() {
               >
                 {/* Background Image Parallax Effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-900/90 to-blue-900/90 z-10" />
-                <Image 
-                  src={project.image} 
-                  alt={project.title}
-                  width={1200}
-                  height={600}
-                  className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
-                />
+                
+                {/* Note: In a real app, ensure this path exists in public/works/ */}
+                <div className="absolute inset-0 z-0">
+                   <Image 
+                    src={project.image} 
+                    alt={project.title}
+                    fill
+                    className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
                 
                 {/* Content Container */}
                 <div className="relative z-20 p-8 md:p-16 flex flex-col md:flex-row items-end justify-between gap-8">
@@ -406,7 +432,7 @@ export default function WorkCom() {
 
 // --- Sub-Components ---
 
-function ProjectCard({ project }: { project: any }) {
+function ProjectCard({ project }: { project: Project }) {
   return (
     <motion.div
       layout
@@ -419,12 +445,20 @@ function ProjectCard({ project }: { project: any }) {
     >
       <div className="relative h-64 bg-gray-100 dark:bg-gray-800 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-60" />
-        <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold bg-gray-200 dark:bg-white/5">
-           [Project Image: {project.title}]
+        
+        {/* Safe fallback for images */}
+        <div className="absolute inset-0">
+          <Image 
+            src={project.image} 
+            alt={project.title} 
+            fill 
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
         </div>
+
         <div className="absolute bottom-4 right-4 z-20 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
-          <a href={project.links.repo} className="p-2 bg-white text-black rounded-full hover:bg-gray-200"><Github size={18} /></a>
-          <a href={project.links.demo} className="p-2 bg-purple-600 text-white rounded-full hover:bg-purple-500"><ExternalLink size={18} /></a>
+          <Link href={project.links.repo} className="p-2 bg-white text-black rounded-full hover:bg-gray-200"><Github size={18} /></Link>
+          <Link href={project.links.demo} className="p-2 bg-purple-600 text-white rounded-full hover:bg-purple-500"><ExternalLink size={18} /></Link>
         </div>
       </div>
       <div className="p-6">
@@ -435,12 +469,29 @@ function ProjectCard({ project }: { project: any }) {
           </span>
         </div>
         <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">{project.desc}</p>
+        
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2">
+           {project.tags.map((tag, i) => (
+             <span key={i} className="text-[10px] font-medium px-2 py-1 bg-gray-100 dark:bg-white/10 rounded-md text-gray-600 dark:text-gray-400">
+               {tag}
+             </span>
+           ))}
+        </div>
       </div>
     </motion.div>
   );
 }
 
-function StatCard({ icon: Icon, value, label, sub, color }: any) {
+interface StatProps {
+  icon: LucideIcon;
+  value: string;
+  label: string;
+  sub: string;
+  color: string;
+}
+
+function StatCard({ icon: Icon, value, label, sub, color }: StatProps) {
   return (
     <motion.div 
       viewport={{ once: false }}
@@ -462,8 +513,16 @@ function StatCard({ icon: Icon, value, label, sub, color }: any) {
   );
 }
 
-// Helper for Background Icons
-function FloatingIcon({ icon: Icon, top, left, right, bottom, delay }: any) {
+interface FloatingIconProps {
+  icon: LucideIcon;
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  delay: number;
+}
+
+function FloatingIcon({ icon: Icon, top, left, right, bottom, delay }: FloatingIconProps) {
   return (
     <motion.div
       animate={{ y: [0, -15, 0], opacity: [0.1, 0.3, 0.1] }}
