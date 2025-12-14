@@ -70,8 +70,8 @@ export default function CollaborationCom() {
       
       {/* 🔮 Background Ambience */}
       <BackgroundGlow />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/25 rounded-full blur-[120px] pointer-events-none" />
 
       <Container>
         

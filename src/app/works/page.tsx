@@ -1,23 +1,9 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Work from "../../components/works/Work"
 
 export default function WorksPage() {
   return (
-    <main className="min-h-screen flex items-center justify-center text-center px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="space-y-4"
-      >
-        <h1 className="text-4xl md:text-6xl font-bold text-purple-600 dark:text-purple-400">
-          My Works
-        </h1>
-        <p className="text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
-          Explore my design and development projects — from frontend to AI-powered apps.
-        </p>
-      </motion.div>
-    </main>
+    <div className="">
+        <Work />
+    </div>
   );
 }

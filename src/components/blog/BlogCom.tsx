@@ -114,8 +114,8 @@ export default function BlogCom() {
 
   return (
     <section className="relative min-h-screen py-24 bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-purple-200/40 dark:from-purple-900/10 to-transparent pointer-events-none" />
-      <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-blue-400/10 dark:bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-purple-200/40 dark:from-purple-900/25 to-transparent pointer-events-none" />
+      <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-blue-400/25 dark:bg-blue-600/20 rounded-full blur-[100px] pointer-events-none" />
 
       <BackgroundGlow />
 
