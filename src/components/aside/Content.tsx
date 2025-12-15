@@ -11,6 +11,7 @@ import {
   DollarSign,
   Book,
   User,
+  Zap, // Added Zap icon for Services
 } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -25,6 +26,7 @@ export default function Content() {
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
+    { name: "Services", href: "/services", icon: Zap }, // ✨ Added Services here
     { name: "Works", href: "/works", icon: Briefcase },
     { name: "Collaborate", href: "/collaborate", icon: Users },
     { name: "Pricing", href: "/pricing", icon: DollarSign },

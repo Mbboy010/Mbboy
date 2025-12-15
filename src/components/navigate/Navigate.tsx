@@ -5,7 +5,17 @@ import NabCom from "./NabCom";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Menu, Home, Briefcase, Users, User, Terminal } from "lucide-react";
+import { 
+  Moon, 
+  Sun, 
+  Menu, 
+  Home, 
+  Briefcase, 
+  Users, 
+  User, 
+  Terminal, 
+  Zap // Added Zap icon for Services
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { useDispatch } from "react-redux";
 import { setIsAside } from "../redux/slicer/AsideCheck";
@@ -20,11 +30,13 @@ export default function Navigate() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
+  // Updated Navigation Items
   const navItems = [
     { name: "Home", href: "/", icon: Home },
+    { name: "Services", href: "/services", icon: Zap }, // ✨ Added Services Page
     { name: "Works", href: "/works", icon: Briefcase },
     { name: "Collaborate", href: "/collaborate", icon: Users },
-    { name: "About Me", href: "/about-me", icon: User },
+    { name: "About Me", href: "/about", icon: User },
   ];
 
   useEffect(() => {
@@ -52,7 +64,6 @@ export default function Navigate() {
 
   return (
     <>
-      {/* FIXED: Removed props 'setPosi' and 'posi' because Aside uses Redux now */}
       <Aside />
 
       <motion.header
@@ -84,7 +95,7 @@ export default function Navigate() {
             <div className="flex items-center gap-4 md:gap-8">
               
               {/* 🧭 Desktop Navigation */}
-              <nav className="hidden md:flex items-center gap-2 p-1 bg-gray-100/50 dark:bg-white/5 rounded-full border border-gray-200/50 dark:border-white/5 backdrop-blur-sm">
+              <nav className="hidden md:flex items-center gap-1 p-1 bg-gray-100/50 dark:bg-white/5 rounded-full border border-gray-200/50 dark:border-white/5 backdrop-blur-sm">
                 {navItems.map(({ name, href }) => {
                   const isActive = pathname === href;
                   return (
