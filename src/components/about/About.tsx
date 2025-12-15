@@ -33,7 +33,7 @@ export default function About() {
 
     // FIX: Cleanup timer if component unmounts
     return () => clearTimeout(timer);
-  }, []);
+  }, [dispatch]);
   
   
   
