@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { 
   Code, 
@@ -29,7 +29,7 @@ interface Service {
   desc: string;
   color: string;
   bg: string;
-  href: string; // Added href for navigation
+  href: string;
   features: string[];
 }
 
@@ -40,7 +40,7 @@ interface ProcessStep {
 }
 
 // --- Animation Variants ---
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
@@ -49,7 +49,7 @@ const fadeInUp = {
   }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -65,7 +65,7 @@ const services: Service[] = [
     desc: "Scalable, high-performance web applications built with modern frameworks.",
     color: "text-blue-500",
     bg: "bg-blue-500/10",
-    href: "/services/web-development", // Link added
+    href: "/services/web-development",
     features: [
       "Custom React/Next.js Applications",
       "API Development & Integration",
@@ -79,7 +79,7 @@ const services: Service[] = [
     desc: "Offensive and defensive security strategies to protect your digital assets.",
     color: "text-red-500",
     bg: "bg-red-500/10",
-    href: "/services/penetration-testing", // Link added
+    href: "/services/security",
     features: [
       "Vulnerability Assessment & Penetration Testing",
       "Source Code Security Review",
@@ -93,7 +93,7 @@ const services: Service[] = [
     desc: "Intelligent agents and automation workflows to optimize business logic.",
     color: "text-purple-500",
     bg: "bg-purple-500/10",
-    href: "/services/ai-integration", // Link added
+    href: "/services/ai",
     features: [
       "Custom AI Chatbots (LLM Integration)",
       "Automated Workflows (n8n/Python)",
@@ -107,7 +107,7 @@ const services: Service[] = [
     desc: "Cross-platform mobile experiences that feel native and perform beautifully.",
     color: "text-pink-500",
     bg: "bg-pink-500/10",
-    href: "/services/mobile-apps", // Link added
+    href: "/services/mobile",
     features: [
       "React Native Development",
       "iOS & Android Deployment",
@@ -121,7 +121,7 @@ const services: Service[] = [
     desc: "Robust infrastructure setup ensuring 99.9% uptime and auto-scalability.",
     color: "text-orange-500",
     bg: "bg-orange-500/10",
-    href: "/services/devops", // Link added
+    href: "/services/devops",
     features: [
       "CI/CD Pipeline Setup",
       "Docker & Kubernetes Orchestration",
@@ -135,7 +135,7 @@ const services: Service[] = [
     desc: "Decentralized applications (dApps) and smart contract development.",
     color: "text-green-500",
     bg: "bg-green-500/10",
-    href: "/services/blockchain", // Link added
+    href: "/services/blockchain",
     features: [
       "Smart Contract Auditing",
       "dApp Frontend Integration",
@@ -171,7 +171,7 @@ export default function ServicesPage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false }}
+          viewport={{ once: false, margin: "-100px" }}
           variants={fadeInUp}
           className="text-center mb-24 max-w-4xl mx-auto"
         >
@@ -195,7 +195,7 @@ export default function ServicesPage() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false }}
+          viewport={{ once: false, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32"
         >
           {services.map((service, index) => (
@@ -208,7 +208,7 @@ export default function ServicesPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
+            viewport={{ once: false, margin: "-100px" }}
             className="text-center mb-16"
           >
             <h2 className="text-3xl font-bold mb-4">The Engineering Process</h2>
@@ -244,7 +244,7 @@ export default function ServicesPage() {
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
+          viewport={{ once: false, margin: "-100px" }}
           className="grid md:grid-cols-2 gap-12 items-center mb-32 bg-white dark:bg-[#0b1220] p-8 md:p-12 rounded-3xl border border-gray-200 dark:border-white/5 shadow-2xl"
         >
           <div>
@@ -323,7 +323,8 @@ function ServiceCard({ service }: { service: Service }) {
   return (
     <motion.div
       variants={fadeInUp}
-      viewport={{ once: false }}
+      // Added margin to viewport so it doesn't flicker at bottom of screen
+      viewport={{ once: false, margin: "-100px" }} 
       whileHover={{ y: -8 }}
     >
       <Link 
