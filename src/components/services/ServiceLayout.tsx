@@ -101,6 +101,9 @@ export default function ServiceLayout({
           {features.map((feature, i) => (
             <motion.div 
               key={i} 
+              initial="hidden" 
+              whileInView="visible" 
+              viewport={{ once: false, margin: "-100px" }} 
               // ✅ Use the variable here as well
               variants={variants}
               className="p-8 rounded-3xl bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 shadow-lg hover:border-purple-500/30 transition-colors"
@@ -120,7 +123,7 @@ export default function ServiceLayout({
         <motion.div 
           initial="hidden" 
           whileInView="visible" 
-          viewport={{ once: false, margin: "-50px" }} 
+          viewport={{ once: false, margin: "-100px" }} 
           // ✅ Use the variable here
           variants={variants}
           className="mb-24 text-center"
