@@ -77,10 +77,10 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <h3 className="text-white font-semibold mb-2">Services</h3>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/services#web" className="hover:text-purple-400 transition-colors">Web Development</Link></li>
-              <li><Link href="/services#security" className="hover:text-purple-400 transition-colors">Penetration Testing</Link></li>
-              <li><Link href="/services#ai" className="hover:text-purple-400 transition-colors">AI Integration</Link></li>
-              <li><Link href="/services#mobile" className="hover:text-purple-400 transition-colors">Mobile Apps</Link></li>
+              <li><Link href="/services/web-development" className="hover:text-purple-400 transition-colors">Web Development</Link></li>
+              <li><Link href="/services/security" className="hover:text-purple-400 transition-colors">Penetration Testing</Link></li>
+              <li><Link href="/services/ai" className="hover:text-purple-400 transition-colors">AI Integration</Link></li>
+              <li><Link href="/services/mobile" className="hover:text-purple-400 transition-colors">Mobile Apps</Link></li>
             </ul>
           </div>
 
