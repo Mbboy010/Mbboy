@@ -16,10 +16,27 @@ import {
   Lock,
   Search,
   Settings,
-  Server
+  Server,
+  LucideIcon
 } from "lucide-react";
 import Container from "@/components/Container";
 import BackgroundGlow from "@/components/BackgroundGlow";
+
+// --- Types ---
+interface Service {
+  title: string;
+  icon: LucideIcon;
+  desc: string;
+  color: string;
+  bg: string;
+  features: string[];
+}
+
+interface ProcessStep {
+  num: string;
+  title: string;
+  desc: string;
+}
 
 // --- Animation Variants ---
 const fadeInUp = {
@@ -40,7 +57,7 @@ const staggerContainer = {
 };
 
 // --- Data ---
-const services = [
+const services: Service[] = [
   {
     title: "Full-Stack Development",
     icon: Code,
@@ -121,7 +138,7 @@ const services = [
   }
 ];
 
-const processSteps = [
+const processSteps: ProcessStep[] = [
   { num: "01", title: "Discovery", desc: "We map out your goals, requirements, and technical scope." },
   { num: "02", title: "Architecture", desc: "Designing a secure, scalable blueprint for the system." },
   { num: "03", title: "Development", desc: "Agile coding sprints with regular updates and feedback." },
@@ -161,7 +178,7 @@ export default function ServicesPage() {
             </span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
-            I don't just write code; I engineer secure, scalable, and intelligent solutions 
+            I don&apos;t just write code; I engineer secure, scalable, and intelligent solutions 
             tailored to solve complex business problems.
           </p>
         </motion.div>
@@ -275,7 +292,7 @@ export default function ServicesPage() {
               Have a project in mind?
             </h2>
             <p className="text-purple-200 mb-8 max-w-xl mx-auto">
-              Let's discuss how we can engineer a solution that meets your business goals and security requirements.
+              Let&apos;s discuss how we can engineer a solution that meets your business goals and security requirements.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/collaborate" className="px-8 py-4 bg-white text-gray-900 rounded-xl font-bold hover:bg-gray-100 transition flex items-center justify-center gap-2">
@@ -295,7 +312,7 @@ export default function ServicesPage() {
 
 // --- Sub-Components ---
 
-function ServiceCard({ service }: { service: any }) {
+function ServiceCard({ service }: { service: Service }) {
   return (
     <motion.div
       variants={fadeInUp}
@@ -329,7 +346,13 @@ function ServiceCard({ service }: { service: any }) {
   );
 }
 
-function BenefitItem({ icon: Icon, title, desc }: any) {
+interface BenefitItemProps {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+}
+
+function BenefitItem({ icon: Icon, title, desc }: BenefitItemProps) {
   return (
     <div className="flex gap-4">
       <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
@@ -360,7 +383,16 @@ function FaqItem({ q, a }: { q: string, a: string }) {
   );
 }
 
-function FloatingIcon({ icon: Icon, top, left, right, bottom, delay }: any) {
+interface FloatingIconProps {
+  icon: LucideIcon;
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  delay: number;
+}
+
+function FloatingIcon({ icon: Icon, top, left, right, bottom, delay }: FloatingIconProps) {
   return (
     <motion.div
       animate={{ y: [0, -15, 0], opacity: [0.1, 0.3, 0.1] }}
