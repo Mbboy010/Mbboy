@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ServiceLayout from "@/components/ServiceLayout";
+import ServiceLayout from "../../../components/services/ServiceLayout";
 import { Code, Globe, Layout, Database, ShoppingCart, Server } from "lucide-react";
 
 export default function WebDevPage() {
@@ -16,7 +16,7 @@ export default function WebDevPage() {
       features={[
         { 
           title: "Custom SaaS Platforms", 
-          desc: "End-to-end development of subscription-based software with secure authentication, recurring billing (Stripe), and multi-tenant architecture." 
+          desc: "End-to-end development of subscription-based software with secure authentication, recurring billing (Stripe), and multi- tenant architecture." 
         },
         { 
           title: "High-Performance Frontends", 
