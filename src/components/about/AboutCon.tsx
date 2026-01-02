@@ -21,17 +21,6 @@ import {
   FaDownload,
 } from "react-icons/fa";
 
-// Background Icons
-import { 
-  Code2, 
-  Terminal, 
-  Cpu, 
-  Globe, 
-  ShieldCheck, 
-  Zap, 
-  LucideIcon 
-} from "lucide-react";
-
 // --- Animation Variants ---
 const fadeIn: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -74,27 +63,59 @@ export default function AboutCon() {
   return (
     <section className="relative py-24 min-h-screen bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 transition-colors duration-500 overflow-hidden">
 
-      {/* 🔮 STATIC Background Decorations (No Grid) */}
+      {/* 🔮 NEW GEOMETRIC BACKGROUND (Matches Image Style) */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         
-        {/* 1. Static Color Blobs */}
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]" />
-        
-        {/* 2. Static Icons */}
-        <StaticIcon icon={Code2} top="10%" left="5%" size={48} rotate={-12} />
-        <StaticIcon icon={Terminal} top="20%" right="10%" size={64} rotate={12} />
-        <StaticIcon icon={Cpu} bottom="15%" left="8%" size={56} rotate={-6} />
-        <StaticIcon icon={ShieldCheck} bottom="25%" right="5%" size={48} rotate={15} />
-        
-        {/* Smaller filler icons */}
-        <StaticIcon icon={Globe} top="45%" left="2%" size={32} rotate={0} opacity="opacity-5" />
-        <StaticIcon icon={Zap} top="35%" right="20%" size={80} opacity="opacity-5" rotate={-5} />
+        {/* 1. Deep Gradient Base Overlay (Adds that deep purple/blue vibe) */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/5 via-transparent to-blue-900/5 dark:from-purple-900/20 dark:to-blue-900/20" />
 
-        {/* 3. Large Faded Watermark */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-bold text-gray-900/5 dark:text-white/[0.02] pointer-events-none select-none">
-          ABOUT
+        {/* 2. Top Left: Intersecting Outlined Squares */}
+        <div className="absolute top-[-5%] left-[-5%] opacity-10 dark:opacity-20">
+          <div className="absolute top-0 left-0 w-64 h-64 border border-purple-600 dark:border-white rounded-xl transform rotate-[15deg]" />
+          <div className="absolute top-12 left-12 w-64 h-64 border border-purple-600 dark:border-white rounded-xl transform -rotate-[10deg]" />
         </div>
+
+        {/* 3. Top Right: Large Gradient Circle + Dot Grid */}
+        <div className="absolute top-0 right-0">
+          {/* Glowing Orb */}
+          <div className="absolute top-[-100px] right-[-100px] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px]" />
+          {/* Dot Grid */}
+          <div className="absolute top-24 right-12 grid grid-cols-4 gap-3 opacity-20 dark:opacity-40">
+            {[...Array(24)].map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 bg-purple-900 dark:bg-white rounded-full" />
+            ))}
+          </div>
+        </div>
+
+        {/* 4. Center/Right: Large Thin Line/Triangle */}
+        <div className="absolute top-[30%] right-[-15%] w-[600px] h-[600px] border border-purple-400/10 dark:border-white/5 transform rotate-45" />
+
+        {/* 5. Bottom Left: Concentric "L" Shapes */}
+        <div className="absolute bottom-[5%] left-[5%] opacity-15 dark:opacity-25">
+             <div className="w-48 h-48 border-l-2 border-b-2 border-purple-600 dark:border-white p-4">
+                 <div className="w-full h-full border-l-2 border-b-2 border-purple-600 dark:border-white p-4">
+                     <div className="w-full h-full border-l-2 border-b-2 border-purple-600 dark:border-white" />
+                 </div>
+             </div>
+        </div>
+
+        {/* 6. Bottom Center/Right: Gradient Circle + Dots */}
+        <div className="absolute bottom-[10%] right-[15%]">
+            {/* Soft Gradient Circle */}
+            <div className="w-64 h-64 bg-gradient-to-t from-pink-500/10 to-purple-600/10 rounded-full blur-2xl" />
+            {/* Overlying Dots */}
+            <div className="absolute bottom-4 right-[-20px] grid grid-cols-6 gap-4 opacity-15 dark:opacity-30">
+               {[...Array(30)].map((_, i) => (
+                  <div key={i} className="w-1 h-1 bg-purple-900 dark:bg-white rounded-full" />
+               ))}
+            </div>
+             {/* Ring */}
+            <div className="absolute bottom-[-50px] right-[-50px] w-64 h-64 border border-purple-400/20 dark:border-white/10 rounded-full" />
+        </div>
+
+        {/* 7. Top Center: Semi-Circle Arc */}
+        <div className="absolute top-[-50px] left-[40%] w-80 h-80 border-b border-purple-900/10 dark:border-white/10 rounded-full" />
+
       </div>
 
       <Container className="relative z-10">
@@ -513,31 +534,5 @@ function TimelineItem({
         {desc}
       </p>
     </motion.div>
-  );
-}
-
-// --- STATIC ICON COMPONENT (Added Helper) ---
-interface StaticIconProps {
-  icon: LucideIcon;
-  top?: string;
-  left?: string;
-  right?: string;
-  bottom?: string;
-  size?: number;
-  rotate?: number;
-  opacity?: string;
-}
-
-function StaticIcon({ icon: Icon, top, left, right, bottom, size = 40, rotate = 0, opacity = "opacity-10" }: StaticIconProps) {
-  return (
-    <div
-      className={`absolute text-purple-900 dark:text-white ${opacity}`}
-      style={{ 
-        top, left, right, bottom,
-        transform: `rotate(${rotate}deg)` 
-      }}
-    >
-      <Icon size={size} />
-    </div>
   );
 }
