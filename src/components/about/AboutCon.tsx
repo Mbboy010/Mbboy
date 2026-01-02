@@ -2,10 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion,Variants, Transition } from "framer-motion";
+import { motion, Variants, Transition } from "framer-motion";
 import Container from "@/components/Container";
-import BackgroundGlow from "@/components/BackgroundGlow";
-import { IconType } from "react-icons"; // <-- use IconType
+import { IconType } from "react-icons"; 
+// UI Icons
 import {
   FaPython,
   FaReact,
@@ -21,16 +21,25 @@ import {
   FaDownload,
 } from "react-icons/fa";
 
+// Background Icons
+import { 
+  Code2, 
+  Terminal, 
+  Cpu, 
+  Globe, 
+  ShieldCheck, 
+  Zap, 
+  LucideIcon 
+} from "lucide-react";
+
 // --- Animation Variants ---
-
-
 const fadeIn: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (custom: number = 0) => {
     const transition: Transition = {
       delay: custom * 0.1,
       duration: 0.6,
-      ease: [0.42, 0, 0.58, 1] // use cubic bezier array instead of string
+      ease: [0.42, 0, 0.58, 1] 
     };
     return {
       opacity: 1,
@@ -65,13 +74,28 @@ export default function AboutCon() {
   return (
     <section className="relative py-24 min-h-screen bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 transition-colors duration-500 overflow-hidden">
 
-      {/* Decorative Gradients */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-purple-600/25 dark:bg-purple-600/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/25 dark:bg-blue-600/20 rounded-full blur-[120px]" />
-      </div>
+      {/* 🔮 STATIC Background Decorations (No Grid) */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+        
+        {/* 1. Static Color Blobs */}
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]" />
+        
+        {/* 2. Static Icons */}
+        <StaticIcon icon={Code2} top="10%" left="5%" size={48} rotate={-12} />
+        <StaticIcon icon={Terminal} top="20%" right="10%" size={64} rotate={12} />
+        <StaticIcon icon={Cpu} bottom="15%" left="8%" size={56} rotate={-6} />
+        <StaticIcon icon={ShieldCheck} bottom="25%" right="5%" size={48} rotate={15} />
+        
+        {/* Smaller filler icons */}
+        <StaticIcon icon={Globe} top="45%" left="2%" size={32} rotate={0} opacity="opacity-5" />
+        <StaticIcon icon={Zap} top="35%" right="20%" size={80} opacity="opacity-5" rotate={-5} />
 
-      <BackgroundGlow />
+        {/* 3. Large Faded Watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-bold text-gray-900/5 dark:text-white/[0.02] pointer-events-none select-none">
+          ABOUT
+        </div>
+      </div>
 
       <Container className="relative z-10">
         {/* Hero Section */}
@@ -489,5 +513,31 @@ function TimelineItem({
         {desc}
       </p>
     </motion.div>
+  );
+}
+
+// --- STATIC ICON COMPONENT (Added Helper) ---
+interface StaticIconProps {
+  icon: LucideIcon;
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  size?: number;
+  rotate?: number;
+  opacity?: string;
+}
+
+function StaticIcon({ icon: Icon, top, left, right, bottom, size = 40, rotate = 0, opacity = "opacity-10" }: StaticIconProps) {
+  return (
+    <div
+      className={`absolute text-purple-900 dark:text-white ${opacity}`}
+      style={{ 
+        top, left, right, bottom,
+        transform: `rotate(${rotate}deg)` 
+      }}
+    >
+      <Icon size={size} />
+    </div>
   );
 }

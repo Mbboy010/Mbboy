@@ -78,8 +78,7 @@ export default function NotFound() {
         <div className="absolute top-[10%] left-[15%] w-72 h-72 bg-purple-600/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[10%] right-[15%] w-72 h-72 bg-blue-600/10 rounded-full blur-[120px]" />
         
-        {/* 2. Technical Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+
 
         {/* 3. Static Icons (404/Error Themed) */}
         <StaticIcon icon={Ghost} top="10%" left="10%" size={48} rotate={-12} />
