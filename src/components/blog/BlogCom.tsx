@@ -121,14 +121,14 @@ export default function BlogCom() {
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/10 via-purple-900/5 to-black dark:from-[#1a0b2e] dark:via-[#0f0518] dark:to-black" />
 
         {/* 2. Top Left: Parallel Lines / Corner Shape */}
-        <div className="absolute top-[5%] left-[5%] w-64 h-64 opacity-20 dark:opacity-30">
+        <div className="absolute top-[2%] left-[5%] w-64 h-64 opacity-20 dark:opacity-30">
           <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-3xl" />
           <div className="absolute top-4 left-4 w-full h-full border-t-2 border-l-2 border-purple-500/50 dark:border-white/50 rounded-tl-2xl" />
           <div className="absolute top-8 left-8 w-full h-full border-t-2 border-l-2 border-purple-500/30 dark:border-white/30 rounded-tl-xl" />
         </div>
 
         {/* 3. Top Right: Intersecting Squares & Dots */}
-        <div className="absolute top-[8%] right-[5%]">
+        <div className="absolute top-[5%] right-[5%]">
           {/* Rotated Squares */}
           <div className="relative w-40 h-40">
              <div className="absolute inset-0 border border-pink-500/30 dark:border-white/20 transform rotate-12" />
