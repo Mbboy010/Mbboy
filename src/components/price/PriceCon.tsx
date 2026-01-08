@@ -10,7 +10,6 @@ import {
   FaCode, 
   FaMobileAlt 
 } from "react-icons/fa";
-import BackgroundGlow from "@/components/BackgroundGlow";
 import Container from "@/components/Container";
 
 // --- Pricing Data ---
@@ -113,7 +112,62 @@ const faqs = [
 export default function PriceCon() {
   return (
     <section className="relative min-h-screen py-24 bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 overflow-hidden">
-      <BackgroundGlow />
+      
+      {/* 🔮 NEW GEOMETRIC BACKGROUND (Matches provided images) */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        
+        {/* 1. Deep Gradient Base */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-blue-900/10 dark:from-[#1a0b2e] dark:via-[#0f0518] dark:to-black" />
+
+        {/* 2. Top Left: Parallel Lines (Corner Decoration) */}
+        <div className="absolute top-[3%] left-[3%] w-48 h-48 opacity-20 dark:opacity-30">
+          {/* L-Shape Lines */}
+          <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-3xl" />
+          <div className="absolute top-3 left-3 w-full h-full border-t-2 border-l-2 border-purple-500/60 dark:border-white/60 rounded-tl-2xl" />
+          <div className="absolute top-6 left-6 w-full h-full border-t-2 border-l-2 border-purple-500/30 dark:border-white/30 rounded-tl-xl" />
+        </div>
+
+        {/* 3. Top Right: Square Overlays & Dots */}
+        <div className="absolute top-[5%] right-[5%]">
+          {/* Intersecting Squares */}
+          <div className="relative w-32 h-32 opacity-20 dark:opacity-40">
+            <div className="absolute inset-0 border border-purple-400 dark:border-white transform -rotate-12" />
+            <div className="absolute inset-0 border border-purple-400 dark:border-white transform rotate-12 translate-x-4 translate-y-4" />
+          </div>
+          {/* Dot Grid */}
+          <div className="absolute top-20 right-20 grid grid-cols-5 gap-3 opacity-15 dark:opacity-30">
+             {[...Array(25)].map((_, i) => (
+               <div key={i} className="w-1 h-1 bg-purple-900 dark:bg-white rounded-full" />
+             ))}
+          </div>
+          {/* Circle Outline */}
+          <div className="absolute top-32 right-[-20px] w-24 h-24 border border-pink-500/30 dark:border-white/20 rounded-full" />
+        </div>
+
+        {/* 4. Center: Large Circle Outline */}
+        <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-purple-500/10 dark:border-white/5 rounded-full" />
+
+        {/* 5. Center Left: Vertical Rectangle */}
+        <div className="absolute top-[30%] left-[15%] w-24 h-48 border border-purple-400/20 dark:border-white/10 opacity-30 transform rotate-6" />
+
+        {/* 6. Bottom Right: Solid Gradient Circle & Dots */}
+        <div className="absolute bottom-[5%] right-[5%]">
+            {/* Gradient Orb */}
+            <div className="w-64 h-64 bg-gradient-to-tr from-purple-600/20 to-pink-500/20 rounded-full blur-2xl" />
+            {/* Dot Grid Overlay */}
+            <div className="absolute bottom-10 right-10 grid grid-cols-6 gap-3 opacity-20 dark:opacity-40">
+              {[...Array(24)].map((_, i) => (
+                <div key={i} className="w-1.5 h-1.5 bg-gray-900 dark:bg-white rounded-full" />
+              ))}
+            </div>
+             {/* Outline */}
+            <div className="absolute bottom-[-20px] right-[-20px] w-48 h-96 border border-purple-500/20 dark:border-white/10" />
+        </div>
+
+        {/* 7. Bottom Left: Large Gradient Orb */}
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/10 dark:bg-purple-900/20 rounded-full blur-[100px]" />
+      </div>
+
       <Container className="relative z-10">
 
         {/* Header */}
@@ -124,7 +178,7 @@ export default function PriceCon() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs font-bold uppercase tracking-widest mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs font-bold uppercase tracking-widest mb-4 border border-purple-200 dark:border-purple-700/50">
             Transparent Pricing
           </span>
 
@@ -153,7 +207,7 @@ export default function PriceCon() {
                 ${
                   plan.highlight
                     ? "bg-white dark:bg-[#121212] border-2 border-purple-500 shadow-2xl scale-105 z-10"
-                    : "bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/10 hover:border-purple-500/50 hover:shadow-xl"
+                    : "bg-white/80 dark:bg-[#0b1220]/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 hover:border-purple-500/50 hover:shadow-xl"
                 }
               `}
             >
@@ -243,7 +297,7 @@ function FaqItem({ faq }: { faq: { question: string; answer: string } }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-white/5 overflow-hidden hover:border-purple-500/30 transition-colors">
+    <div className="border border-gray-200 dark:border-gray-800 rounded-xl bg-white/80 dark:bg-white/5 backdrop-blur-sm overflow-hidden hover:border-purple-500/30 transition-colors">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-5 text-left focus:outline-none"
