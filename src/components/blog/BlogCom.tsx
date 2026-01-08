@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Container from "@/components/Container";
-import BackgroundGlow from "@/components/BackgroundGlow";
 import {
   FaSearch,
   FaArrowRight,
@@ -114,10 +113,60 @@ export default function BlogCom() {
 
   return (
     <section className="relative min-h-screen py-24 bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-purple-200/40 dark:from-purple-900/25 to-transparent pointer-events-none" />
-      <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-blue-400/25 dark:bg-blue-600/20 rounded-full blur-[100px] pointer-events-none" />
+      
+      {/* 🔮 NEW GEOMETRIC BACKGROUND (Matches your images) */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        
+        {/* 1. Deep Gradient Base */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/10 via-purple-900/5 to-black dark:from-[#1a0b2e] dark:via-[#0f0518] dark:to-black" />
 
-      <BackgroundGlow />
+        {/* 2. Top Left: Parallel Lines / Corner Shape */}
+        <div className="absolute top-[5%] left-[5%] w-64 h-64 opacity-20 dark:opacity-30">
+          <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-3xl" />
+          <div className="absolute top-4 left-4 w-full h-full border-t-2 border-l-2 border-purple-500/50 dark:border-white/50 rounded-tl-2xl" />
+          <div className="absolute top-8 left-8 w-full h-full border-t-2 border-l-2 border-purple-500/30 dark:border-white/30 rounded-tl-xl" />
+        </div>
+
+        {/* 3. Top Right: Intersecting Squares & Dots */}
+        <div className="absolute top-[8%] right-[5%]">
+          {/* Rotated Squares */}
+          <div className="relative w-40 h-40">
+             <div className="absolute inset-0 border border-pink-500/30 dark:border-white/20 transform rotate-12" />
+             <div className="absolute inset-0 border border-purple-500/30 dark:border-white/20 transform -rotate-6 translate-x-4 translate-y-4" />
+          </div>
+          {/* Dot Grid */}
+          <div className="absolute top-20 -left-20 grid grid-cols-4 gap-3 opacity-20 dark:opacity-40">
+            {[...Array(16)].map((_, i) => (
+              <div key={i} className="w-1 h-1 bg-purple-900 dark:bg-white rounded-full" />
+            ))}
+          </div>
+        </div>
+
+        {/* 4. Center/Left: Large Gradient Orb */}
+        <div className="absolute top-[30%] left-[-10%] w-[600px] h-[600px] bg-purple-600/10 dark:bg-purple-600/20 rounded-full blur-[120px]" />
+
+        {/* 5. Bottom Right: Circle Outlines & Glow */}
+        <div className="absolute bottom-[5%] right-[5%]">
+            <div className="w-80 h-80 border border-purple-400/20 dark:border-white/10 rounded-full flex items-center justify-center">
+                <div className="w-56 h-56 border border-pink-400/20 dark:border-white/10 rounded-full" />
+            </div>
+            {/* Glow */}
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/10 dark:bg-blue-600/10 rounded-full blur-[100px]" />
+        </div>
+
+        {/* 6. Middle Right: Floating Rectangles */}
+        <div className="absolute top-[40%] right-[10%] opacity-10 dark:opacity-20 flex flex-col gap-4">
+             <div className="w-16 h-24 border border-purple-600 dark:border-white" />
+             <div className="w-16 h-24 border border-purple-600 dark:border-white translate-x-8" />
+        </div>
+
+        {/* 7. Bottom Left: Dot Matrix */}
+        <div className="absolute bottom-[10%] left-[10%] grid grid-cols-6 gap-4 opacity-10 dark:opacity-20">
+            {[...Array(24)].map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 bg-gray-900 dark:bg-white rounded-full" />
+            ))}
+        </div>
+      </div>
 
       <Container className="relative z-10">
         {/* Header */}
@@ -131,7 +180,7 @@ export default function BlogCom() {
           >
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
               Insights &{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 dark:from-purple-400 dark:to-pink-400">
                 Chronicles
               </span>
             </h1>
@@ -146,7 +195,7 @@ export default function BlogCom() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex flex-col md:flex-row items-center justify-between gap-6 p-2 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/5 backdrop-blur-sm max-w-5xl mx-auto shadow-sm"
+            className="flex flex-col md:flex-row items-center justify-between gap-6 p-2 rounded-2xl bg-white/50 dark:bg-white/5 border border-gray-200 dark:border-white/5 backdrop-blur-md max-w-5xl mx-auto shadow-sm"
           >
             {/* Category Tabs */}
             <div className="flex overflow-x-auto pb-2 gap-2 w-full md:w-auto px-2 no-scrollbar">
@@ -156,7 +205,7 @@ export default function BlogCom() {
                   onClick={() => setActiveCategory(cat)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     activeCategory === cat
-                      ? "bg-purple-600 text-white shadow-lg"
+                      ? "bg-purple-600 text-white shadow-lg shadow-purple-500/25"
                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10"
                   }`}
                 >
@@ -173,7 +222,7 @@ export default function BlogCom() {
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-gray-50 dark:bg-[#0b1220] border border-gray-200 dark:border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-purple-500/50 transition-colors"
+                className="w-full bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-purple-500/50 transition-colors"
               />
             </div>
           </motion.div>
@@ -243,7 +292,7 @@ export default function BlogCom() {
               >
                 <Link
                   href={post.href}
-                  className="group flex flex-col h-full rounded-2xl overflow-hidden bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 transition-all hover:border-purple-500/30 shadow-sm hover:shadow-2xl"
+                  className="group flex flex-col h-full rounded-2xl overflow-hidden bg-white/80 dark:bg-[#0b1220]/80 backdrop-blur-md border border-gray-200 dark:border-white/5 transition-all hover:border-purple-500/30 shadow-sm hover:shadow-2xl"
                 >
                   <div className="relative w-full h-56">
                     <div className="absolute top-4 left-4 z-10">
