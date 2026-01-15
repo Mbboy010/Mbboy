@@ -66,8 +66,7 @@ export default function AboutCon() {
       {/* 🔮 NEW GEOMETRIC BACKGROUND (Matches Image Style) */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         
-        {/* 1. Deep Gradient Base Overlay (Adds that deep purple/blue vibe) */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/5 via-transparent to-blue-900/5 dark:from-purple-900/20 dark:to-blue-900/20" />
+
 
         {/* 2. Top Left: Intersecting Outlined Squares */}
         <div className="absolute top-[-5%] left-[-5%] opacity-10 dark:opacity-20">
