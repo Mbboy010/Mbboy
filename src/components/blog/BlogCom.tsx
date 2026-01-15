@@ -104,68 +104,102 @@ export default function BlogCom() {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
 
-    // If the featured layout is visible, hide that specific post from the grid
-    // If we are filtering/searching, show the featured post in the grid along with everything else
     if (showFeaturedLayout && p.featured) return false;
 
     return matchesCategory && matchesSearch;
   });
 
   return (
-    <section className="relative min-h-screen py-24 bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 overflow-hidden">
+    <section className="relative min-h-screen py-24 md:py-32 bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 overflow-hidden">
       
-      {/* 🔮 NEW GEOMETRIC BACKGROUND (Matches your images) */}
+      {/* 🔮 ANIMATED GEOMETRIC BACKGROUND */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
         
         {/* 1. Deep Gradient Base */}
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/10 via-purple-900/5 to-black dark:from-[#1a0b2e] dark:via-[#0f0518] dark:to-black" />
 
         {/* 2. Top Left: Parallel Lines / Corner Shape */}
-        <div className="absolute top-[2%] left-[5%] w-64 h-64 opacity-20 dark:opacity-30">
-          <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-3xl" />
-          <div className="absolute top-4 left-4 w-full h-full border-t-2 border-l-2 border-purple-500/50 dark:border-white/50 rounded-tl-2xl" />
-          <div className="absolute top-8 left-8 w-full h-full border-t-2 border-l-2 border-purple-500/30 dark:border-white/30 rounded-tl-xl" />
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 0.3, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1 }}
+          className="absolute top-[-2%] left-[-2%] w-40 h-40 md:w-80 md:h-80 opacity-20 dark:opacity-30"
+        >
+          <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-[3rem]" />
+          <div className="absolute top-4 left-4 md:top-6 md:left-6 w-full h-full border-t-2 border-l-2 border-purple-500/50 dark:border-white/50 rounded-tl-[2.5rem]" />
+          <div className="absolute top-8 left-8 md:top-12 md:left-12 w-full h-full border-t-2 border-l-2 border-purple-500/30 dark:border-white/30 rounded-tl-[2rem]" />
+        </motion.div>
 
         {/* 3. Top Right: Intersecting Squares & Dots */}
-        <div className="absolute top-[5%] right-[5%]">
+        <motion.div 
+          initial={{ opacity: 0, rotate: 20 }}
+          whileInView={{ opacity: 1, rotate: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.2 }}
+          className="absolute top-[5%] right-[5%]"
+        >
           {/* Rotated Squares */}
-          <div className="relative w-40 h-40">
+          <div className="relative w-24 h-24 md:w-48 md:h-48 opacity-30">
              <div className="absolute inset-0 border border-pink-500/30 dark:border-white/20 transform rotate-12" />
-             <div className="absolute inset-0 border border-purple-500/30 dark:border-white/20 transform -rotate-6 translate-x-4 translate-y-4" />
+             <div className="absolute inset-0 border border-purple-500/30 dark:border-white/20 transform -rotate-6 translate-x-2 translate-y-2 md:translate-x-6 md:translate-y-6" />
           </div>
           {/* Dot Grid */}
-          <div className="absolute top-20 -left-20 grid grid-cols-4 gap-3 opacity-20 dark:opacity-40">
+          <div className="hidden md:grid absolute top-24 -left-24 grid-cols-4 gap-3 opacity-20 dark:opacity-40">
             {[...Array(16)].map((_, i) => (
               <div key={i} className="w-1 h-1 bg-purple-900 dark:bg-white rounded-full" />
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* 4. Center/Left: Large Gradient Orb */}
-        <div className="absolute top-[30%] left-[-10%] w-[600px] h-[600px] bg-purple-600/10 dark:bg-purple-600/20 rounded-full blur-[120px]" />
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.5 }}
+          className="absolute top-[20%] left-[-10%] w-[300px] h-[300px] md:w-[700px] md:h-[700px] bg-purple-600/10 dark:bg-purple-600/15 rounded-full blur-[80px] md:blur-[120px]" 
+        />
 
         {/* 5. Bottom Right: Circle Outlines & Glow */}
-        <div className="absolute bottom-[5%] right-[5%]">
-            <div className="w-80 h-80 border border-purple-400/20 dark:border-white/10 rounded-full flex items-center justify-center">
-                <div className="w-56 h-56 border border-pink-400/20 dark:border-white/10 rounded-full" />
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1 }}
+          className="absolute bottom-[5%] right-[5%]"
+        >
+            <div className="w-64 h-64 md:w-[500px] md:h-[500px] border border-purple-400/20 dark:border-white/10 rounded-full flex items-center justify-center">
+                <div className="w-40 h-40 md:w-[350px] md:h-[350px] border border-pink-400/20 dark:border-white/10 rounded-full" />
             </div>
             {/* Glow */}
-            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-600/10 dark:bg-blue-600/10 rounded-full blur-[100px]" />
-        </div>
+            <div className="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-blue-600/10 dark:bg-blue-600/10 rounded-full blur-[80px] md:blur-[100px]" />
+        </motion.div>
 
         {/* 6. Middle Right: Floating Rectangles */}
-        <div className="absolute top-[40%] right-[10%] opacity-10 dark:opacity-20 flex flex-col gap-4">
-             <div className="w-16 h-24 border border-purple-600 dark:border-white" />
-             <div className="w-16 h-24 border border-purple-600 dark:border-white translate-x-8" />
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 0.2, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.2 }}
+          className="absolute top-[40%] right-[5%] md:right-[10%] opacity-10 dark:opacity-20 flex flex-col gap-4"
+        >
+             <div className="w-12 h-16 md:w-20 md:h-32 border border-purple-600 dark:border-white" />
+             <div className="w-12 h-16 md:w-20 md:h-32 border border-purple-600 dark:border-white translate-x-6 md:translate-x-10" />
+        </motion.div>
 
         {/* 7. Bottom Left: Dot Matrix */}
-        <div className="absolute bottom-[10%] left-[10%] grid grid-cols-6 gap-4 opacity-10 dark:opacity-20">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.2 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-[10%] left-[5%] md:left-[10%] grid grid-cols-6 gap-3 md:gap-4 opacity-10 dark:opacity-20"
+        >
             {[...Array(24)].map((_, i) => (
-              <div key={i} className="w-1.5 h-1.5 bg-gray-900 dark:bg-white rounded-full" />
+              <div key={i} className="w-1 h-1 md:w-1.5 md:h-1.5 bg-gray-900 dark:bg-white rounded-full" />
             ))}
-        </div>
+        </motion.div>
       </div>
 
       <Container className="relative z-10">

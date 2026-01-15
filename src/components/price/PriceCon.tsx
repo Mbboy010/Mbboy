@@ -111,61 +111,94 @@ const faqs = [
 
 export default function PriceCon() {
   return (
-    <section className="relative min-h-screen py-24 bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 overflow-hidden">
+    <section className="relative min-h-screen py-32 md:py-40 bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 overflow-hidden">
       
-      {/* 🔮 NEW GEOMETRIC BACKGROUND (Matches provided images) */}
+      {/* 🔮 ANIMATED GEOMETRIC BACKGROUND */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
         
-        {/* 1. Deep Gradient Base */}
+        {/* 1. Deep Gradient Base (Static) */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-blue-900/10 dark:from-[#1a0b2e] dark:via-[#0f0518] dark:to-black" />
 
-        {/* 2. Top Left: Parallel Lines (Corner Decoration) */}
-        <div className="absolute top-[3%] left-[3%] w-48 h-48 opacity-20 dark:opacity-30">
-          {/* L-Shape Lines */}
-          <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-3xl" />
-          <div className="absolute top-3 left-3 w-full h-full border-t-2 border-l-2 border-purple-500/60 dark:border-white/60 rounded-tl-2xl" />
-          <div className="absolute top-6 left-6 w-full h-full border-t-2 border-l-2 border-purple-500/30 dark:border-white/30 rounded-tl-xl" />
-        </div>
+        {/* 2. Top Left: Parallel Lines (Increased Size) */}
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 0.3, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1 }}
+          className="absolute top-[-5%] left-[-5%] w-48 h-48 md:w-80 md:h-80 opacity-20 dark:opacity-30"
+        >
+          <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-[3rem]" />
+          <div className="absolute top-4 left-4 md:top-6 md:left-6 w-full h-full border-t-2 border-l-2 border-purple-500/60 dark:border-white/60 rounded-tl-[2.5rem]" />
+          <div className="absolute top-8 left-8 md:top-12 md:left-12 w-full h-full border-t-2 border-l-2 border-purple-500/30 dark:border-white/30 rounded-tl-[2rem]" />
+        </motion.div>
 
-        {/* 3. Top Right: Square Overlays & Dots */}
-        <div className="absolute top-[5%] right-[5%]">
+        {/* 3. Top Right: Square Overlays & Dots (Increased Size) */}
+        <motion.div 
+          initial={{ opacity: 0, rotate: -20 }}
+          whileInView={{ opacity: 1, rotate: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.2 }}
+          className="absolute top-[2%] right-[2%] z-0"
+        >
           {/* Intersecting Squares */}
-          <div className="relative w-32 h-32 opacity-20 dark:opacity-40">
-            <div className="absolute inset-0 border border-purple-400 dark:border-white transform -rotate-12" />
-            <div className="absolute inset-0 border border-purple-400 dark:border-white transform rotate-12 translate-x-4 translate-y-4" />
+          <div className="relative w-32 h-32 md:w-56 md:h-56 opacity-20 dark:opacity-40">
+            <div className="absolute inset-0 border-2 border-purple-400 dark:border-white transform -rotate-12" />
+            <div className="absolute inset-0 border-2 border-purple-400 dark:border-white transform rotate-12 translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8" />
           </div>
           {/* Dot Grid */}
-          <div className="absolute top-20 right-20 grid grid-cols-5 gap-3 opacity-15 dark:opacity-30">
+          <div className="hidden md:grid absolute top-32 right-32 grid-cols-5 gap-4 opacity-15 dark:opacity-30">
              {[...Array(25)].map((_, i) => (
-               <div key={i} className="w-1 h-1 bg-purple-900 dark:bg-white rounded-full" />
+               <div key={i} className="w-1.5 h-1.5 bg-purple-900 dark:bg-white rounded-full" />
              ))}
           </div>
-          {/* Circle Outline */}
-          <div className="absolute top-32 right-[-20px] w-24 h-24 border border-pink-500/30 dark:border-white/20 rounded-full" />
-        </div>
+        </motion.div>
 
-        {/* 4. Center: Large Circle Outline */}
-        <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-purple-500/10 dark:border-white/5 rounded-full" />
+        {/* 4. Center: Massive Circle Outline */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] md:w-[900px] md:h-[900px] border border-purple-500/10 dark:border-white/5 rounded-full" 
+        />
 
-        {/* 5. Center Left: Vertical Rectangle */}
-        <div className="absolute top-[30%] left-[15%] w-24 h-48 border border-purple-400/20 dark:border-white/10 opacity-30 transform rotate-6" />
+        {/* 5. Center Left: Vertical Rectangle (Increased Size) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 0.3, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1 }}
+          className="absolute top-[25%] left-[-2%] md:left-[5%] w-24 h-48 md:w-32 md:h-64 border-2 border-purple-400/20 dark:border-white/10 opacity-30 transform rotate-12" 
+        />
 
-        {/* 6. Bottom Right: Solid Gradient Circle & Dots */}
-        <div className="absolute bottom-[5%] right-[5%]">
+        {/* 6. Bottom Right: Solid Gradient Circle & Dots (Increased Size) */}
+        <motion.div 
+           initial={{ opacity: 0, x: 50 }}
+           whileInView={{ opacity: 1, x: 0 }}
+           viewport={{ once: false }}
+           transition={{ duration: 1 }}
+           className="absolute bottom-[-5%] right-[-5%]"
+        >
             {/* Gradient Orb */}
-            <div className="w-64 h-64 bg-gradient-to-tr from-purple-600/20 to-pink-500/20 rounded-full blur-2xl" />
+            <div className="w-64 h-64 md:w-[500px] md:h-[500px] bg-gradient-to-tr from-purple-600/20 to-pink-500/20 rounded-full blur-3xl" />
             {/* Dot Grid Overlay */}
-            <div className="absolute bottom-10 right-10 grid grid-cols-6 gap-3 opacity-20 dark:opacity-40">
-              {[...Array(24)].map((_, i) => (
-                <div key={i} className="w-1.5 h-1.5 bg-gray-900 dark:bg-white rounded-full" />
+            <div className="absolute bottom-10 right-10 md:bottom-20 md:right-20 grid grid-cols-6 gap-3 md:gap-5 opacity-20 dark:opacity-40">
+              {[...Array(36)].map((_, i) => (
+                <div key={i} className="w-1.5 h-1.5 md:w-2 md:h-2 bg-gray-900 dark:bg-white rounded-full" />
               ))}
             </div>
              {/* Outline */}
-            <div className="absolute bottom-[-20px] right-[-20px] w-48 h-96 border border-purple-500/20 dark:border-white/10" />
-        </div>
+            <div className="absolute bottom-[-20px] right-[-20px] w-48 h-80 md:w-80 md:h-[600px] border border-purple-500/20 dark:border-white/10" />
+        </motion.div>
 
-        {/* 7. Bottom Left: Large Gradient Orb */}
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/10 dark:bg-purple-900/20 rounded-full blur-[100px]" />
+        {/* 7. Bottom Left: Massive Gradient Orb */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.5 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-[-10%] left-[-15%] w-[400px] h-[400px] md:w-[800px] md:h-[800px] bg-blue-600/10 dark:bg-purple-900/20 rounded-full blur-[100px] md:blur-[150px]" 
+        />
       </div>
 
       <Container className="relative z-10">
@@ -182,14 +215,14 @@ export default function PriceCon() {
             Transparent Pricing
           </span>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Invest in Quality{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
               & Security
             </span>
           </h1>
 
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             No hidden fees. Choose a package that fits your stage of growth.
           </p>
         </motion.div>
