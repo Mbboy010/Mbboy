@@ -124,7 +124,7 @@ export default function BlogCom() {
           whileInView={{ opacity: 0.3, x: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 1 }}
-          className="absolute top-[-2%] left-[-2%] w-40 h-40 md:w-80 md:h-80 opacity-20 dark:opacity-30"
+          className="absolute top-[-2%] left-[-2%] w-40 h-40 md:w-80 md:h-80 opacity-30 dark:opacity-30"
         >
           <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-[3rem]" />
           <div className="absolute top-4 left-4 md:top-6 md:left-6 w-full h-full border-t-2 border-l-2 border-purple-500/50 dark:border-white/50 rounded-tl-[2.5rem]" />

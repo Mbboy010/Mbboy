@@ -18,7 +18,6 @@ import {
   LucideIcon
 } from "lucide-react";
 import Container from "@/components/Container";
-import BackgroundGlow from "@/components/BackgroundGlow";
 
 // --- Types ---
 interface CollaborationCardProps {
@@ -68,12 +67,97 @@ export default function CollaborationCom() {
   return (
     <div className="relative py-24 min-h-screen bg-gray-50 dark:bg-[#050608] text-gray-900 dark:text-gray-100 transition-colors duration-500 overflow-hidden">
       
-      {/* 🔮 Background Ambience */}
-      <BackgroundGlow />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/25 rounded-full blur-[120px] pointer-events-none" />
+      {/* 🔮 ANIMATED GEOMETRIC BACKGROUND */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        
+        {/* 1. Deep Gradient Base */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-blue-900/10 dark:from-[#1a0b2e] dark:via-[#0f0518] dark:to-black" />
 
-      <Container>
+        {/* 2. Top Left: Parallel Lines / Corner Shape */}
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 0.3, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1 }}
+          className="absolute top-[-2%] left-[-2%] w-40 h-40 md:w-80 md:h-80 opacity-20 dark:opacity-30"
+        >
+          <div className="absolute top-0 left-0 w-full h-full border-t-2 border-l-2 border-purple-500 dark:border-white rounded-tl-[3rem]" />
+          <div className="absolute top-4 left-4 md:top-6 md:left-6 w-full h-full border-t-2 border-l-2 border-purple-500/50 dark:border-white/50 rounded-tl-[2.5rem]" />
+          <div className="absolute top-8 left-8 md:top-12 md:left-12 w-full h-full border-t-2 border-l-2 border-purple-500/30 dark:border-white/30 rounded-tl-[2rem]" />
+        </motion.div>
+
+        {/* 3. Top Right: Intersecting Squares & Dots */}
+        <motion.div 
+          initial={{ opacity: 0, rotate: 20 }}
+          whileInView={{ opacity: 1, rotate: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.2 }}
+          className="absolute top-[5%] right-[5%]"
+        >
+          {/* Rotated Squares */}
+          <div className="relative w-24 h-24 md:w-48 md:h-48 opacity-30">
+             <div className="absolute inset-0 border border-pink-500/30 dark:border-white/20 transform rotate-12" />
+             <div className="absolute inset-0 border border-purple-500/30 dark:border-white/20 transform -rotate-6 translate-x-2 translate-y-2 md:translate-x-6 md:translate-y-6" />
+          </div>
+          {/* Dot Grid */}
+          <div className="hidden md:grid absolute top-24 -left-24 grid-cols-4 gap-3 opacity-20 dark:opacity-40">
+            {[...Array(16)].map((_, i) => (
+              <div key={i} className="w-1 h-1 bg-purple-900 dark:bg-white rounded-full" />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* 4. Center/Left: Large Gradient Orb */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.5 }}
+          className="absolute top-[20%] left-[-10%] w-[300px] h-[300px] md:w-[700px] md:h-[700px] bg-purple-600/10 dark:bg-purple-600/15 rounded-full blur-[80px] md:blur-[120px]" 
+        />
+
+        {/* 5. Bottom Right: Circle Outlines & Glow */}
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1 }}
+          className="absolute bottom-[5%] right-[5%]"
+        >
+            <div className="w-64 h-64 md:w-[500px] md:h-[500px] border border-purple-400/20 dark:border-white/10 rounded-full flex items-center justify-center">
+                <div className="w-40 h-40 md:w-[350px] md:h-[350px] border border-pink-400/20 dark:border-white/10 rounded-full" />
+            </div>
+            {/* Glow */}
+            <div className="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-blue-600/10 dark:bg-blue-600/10 rounded-full blur-[80px] md:blur-[100px]" />
+        </motion.div>
+
+        {/* 6. Middle Right: Floating Rectangles */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 0.2, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.2 }}
+          className="absolute top-[40%] right-[5%] md:right-[10%] opacity-10 dark:opacity-20 flex flex-col gap-4"
+        >
+             <div className="w-12 h-16 md:w-20 md:h-32 border border-purple-600 dark:border-white" />
+             <div className="w-12 h-16 md:w-20 md:h-32 border border-purple-600 dark:border-white translate-x-6 md:translate-x-10" />
+        </motion.div>
+
+        {/* 7. Bottom Left: Dot Matrix */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.2 }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.5 }}
+          className="absolute bottom-[10%] left-[5%] md:left-[10%] grid grid-cols-6 gap-3 md:gap-4 opacity-10 dark:opacity-20"
+        >
+            {[...Array(24)].map((_, i) => (
+              <div key={i} className="w-1 h-1 md:w-1.5 md:h-1.5 bg-gray-900 dark:bg-white rounded-full" />
+            ))}
+        </motion.div>
+      </div>
+
+      <Container className="relative z-10">
         
         {/* --- Header Section --- */}
         <motion.div
@@ -219,7 +303,7 @@ export default function CollaborationCom() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 p-8 rounded-3xl shadow-xl"
+            className="bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md border border-gray-200 dark:border-white/10 p-8 rounded-3xl shadow-xl"
           >
             <h3 className="text-xl font-bold mb-4">Send a Quick Message</h3>
             <form className="space-y-4">
@@ -305,7 +389,7 @@ function CollaborationCard({ icon: Icon, title, desc, color, bgColor }: Collabor
       whileHover={{ y: -5 }}
       // Added margin to viewport to prevent early triggering
       viewport={{ once: false }} 
-      className="p-8 rounded-3xl bg-white dark:bg-[#0b1220] border border-gray-200 dark:border-white/5 shadow-lg hover:shadow-xl transition-all duration-300"
+      className="p-8 rounded-3xl bg-white/80 dark:bg-[#0b1220]/80 backdrop-blur-sm border border-gray-200 dark:border-white/5 shadow-lg hover:shadow-xl transition-all duration-300"
     >
       <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${bgColor} ${color}`}>
         <Icon size={28} />
@@ -341,7 +425,7 @@ function ContactBtn({ href, icon: Icon, label, sub, color }: ContactBtnProps) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group flex items-center gap-4 px-6 py-4 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 transition-all duration-300 shadow-sm hover:shadow-md ${color}`}
+      className={`group flex items-center gap-4 px-6 py-4 rounded-2xl bg-white/80 dark:bg-white/5 backdrop-blur-sm border border-gray-200 dark:border-white/10 transition-all duration-300 shadow-sm hover:shadow-md ${color}`}
     >
       <div className="p-3 bg-gray-100 dark:bg-white/10 rounded-full group-hover:scale-110 transition-transform">
         <Icon size={24} />
